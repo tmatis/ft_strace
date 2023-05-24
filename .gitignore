@@ -1,0 +1,19 @@
+# Executable
+
+ft_strace
+ft_strace_debug
+
+# Libraries
+
+*.so
+*.a
+*.dylib
+
+# Compiled
+
+*.o
+*.d
+
+# Editor
+
+/.vscode
