@@ -14,6 +14,7 @@ typedef struct
 } args_t;
 
 #define OPT_MASK_HELP 1 << 0
+#define OPT_MASK_STATISTICS 1 << 1
 
 config_t *get_config();
 void display_help(void);

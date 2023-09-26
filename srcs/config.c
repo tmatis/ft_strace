@@ -15,6 +15,7 @@ typedef struct
  */
 static const option_t options[] = {
     {'h', "help", "print help message", OPT_MASK_HELP},
+    {'c', "summary-only", "Count time, calls, and errors for each system call and report a summary on program exit.", OPT_MASK_STATISTICS},
     {0, NULL, NULL, 0}};
 
 static const option_t *search_option_by_letter(char **arg, const option_t *options)
