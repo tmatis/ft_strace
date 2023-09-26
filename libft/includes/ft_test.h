@@ -119,6 +119,14 @@ extern tests_tracker test_tracker;
 
 #define assert_not_equal(a, b) a != b ? succeed() : fail("Assertion failed: " C_BOLD "assert_not_equal(" #a ", " #b ")" C_RESET " is " C_BOLD C_RED "equal" C_RESET);
 
-#define assert_string_equal(a, b) ft_strcmp(a, b) == 0 ? succeed() : fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ")" C_RESET " is " C_BOLD C_RED "not equal" C_RESET);
+#define assert_string_equal(a, b)\
+    if (!a)\
+        fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ") " C_RESET #a " is " C_BOLD C_RED "null" C_RESET);\
+    else if (!b)\
+        fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ") " C_RESET #b " is " C_BOLD C_RED "null" C_RESET);\
+    else if (ft_strcmp(a, b) == 0)\
+        succeed();\
+    else\
+        fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ")" C_RESET " is " C_BOLD C_RED "not equal" C_RESET);
 
 #endif
