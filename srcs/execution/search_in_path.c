@@ -39,6 +39,7 @@ char *search_in_path(const char *command_name, const char *path)
         return NULL;
     }
 
+    char *path_saveptr = path_copy;
     char *path_token = NULL;
     while ((path_token = ft_strtok(path_copy, ":")) != NULL)
     {
@@ -51,17 +52,17 @@ char *search_in_path(const char *command_name, const char *path)
         if (!command_path_to_test || asprintf_result == -1)
         {
             log_error("search_in_path", "ft_asprintf failed", true);
-            free(path_copy);
+            free(path_saveptr);
             return NULL;
         }
         if (is_executable(command_path_to_test))
         {
-            free(path_copy);
+            free(path_saveptr);
             return command_path_to_test;
         }
         free(command_path_to_test);
         path_copy = NULL;
     }
-    free(path_copy);
+    free(path_saveptr);
     return NULL;
 }

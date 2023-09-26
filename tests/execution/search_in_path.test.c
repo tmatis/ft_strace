@@ -32,3 +32,12 @@ START_TEST(test_search_in_path_null_path, "Test that search_in_path returns NULL
 
     assert_null(result);
 } END_TEST
+
+START_TEST(test_with_invalid_path, "Test that the behavior with a wrong path is correct")
+{
+    char *path = "/does/not/exist:/other/wrong/path";
+    char *command = "ls";
+
+    char *result = search_in_path(command, path);
+    assert_null(result);
+} END_TEST
