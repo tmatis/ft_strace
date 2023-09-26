@@ -20,7 +20,7 @@ $(LIBFT):
 
 $(OBJSDIR)/%.o: %.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -I $(LIBFTINC) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIBFTINC) -I ./includes -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)

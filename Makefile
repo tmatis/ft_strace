@@ -17,7 +17,7 @@ INCDIR := includes
 
 SRCS_MAIN := main.c
 
-SRCS :=
+SRCS := config.c
 
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
