@@ -115,6 +115,14 @@ char *ft_strchr(const char *s, int c);
  */
 char *ft_strdup(const char *s1);
 
+/**
+ * @brief split string into tokens
+ * 
+ * @param str 
+ * @param delim 
+ * @return char* 
+ */
+char *ft_strtok(char *str, const char *delim);
 
 /**
  * @brief Compare memory areas
