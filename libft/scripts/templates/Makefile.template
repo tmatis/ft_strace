@@ -51,12 +51,12 @@ unit: $(LIBFT) $(OBJS_DEBUG)
 
 -include $(DEPS_RELEASE)
 $(OBJSDIR_RELEASE)/%.o: $(SRCSDIR)/%.c
-	@mkdir -p $(OBJSDIR_RELEASE)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFTINC) $(DFLAGS) -c $< -o $@
 
 -include $(DEPS_DEBUG)
 $(OBJSDIR_DEBUG)/%.o: $(SRCSDIR)/%.c
-	@mkdir -p $(OBJSDIR_DEBUG)
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -I $(INCDIR) -I $(LIBFTINC) $(DFLAGS) -c $< -o $@
 
 clean:
