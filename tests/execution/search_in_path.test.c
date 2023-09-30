@@ -28,9 +28,12 @@ START_TEST(test_search_in_path_null_path, "Test that search_in_path returns NULL
     char *path = NULL;
     char *command = "ls";
 
+    record_output record = launch_record();
     char *result = search_in_path(command, path);
-
+    char *output = stop_record(&record);
+    assert_string_equal(output, "search_in_path: path is unset\n");
     assert_null(result);
+    free(output);
 } END_TEST
 
 START_TEST(test_with_invalid_path, "Test that the behavior with a wrong path is correct")
