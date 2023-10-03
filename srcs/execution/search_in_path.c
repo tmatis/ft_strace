@@ -10,12 +10,12 @@
  * @param path the path to the file to check
  * @return bool_t true if the file is executable and does exist, false otherwise
  */
-static bool_t is_executable(const char *path)
+bool_t file_exist(const char *path)
 {
     struct stat path_stat;
     if (stat(path, &path_stat) == -1)
         return false;
-    return (path_stat.st_mode & S_IXUSR) != 0;
+    return true;
 }
 
 /**
@@ -55,7 +55,7 @@ char *search_in_path(const char *command_name, const char *path)
             free(path_saveptr);
             return NULL;
         }
-        if (is_executable(command_path_to_test))
+        if (file_exist(command_path_to_test))
         {
             free(path_saveptr);
             return command_path_to_test;

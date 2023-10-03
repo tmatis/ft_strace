@@ -27,7 +27,8 @@ SRCS += utils/log_error.c
 
 # execution srcs
 
-SRCS += execution/search_in_path.c
+SRCS += execution/search_in_path.c \
+		execution/exec_program.c
 
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
