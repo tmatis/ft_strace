@@ -1,11 +1,15 @@
 NAME := libft.a
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -fPIE -g
-DFLAGS	= -MMD -MF $(@:.o=.d)
+CFLAGS := -Wall -Wextra -Werror -fPIE
+
+ifneq ($(filter debug redebug,$(MAKECMDGOALS)),)
+	CFLAGS += -g
+endif
 
 # Directories
 SRCSDIR := srcs
-OBJDIR := objs
+OBJSDIR_RELEASE := .build/release
+OBJSDIR_DEBUG := .build/debug
 INCDIR := includes
 
 # string files
@@ -60,30 +64,46 @@ SRCS +=	printf/buffer/buffer_printf.c \
 SRCS += units/units.c \
 		units/record_output.c
 
-OBJS := $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+OBJS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.o))
+OBJS_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS:.c=.o))
+
+DEPS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.d))
+DEPS_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS:.c=.d))
 
 DFLAGS	= -MMD -MF $(@:.o=.d)
-DEPS	= $(addprefix $(OBJDIR)/, $(SRCS:.c=.d))
+
+NAME_DEBUG := libftdebug.a
 # Rules
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar -rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS_RELEASE)
+	ar -rcs $(NAME) $(OBJS_RELEASE)
 
-$(OBJDIR)/%.o: $(SRCSDIR)/%.c
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(DFLAGS) -I $(INCDIR) -c $< -o $@
+debug: $(NAME_DEBUG)
 
-unit: $(OBJS)
-	@LIBFT_TEST=true scripts/car.sh $(OBJS)
+$(NAME_DEBUG): $(OBJS_DEBUG)
+	ar -rcs $(NAME_DEBUG) $(OBJS_DEBUG)
+
+-include $(DEPS_RELEASE)
+$(OBJSDIR_RELEASE)/%.o: $(SRCSDIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I $(INCDIR) $(DFLAGS) -c $< -o $@
+
+-include $(DEPS_DEBUG)
+$(OBJSDIR_DEBUG)/%.o: $(SRCSDIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I $(INCDIR) $(DFLAGS) -c $< -o $@
+
+unit: $(OBJS_DEBUG)
+	@LIBFT_TEST=true scripts/car.sh $(OBJS_DEBUG)
 
 clean:
-	rm -rf $(OBJDIR)
+	rm -rf .build
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_DEBUG)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug unit

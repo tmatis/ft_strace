@@ -3,8 +3,9 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 LIBFTDIR := libft
 LIBFT := $(LIBFTDIR)/libft.a
+LIBFT_DEBUG := $(LIBFTDIR)/debug_libft.a
 LIBFTINC := $(LIBFTDIR)/includes
-LIBS := -L $(LIBFTDIR) -lft
+LIBS :=
 
 ifneq ($(filter debug redebug,$(MAKECMDGOALS)),)
 	CFLAGS += -g
@@ -49,11 +50,14 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)
 
-$(NAME): $(LIBFT) $(OBJS_RELEASE) $(OBJS_MAIN_RELEASE)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS_RELEASE) $(OBJS_MAIN_RELEASE) $(LIBS)
+$(LIBFT_DEBUG):
+	$(MAKE) -C $(LIBFTDIR) debug
 
-$(NAME_DEBUG): $(LIBFT) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG)
-	$(CC) $(CFLAGS) -o $(NAME_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG) $(LIBS)
+$(NAME): $(LIBFT) $(OBJS_RELEASE) $(OBJS_MAIN_RELEASE)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS_RELEASE) $(OBJS_MAIN_RELEASE) $(LIBS) -L $(LIBFTDIR) -lft
+
+$(NAME_DEBUG): $(LIBFT_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG)
+	$(CC) $(CFLAGS) -o $(NAME_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG) $(LIBS) -L $(LIBFTDIR) -lftdebug
 
 debug: $(NAME_DEBUG)
 
