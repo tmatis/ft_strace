@@ -1,7 +1,8 @@
 #include <config.h>
 #include <execution.h>
 #include <ft_strace_utils.h>
-#include <sys/wait.h>
+#include <ft_printf.h>
+#include <analysis.h>
 
 int main(int argc, char **argv, char **envp)
 {
@@ -18,12 +19,16 @@ int main(int argc, char **argv, char **envp)
 		display_help();
 		return 0;
 	}
-	__pid_t pid = exec_program(args.argv, envp);
+	pid_t pid = exec_program(args.argv, envp);
+
+	if (pid == EXEC_CHILD_END)
+		return 1;
 	if (pid == EXEC_ERROR)
 	{
 		log_error("main", "exec_program failed", true);
 		return 1;
 	}
-	waitpid(pid, 0, 0);
-	return (0);
+	if (setup_tracing(pid))
+		return 1;
+	return (analysis_routine(pid));
 }

@@ -4,6 +4,7 @@
 #include <execution.h>
 #include <ft_strace_utils.h>
 #include <stdio.h>
+#include <signal.h>
 
 /**
  * @brief Execute a program
@@ -11,7 +12,7 @@
  * @param argc
  * @param argv
  * @param envp
- * @return the pid of the child process or EXEC_ERROR if an error occurred
+ * @return the pid of the child process or EXEC_ERROR if an error occurred or EXEC_END_CHILD if the child process ended
  */
 int exec_program(char **argv, char **envp)
 {
@@ -23,7 +24,7 @@ int exec_program(char **argv, char **envp)
         if (program_path == NULL)
             return EXEC_ERROR;
     }
-    __pid_t pid = fork();
+    pid_t pid = fork();
     if (pid == -1)
     {
         log_error("exec_program", "fork failed", true);
@@ -33,11 +34,12 @@ int exec_program(char **argv, char **envp)
     }
     if (pid == 0)
     {
+        raise(SIGSTOP); // we stop the child process to let the parent trace it
         execve(program_path, argv, envp);
         if (slash_ptr == NULL)
             free(program_path);
         log_error("exec_program", "execve failed", true);
-        exit(1);
+        return EXEC_CHILD_END;
     }
     if (slash_ptr == NULL)
         free(program_path);
