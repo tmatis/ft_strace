@@ -10,6 +10,7 @@ START_TEST(basic, "Test that ft_printf prints a string")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(basic2, "Test that ft_printf prints a string with a newline")
@@ -20,6 +21,7 @@ START_TEST(basic2, "Test that ft_printf prints a string with a newline")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num, "Test that ft_printf prints a number")
@@ -30,6 +32,7 @@ START_TEST(num, "Test that ft_printf prints a number")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num2, "Test that ft_printf prints a negative number")
@@ -40,6 +43,7 @@ START_TEST(num2, "Test that ft_printf prints a negative number")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num3, "Test that ft_printf prints a number with a plus sign")
@@ -50,6 +54,7 @@ START_TEST(num3, "Test that ft_printf prints a number with a plus sign")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num4, "Test that ft_printf prints a number with a space")
@@ -60,6 +65,7 @@ START_TEST(num4, "Test that ft_printf prints a number with a space")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num_limit, "Test that ft_printf prints INT_MAX")
@@ -70,6 +76,7 @@ START_TEST(num_limit, "Test that ft_printf prints INT_MAX")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num_limit2, "Test that ft_printf prints INT_MIN")
@@ -80,6 +87,7 @@ START_TEST(num_limit2, "Test that ft_printf prints INT_MIN")
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(num_length, "Test that ft_printf prints a number with a length modifier")
@@ -90,6 +98,7 @@ START_TEST(num_length, "Test that ft_printf prints a number with a length modifi
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
 
 START_TEST(test_string_with_length, "Test that ft_printf prints a string with a length modifier")
@@ -100,4 +109,5 @@ START_TEST(test_string_with_length, "Test that ft_printf prints a string with a 
     char *result = stop_record(&record);
     assert_string_equal(result, str);
     succeed();
+    free(result);
 } END_TEST
