@@ -8,88 +8,77 @@
 #include <signal.h>
 #include <ft_strace_utils.h>
 #include <errno.h>
-
-struct user_regs_struct_x86_64
-{
-    unsigned long long int r15;
-    unsigned long long int r14;
-    unsigned long long int r13;
-    unsigned long long int r12;
-    unsigned long long int rbp;
-    unsigned long long int rbx;
-    unsigned long long int r11;
-    unsigned long long int r10;
-    unsigned long long int r9;
-    unsigned long long int r8;
-    unsigned long long int rax;
-    unsigned long long int rcx;
-    unsigned long long int rdx;
-    unsigned long long int rsi;
-    unsigned long long int rdi;
-    unsigned long long int orig_rax;
-    unsigned long long int rip;
-    unsigned long long int cs;
-    unsigned long long int eflags;
-    unsigned long long int rsp;
-    unsigned long long int ss;
-    unsigned long long int fs_base;
-    unsigned long long int gs_base;
-    unsigned long long int ds;
-    unsigned long long int es;
-    unsigned long long int fs;
-    unsigned long long int gs;
-    };
+#include <syscall_strace.h>
+#include <user_registers.h>
 
 #define MAX_SYSCALL_NO 0x14c
 
+#define SYS_EXECVE 0x3b
 
-void print_params(struct user_regs_struct_x86_64 *regs)
+typedef enum
 {
-    for (int i = 0; i < 6; i++)
-        ft_printf("%#llx ", regs->rdi + i * sizeof(long long int));
-    ft_printf("\n");
-}
+    NOT_ENCOUNTERED,
+    ENCOUNTERED,
+    ERROR
+} execve_status_t;
+
+typedef struct
+{
+    execve_status_t status;
+} analysis_routine_data_t;
 
 #define NO_STATUS -1
 
-int handle_syscall(pid_t pid)
+int handle_syscall(pid_t pid, analysis_routine_data_t *data)
 {
-    struct user_regs_struct_x86_64 regs;
-
+    user_regs_x86_64_t regs_before;
+    user_regs_x86_64_t regs_after;
 
     // before the syscall
-    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) < 0)
+    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs_before) < 0)
     {
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(1) failed", true);
         return NO_STATUS;
     }
-    if (regs.orig_rax > MAX_SYSCALL_NO)
+    int syscall_no = regs_before.orig_rax;
+    if (syscall_no > MAX_SYSCALL_NO)
         return NO_STATUS;
-    ft_printf("registers before syscall:\n");
-    ft_printf("syscall %lli: ", regs.orig_rax);
-    print_params(&regs);
 
-    
     // after the syscall
     if (ptrace(PTRACE_SYSCALL, pid, NULL, NULL) < 0)
     {
         log_error("handle_syscall", "ptrace failed", true);
         return NO_STATUS;
     }
+    if (data->status == ERROR && syscall_no != SYS_EXECVE)
+        return NO_STATUS;
+    if (data->status == NOT_ENCOUNTERED && syscall_no != SYS_EXECVE)
+        return NO_STATUS;
+    if (data->status == NOT_ENCOUNTERED && syscall_no == SYS_EXECVE)
+        data->status = regs_after.rax < 0 ? ERROR : ENCOUNTERED;
+    bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && syscall_no == SYS_EXECVE);
+    if (should_log)
+        syscall_log_name_params(pid, &regs_before);
     int status;
-    waitpid(pid, &status, 0);
+    if (waitpid(pid, &status, 0) < 0)
+    {
+        log_error("handle_syscall", "waitpid failed", true);
+        return NO_STATUS;
+    }
     if (WIFEXITED(status) || WIFSIGNALED(status))
+    {
+        ft_dprintf(STDERR_FILENO, ") = ?\n");
         return status;
+    }
 
     // after the syscall
-    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs) < 0)
+    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs_after) < 0)
     {
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(2) failed", true);
         return NO_STATUS;
     }
-    ft_printf("registers after syscall:\n");
-    print_params(&regs);
-    ft_printf("return value: %lli\n", regs.rax);
+    if (should_log)
+        syscall_log_return(pid, syscall_no, &regs_after);
     return NO_STATUS;
 }
 
@@ -109,6 +98,7 @@ int handle_status(int status)
     }
     return NO_STATUS;
 }
+
 /**
  * @brief Analysis routine of the tracer
  *
@@ -117,6 +107,7 @@ int handle_status(int status)
  */
 int analysis_routine(pid_t pid)
 {
+    analysis_routine_data_t data = {NOT_ENCOUNTERED};
     while (true)
     {
         int status;
@@ -128,7 +119,7 @@ int analysis_routine(pid_t pid)
         int status_code = handle_status(status);
         if (status_code != NO_STATUS)
             return status_code;
-        status_code = handle_status(handle_syscall(pid));
+        status_code = handle_status(handle_syscall(pid, &data));
         if (status_code != NO_STATUS)
             return status_code;
         if (ptrace(PTRACE_SYSCALL, pid, NULL, NULL) < 0)

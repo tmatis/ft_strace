@@ -36,6 +36,12 @@ SRCS += execution/search_in_path.c \
 
 SRCS += analysis/analysis_routine.c
 
+# syscall srcs
+
+SRCS += syscall/syscall_get_description.c \
+		syscall/syscall_log.c \
+		syscall/syscall_log_param.c 
+
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
 OBJS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.o))
@@ -50,7 +56,10 @@ DFLAGS	= -MMD -MF $(@:.o=.d)
 
 NAME_DEBUG := $(NAME)_debug
 
+
 all: $(NAME)
+
+debug: $(NAME_DEBUG)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)
@@ -64,7 +73,6 @@ $(NAME): $(LIBFT) $(OBJS_RELEASE) $(OBJS_MAIN_RELEASE)
 $(NAME_DEBUG): $(LIBFT_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG)
 	$(CC) $(CFLAGS) -o $(NAME_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG) $(LIBS) -L $(LIBFTDIR) -lftdebug
 
-debug: $(NAME_DEBUG)
 
 unit: $(LIBFT) $(OBJS_DEBUG)
 	libft/scripts/car.sh $(OBJS_DEBUG)
