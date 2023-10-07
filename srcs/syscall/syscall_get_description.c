@@ -11,7 +11,7 @@ const syscall_description_t *syscall_get_description(uint64_t syscall_no)
 {
     static const syscall_description_t default_syscall = {"unknown", INT, {NONE, NONE, NONE, NONE, NONE, NONE}};
     // check if in bounds
-    if (syscall_no < 0 || syscall_no >= ELEM_COUNT(x86_64_syscalls))
+    if (syscall_no >= ELEM_COUNT(x86_64_syscalls))
         return &default_syscall;
     return &x86_64_syscalls[syscall_no];
 }
