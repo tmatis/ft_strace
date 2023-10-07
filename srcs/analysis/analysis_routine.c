@@ -54,8 +54,6 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         return NO_STATUS;
     if (data->status == NOT_ENCOUNTERED && syscall_no != SYS_EXECVE)
         return NO_STATUS;
-    if (data->status == NOT_ENCOUNTERED && syscall_no == SYS_EXECVE)
-        data->status = regs_after.rax < 0 ? ERROR : ENCOUNTERED;
     bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && syscall_no == SYS_EXECVE);
     if (should_log)
         syscall_log_name_params(pid, &regs_before);
@@ -77,6 +75,8 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(2) failed", true);
         return NO_STATUS;
     }
+    if (data->status == NOT_ENCOUNTERED && syscall_no == SYS_EXECVE)
+        data->status = (int64_t)regs_after.rax < 0 ? ERROR : ENCOUNTERED;
     if (should_log)
         syscall_log_return(pid, syscall_no, &regs_after);
     return NO_STATUS;
