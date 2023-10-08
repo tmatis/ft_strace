@@ -52,4 +52,12 @@ int ft_tolower(int c);
  */
 int ft_isalnum(int c);
 
+/**
+ * @brief Checks if the character is printable
+ * 
+ * @param c The character to check
+ * @return int 1 if the character is printable, 0 otherwise
+ */
+int ft_isprint(int c);
+
 #endif

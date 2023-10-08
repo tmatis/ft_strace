@@ -142,4 +142,13 @@ int ft_memcmp(const void *s1, const void *s2, size_t n);
  */
 const char *ft_strerror(int errnum);
 
+
+/**
+ * @brief Escape a memory
+ * 
+ * @param str The string to escape
+ * @param size The size of the string
+ * @return char* The escaped string
+ */
+char *ft_escape(const char *str, size_t size);
 #endif

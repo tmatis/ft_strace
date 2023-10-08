@@ -27,7 +27,8 @@ SRCS +=	string/ft_strlen.c \
 		string/ft_strtok.c \
 		string/ft_strdup.c \
 		string/ft_memcmp.c \
-		string/ft_strerror.c
+		string/ft_strerror.c \
+		string/ft_escape.c
 
 # char files
 
@@ -36,7 +37,8 @@ SRCS += char/ft_isdigit.c \
 		char/ft_isupper.c \
 		char/ft_islower.c \
 		char/ft_tolower.c \
-		char/ft_isalnum.c
+		char/ft_isalnum.c \
+		char/ft_isprint.c
 
 # gnl files
 
@@ -63,6 +65,10 @@ SRCS +=	printf/buffer/buffer_printf.c \
 
 SRCS += units/units.c \
 		units/record_output.c
+
+# misc files
+
+SRCS += misc/ft_calloc.c
 
 OBJS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.o))
 OBJS_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS:.c=.o))
