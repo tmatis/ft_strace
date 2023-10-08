@@ -29,6 +29,7 @@ typedef enum
 typedef struct
 {
     execve_status_t status;
+    register_type_t register_type;
 } analysis_routine_data_t;
 
 #define NO_STATUS -1
@@ -46,6 +47,11 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         return NO_STATUS;
     }
     register_type_t register_type = registers_get_type(regs_before_iov.iov_len);
+    if (data->register_type != register_type)
+    {
+        data->register_type = register_type;
+        ft_dprintf(STDERR_FILENO, "[ Process PID=%d runs in 32 bit mode. ]\n", pid);
+    }
     uint64_t syscall_no = registers_get_syscall(&regs_before, register_type);
     if (syscall_no > MAX_SYSCALL_NO)
         return NO_STATUS;
@@ -116,7 +122,7 @@ int handle_status(int status)
  */
 int analysis_routine(pid_t pid)
 {
-    analysis_routine_data_t data = {NOT_ENCOUNTERED};
+    analysis_routine_data_t data = {NOT_ENCOUNTERED, X86_64};
     while (true)
     {
         int status;
