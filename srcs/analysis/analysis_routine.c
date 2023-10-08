@@ -3,13 +3,17 @@
 #include <sys/types.h>
 #include <stddef.h>
 #include <sys/wait.h>
-#include <ft_printf.h>
+#include <stdio.h>
 #include <analysis.h>
 #include <signal.h>
 #include <ft_strace_utils.h>
 #include <errno.h>
 #include <syscall_strace.h>
 #include <user_registers.h>
+#include <sys/uio.h>
+#include <elf.h>
+#include <registers.h>
+#include <ft_printf.h>
 
 #define MAX_SYSCALL_NO 0x14c
 
@@ -31,32 +35,34 @@ typedef struct
 
 int handle_syscall(pid_t pid, analysis_routine_data_t *data)
 {
-    user_regs_x86_64_t regs_before;
-    user_regs_x86_64_t regs_after;
+    user_regs_t regs_before = {0};
+    struct iovec regs_before_iov;
 
-    // before the syscall
-    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs_before) < 0)
+    regs_before_iov.iov_base = &regs_before;
+    regs_before_iov.iov_len = sizeof(regs_before);
+    if (ptrace(PTRACE_GETREGSET, pid, (void *)NT_PRSTATUS, &regs_before_iov) < 0)
     {
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(1) failed", true);
         return NO_STATUS;
     }
-    int syscall_no = regs_before.orig_rax;
+    register_type_t register_type = registers_get_type(regs_before_iov.iov_len);
+    uint64_t syscall_no = registers_get_syscall(&regs_before, register_type);
     if (syscall_no > MAX_SYSCALL_NO)
         return NO_STATUS;
 
-    // after the syscall
     if (ptrace(PTRACE_SYSCALL, pid, NULL, NULL) < 0)
     {
         log_error("handle_syscall", "ptrace failed", true);
         return NO_STATUS;
     }
-    if (data->status == ERROR && syscall_no != SYS_EXECVE)
+    bool_t is_execve = syscall_is_execve(syscall_no, register_type);
+    if (data->status == ERROR && !is_execve)
         return NO_STATUS;
-    if (data->status == NOT_ENCOUNTERED && syscall_no != SYS_EXECVE)
+    if (data->status == NOT_ENCOUNTERED && !is_execve)
         return NO_STATUS;
-    bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && syscall_no == SYS_EXECVE);
+    bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && is_execve);
     if (should_log)
-        syscall_log_name_params(pid, &regs_before);
+        syscall_log_name_params(pid, &regs_before, register_type);
     int status;
     if (waitpid(pid, &status, 0) < 0)
     {
@@ -68,17 +74,20 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         ft_dprintf(STDERR_FILENO, ") = ?\n");
         return status;
     }
+    user_regs_t regs_after;
+    struct iovec regs_after_iov;
 
-    // after the syscall
-    if (ptrace(PTRACE_GETREGS, pid, NULL, &regs_after) < 0)
+    regs_after_iov.iov_base = &regs_after;
+    regs_after_iov.iov_len = sizeof(regs_after);
+    if (ptrace(PTRACE_GETREGSET, pid, (void *)NT_PRSTATUS, &regs_after_iov) < 0)
     {
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(2) failed", true);
         return NO_STATUS;
     }
     if (data->status == NOT_ENCOUNTERED && syscall_no == SYS_EXECVE)
-        data->status = (int64_t)regs_after.rax < 0 ? ERROR : ENCOUNTERED;
+        data->status = (int64_t)registers_get_return(&regs_after, register_type) < 0 ? ERROR : ENCOUNTERED;
     if (should_log)
-        syscall_log_return(pid, syscall_no, &regs_after);
+        syscall_log_return(pid, syscall_no, &regs_after, register_type);
     return NO_STATUS;
 }
 

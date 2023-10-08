@@ -40,7 +40,15 @@ SRCS += analysis/analysis_routine.c
 
 SRCS += syscall/syscall_get_description.c \
 		syscall/syscall_log.c \
-		syscall/syscall_log_param.c 
+		syscall/syscall_log_param.c  \
+		syscall/syscall_is_execve.c
+
+# registers srcs
+
+SRCS += registers/registers_get_param.c \
+		registers/registers_get_return.c \
+		registers/registers_get_syscall.c \
+		registers/registers_get_type.c
 
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
