@@ -24,9 +24,7 @@ void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_
     {
         if (syscall_desc->arg_types[i] == NONE || syscall_desc->arg_types[i] > 0)
             break;
-        int64_t positive_arg_type = -syscall_desc->arg_types[i];
-        uint64_t arg = registers_get_param(regs_before, register_type, i);
-        syscall_log_param(pid, positive_arg_type, arg);
+        syscall_log_param(pid, regs_before, register_type, i);
         if (!(i == param_count - 1 || syscall_desc->arg_types[i + 1] == NONE))
             ft_dprintf(STDERR_FILENO, ", ");
     }
@@ -61,13 +59,12 @@ void syscall_log_params_return(
             break;
         if (syscall_desc->arg_types[i] < 0)
             continue;
-        uint64_t arg = registers_get_param(regs_after, regs_after_type, i);
-        syscall_log_param(pid, syscall_desc->arg_types[i], arg);
+        syscall_log_param(pid, regs_after, regs_after_type, i);
         if (!(i == param_count - 1 || syscall_desc->arg_types[i + 1] == NONE))
             ft_dprintf(STDERR_FILENO, ", ");
     }
     ft_dprintf(STDERR_FILENO, ") = ");
-    syscall_log_param(pid, syscall_desc->return_type, return_value);
+    syscall_log_return(pid, regs_after, regs_after_type);
     if (errno)
         ft_dprintf(STDERR_FILENO, " %s (%s)", ft_strerror(errno), "Not implemented");
     ft_dprintf(STDERR_FILENO, "\n");

@@ -45,13 +45,14 @@ const syscall_description_t *syscall_get_description(uint64_t syscall_no, regist
 void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t type);
 
 /**
- * @brief Log a parameter of the syscall
+ * @brief Log a syscall parameter
  * 
- * @param pid The pid of the process
- * @param arg_type the type of the parameter
- * @param arg the value of the parameter
+ * @param pid the pids of the tracee
+ * @param regs the registers
+ * @param regs_type the registers type
+ * @param arg_index the argument index
  */
-void syscall_log_param(pid_t pid, arg_type_t arg_type, uint64_t arg);
+void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, uint8_t arg_index);
 
 /**
  * @brief Log remaining parameters of the syscall and return value
@@ -66,6 +67,16 @@ void syscall_log_params_return(
     int syscall_no,
     user_regs_t *regs_after,
     register_type_t regs_after_type);
+
+/**
+ * @brief Log the return value of a syscall
+ * 
+ * @param pid the pids of the tracee
+ * @param regs the registers
+ * @param regs_type the registers type
+ */
+void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type);
+
 /**
  * @brief Check if syscall is execve depending on the syscall number and the registers type
  * 
