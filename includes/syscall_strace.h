@@ -14,6 +14,7 @@
 #define SIGNED_INT 2
 #define HEX 3
 #define STRING 4
+#define MEMSEG 5
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the syscall

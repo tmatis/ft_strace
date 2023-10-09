@@ -7,7 +7,7 @@ START_TEST(test_read_description, "Test that the description is right for read")
     assert_string_equal(description->name, "read");
     assert_equal(description->return_type, SIGNED_INT);
     assert_equal(description->arg_types[0], -SIGNED_INT);
-    assert_equal(description->arg_types[1], STRING);
+    assert_equal(description->arg_types[1], MEMSEG);
     assert_equal(description->arg_types[2], INT);
     assert_equal(description->arg_types[3], NONE);
 } END_TEST

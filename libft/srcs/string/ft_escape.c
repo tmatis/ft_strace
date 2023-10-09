@@ -18,9 +18,7 @@ static int compute_number_of_digits(int n)
         n /= 10;
         digits++;
     }
-    if (digits == 0)
-        digits = 1;
-    return digits;
+    return digits + 1;
 }
 
 typedef struct
@@ -114,7 +112,11 @@ char *ft_escape(const char *str, size_t size)
             }
             else
             {
-                int added = ft_snprintf(escaped_str + j, escaped_size - j, "\\%d", str[i]);
+                int added = ft_snprintf(
+                    escaped_str + j,
+                    escaped_size - j,
+                    "\\%u",
+                    (unsigned char)str[i] % 256);
                 if (added < 0)
                 {
                     free(escaped_str);

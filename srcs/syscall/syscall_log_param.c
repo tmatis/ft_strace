@@ -2,14 +2,7 @@
 #include <ft_printf.h>
 #include <sys/types.h>
 #include <registers.h>
-
-typedef struct
-{
-    pid_t pid;
-    uint8_t arg_index;
-    user_regs_t *regs;
-    register_type_t type;
-} syscall_log_param_t;
+#include "param_log/param_log.h"
 
 static void log_INT(uint64_t value)
 {
@@ -38,7 +31,6 @@ static void log_NONE(uint64_t value)
     ft_dprintf(STDERR_FILENO, "?");
 }
 
-typedef void (*log_function_t)();
 
 static const log_function_t log_functions[] = {
     [NONE] = log_NONE,
@@ -46,6 +38,7 @@ static const log_function_t log_functions[] = {
     [SIGNED_INT] = log_UNSIGNED_INT,
     [HEX] = log_HEX,
     [STRING] = log_STRING,
+    [MEMSEG] = log_MEMSEG,
 };
 
 /**
