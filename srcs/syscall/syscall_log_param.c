@@ -42,11 +42,11 @@ void syscall_log_param(pid_t pid, arg_type_t arg_type, uint64_t arg)
 {
     (void)pid;
     static const log_function_t log_functions[] = {
+        [NONE] = log_NONE,
         [INT] = log_INT,
         [SIGNED_INT] = log_UNSIGNED_INT,
         [HEX] = log_HEX,
         [STRING] = log_STRING,
-        [NONE] = log_NONE
     };
     log_functions[arg_type](arg);
 }

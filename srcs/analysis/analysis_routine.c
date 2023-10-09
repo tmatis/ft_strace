@@ -46,13 +46,13 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(1) failed", true);
         return NO_STATUS;
     }
-    register_type_t register_type = registers_get_type(regs_before_iov.iov_len);
-    if (data->register_type != register_type)
+    register_type_t register_type_before = registers_get_type(regs_before_iov.iov_len);
+    if (data->register_type != register_type_before)
     {
-        data->register_type = register_type;
+        data->register_type = register_type_before;
         ft_dprintf(STDERR_FILENO, "[ Process PID=%d runs in 32 bit mode. ]\n", pid);
     }
-    uint64_t syscall_no = registers_get_syscall(&regs_before, register_type);
+    uint64_t syscall_no = registers_get_syscall(&regs_before, register_type_before);
     if (syscall_no > MAX_SYSCALL_NO)
         return NO_STATUS;
 
@@ -61,14 +61,14 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         log_error("handle_syscall", "ptrace failed", true);
         return NO_STATUS;
     }
-    bool_t is_execve = syscall_is_execve(syscall_no, register_type);
+    bool_t is_execve = syscall_is_execve(syscall_no, register_type_before);
     if (data->status == ERROR && !is_execve)
         return NO_STATUS;
     if (data->status == NOT_ENCOUNTERED && !is_execve)
         return NO_STATUS;
     bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && is_execve);
     if (should_log)
-        syscall_log_name_params(pid, &regs_before, register_type);
+        syscall_log_name_params(pid, &regs_before, register_type_before);
     int status;
     if (waitpid(pid, &status, 0) < 0)
     {
@@ -90,10 +90,11 @@ int handle_syscall(pid_t pid, analysis_routine_data_t *data)
         log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(2) failed", true);
         return NO_STATUS;
     }
+    register_type_t register_type_after = registers_get_type(regs_after_iov.iov_len);
     if (data->status == NOT_ENCOUNTERED && syscall_no == SYS_EXECVE)
-        data->status = (int64_t)registers_get_return(&regs_after, register_type) < 0 ? ERROR : ENCOUNTERED;
+        data->status = (int64_t)registers_get_return(&regs_after, register_type_after) < 0 ? ERROR : ENCOUNTERED;
     if (should_log)
-        syscall_log_return(pid, syscall_no, &regs_after, register_type);
+        syscall_log_params_return(pid, syscall_no, &regs_after, register_type_after);
     return NO_STATUS;
 }
 
