@@ -116,7 +116,7 @@ char *ft_escape(const char *str, size_t size)
                     escaped_str + j,
                     escaped_size - j,
                     "\\%u",
-                    (unsigned char)str[i] % 256);
+                    (unsigned char)str[i]);
                 if (added < 0)
                 {
                     free(escaped_str);

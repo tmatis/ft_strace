@@ -28,6 +28,23 @@ typedef struct {
     const arg_type_t arg_types[6];
 } syscall_description_t;
 
+#define MAX_SYSCALL_NO 0x17f
+
+typedef enum
+{
+    NOT_ENCOUNTERED,
+    ENCOUNTERED,
+    ERROR
+} execve_status_t;
+
+typedef struct
+{
+    execve_status_t status;
+    register_type_t register_type;
+} analysis_routine_data_t;
+
+#define NO_STATUS -1
+
 #define ELEM_COUNT(x) (sizeof(x) / sizeof(x[0]))
 
 /**
@@ -86,3 +103,12 @@ void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type)
  * @return bool_t true if syscall is execve, false otherwise
  */
 bool_t syscall_is_execve(uint64_t syscall_no, register_type_t type);
+
+/**
+ * @brief Handle a syscall
+ * 
+ * @param pid the pid of the tracee
+ * @param data the data of the analysis routine
+ * @return int the status code of the tracee or NO_STATUS if no status code is available
+ */
+int syscall_handle(pid_t pid, analysis_routine_data_t *data);

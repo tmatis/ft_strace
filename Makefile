@@ -42,7 +42,8 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/syscall_log.c \
 		syscall/syscall_log_param.c  \
 		syscall/syscall_is_execve.c \
-		syscall/param_log/param_log_memseg.c
+		syscall/param_log/param_log_memseg.c \
+		syscall/syscall_handle.c
 
 # registers srcs
 
