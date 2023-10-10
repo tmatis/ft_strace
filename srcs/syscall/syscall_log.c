@@ -46,10 +46,10 @@ void syscall_log_params_return(
 {
     const syscall_description_t *syscall_desc = syscall_get_description(syscall_no, regs_after_type);
     int64_t return_value = (int64_t)registers_get_return(regs_after, regs_after_type);
-    int errno = 0;
+    int errno_value = 0;
     if (return_value < 0 && return_value >= -4096)
     {
-        errno = -return_value;
+        errno_value = -return_value;
         return_value = -1;
     }
     const size_t param_count = ELEM_COUNT(syscall_desc->arg_types);
@@ -65,7 +65,7 @@ void syscall_log_params_return(
     }
     ft_dprintf(STDERR_FILENO, ") = ");
     syscall_log_return(pid, regs_after, regs_after_type);
-    if (errno)
-        ft_dprintf(STDERR_FILENO, " %s (%s)", ft_strerror(errno), "Not implemented");
+    if (errno_value)
+        ft_dprintf(STDERR_FILENO, " %s (%s)", ft_errnoname(errno_value), ft_strerror(errno_value));
     ft_dprintf(STDERR_FILENO, "\n");
 }
