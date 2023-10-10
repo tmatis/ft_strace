@@ -1,8 +1,8 @@
+#include <analysis.h>
 #include <config.h>
 #include <execution.h>
-#include <ft_strace_utils.h>
 #include <ft_printf.h>
-#include <analysis.h>
+#include <ft_strace_utils.h>
 
 int main(int argc, char **argv, char **envp)
 {

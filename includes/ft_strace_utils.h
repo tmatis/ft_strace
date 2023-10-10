@@ -4,7 +4,7 @@
 
 /**
  * @brief show a error message in STDERR
- * 
+ *
  * @param context the context where the error was raised
  * @param message the error message
  * @param show_error if true, the message derivate from errno will be shown

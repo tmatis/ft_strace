@@ -2,15 +2,16 @@
 
 #include <stdint.h>
 
-typedef struct {
-    uint64_t options;
-    const char *program_name;
+typedef struct
+{
+	uint64_t options;
+	const char *program_name;
 } config_t;
 
 typedef struct
 {
-    int argc;
-    char **argv;
+	int argc;
+	char **argv;
 } args_t;
 
 #define OPT_MASK_HELP 1 << 0

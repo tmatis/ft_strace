@@ -2,7 +2,8 @@
 #include <syscall_strace.h>
 #include <unistd.h>
 
-// START_TEST(test_syscall_log_name_params, "Test that syscall_log_name_params logs the name of the syscall and its parameters")
+// START_TEST(test_syscall_log_name_params, "Test that syscall_log_name_params
+// logs the name of the syscall and its parameters")
 // {
 //     user_regs_t regs_before;
 //     regs_before.x86_64.rax = 0;

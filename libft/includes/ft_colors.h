@@ -1,5 +1,5 @@
 #ifndef FT_COLORS_H
-# define FT_COLORS_H
+#define FT_COLORS_H
 
 #define C_RESET "\033[0m"
 #define C_BOLD "\033[1m"
