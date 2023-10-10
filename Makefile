@@ -6,6 +6,7 @@ LIBFT := $(LIBFTDIR)/libft.a
 LIBFT_DEBUG := $(LIBFTDIR)/libftdebug.a
 LIBFTINC := $(LIBFTDIR)/includes
 LIBS :=
+FORMAT_COMMAND := clang-format -i -style=file
 
 ifneq ($(filter debug redebug,$(MAKECMDGOALS)),)
 	CFLAGS += -g
@@ -66,7 +67,6 @@ DFLAGS	= -MMD -MF $(@:.o=.d)
 
 NAME_DEBUG := $(NAME)_debug
 
-
 all: $(NAME)
 
 debug: $(NAME_DEBUG)
@@ -108,5 +108,8 @@ fclean: clean
 re: fclean all
 
 redebug: fclean debug
+
+format:
+	find . -regex '.*\.\(c\|h\)' -exec $(FORMAT_COMMAND) {} \;
 
 .PHONY: all clean fclean re debug redebug
