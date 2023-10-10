@@ -151,4 +151,13 @@ const char *ft_strerror(int errnum);
  * @return char* The escaped string
  */
 char *ft_escape(const char *str, size_t size);
+
+/**
+ * @brief get the name of an error number
+ *
+ * @param errnum the error number
+ * @return const char* the name of the error number
+ */
+const char *ft_errnoname(int errnum);
+
 #endif
