@@ -16,7 +16,7 @@ END_TEST
 START_TEST(test_unknown_description, "Test that the description is right for unknown")
 {
 	const syscall_description_t *description = syscall_get_description(10000, X86_64);
-	assert_string_equal(description->name, "unknown");
+	assert_string_equal(description->name, "unknown_10000");
 	assert_equal(description->return_type, INT);
 	assert_equal(description->arg_types[0], NONE);
 	assert_equal(description->arg_types[1], NONE);
@@ -28,7 +28,7 @@ END_TEST
 START_TEST(test_unknown_description_32, "Test that the description is right for unknown on x86_32")
 {
 	const syscall_description_t *description = syscall_get_description(10000, X86_32);
-	assert_string_equal(description->name, "unknown");
+	assert_string_equal(description->name, "unknown_10000");
 	assert_equal(description->return_type, INT);
 	assert_equal(description->arg_types[0], NONE);
 	assert_equal(description->arg_types[1], NONE);
