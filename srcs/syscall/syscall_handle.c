@@ -90,14 +90,14 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *data, uint64
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *data)
+int syscall_handle(pid_t pid, analysis_routine_data_t *data, int cont_signal)
 {
 	uint64_t syscall_no;
 	bool_t is_execve;
 	int should_log = handle_before_syscall(pid, data, &syscall_no, &is_execve);
 	if (should_log == NO_STATUS)
 		return NO_STATUS;
-	if (ptrace(PTRACE_SYSCALL, pid, NULL, NULL) < 0)
+	if (ptrace(PTRACE_SYSCALL, pid, NULL, cont_signal) < 0)
 	{
 		log_error("handle_syscall", "ptrace failed", true);
 		return NO_STATUS;

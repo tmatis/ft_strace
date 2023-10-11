@@ -1,11 +1,13 @@
 #include <assert.h>
 #include <ft_printf.h>
 #include <ft_string.h>
+#include <macros.h>
 #include <syscall_strace.h>
 #include <user_registers.h>
 
 #define ERROR_RANGE_START 0
 #define ERROR_RANGE_END 4095
+#define ERESTARTSYS 512
 
 /**
  * @brief Log the name of the syscall and its parameters
@@ -62,8 +64,19 @@ void syscall_log_params_return(pid_t pid, int syscall_no, user_regs_t *regs_afte
 			ft_dprintf(STDERR_FILENO, ", ");
 	}
 	ft_dprintf(STDERR_FILENO, ") = ");
-	syscall_log_return(pid, regs_after, regs_after_type);
-	if (errno_value)
-		ft_dprintf(STDERR_FILENO, " %s (%s)", ft_errnoname(errno_value), ft_strerror(errno_value));
-	ft_dprintf(STDERR_FILENO, "\n");
+	if (errno_value == ERESTARTSYS) // if ERESTARTSYS
+	{
+		ft_dprintf(STDERR_FILENO, "?");
+		ft_dprintf(STDERR_FILENO, " %s (%s)", "ERESTARTSYS",
+				   "To be restarted if SA_RESTART is set");
+		ft_dprintf(STDERR_FILENO, "\n");
+	}
+	else
+	{
+		syscall_log_return(pid, regs_after, regs_after_type);
+		if (errno_value)
+			ft_dprintf(STDERR_FILENO, " %s (%s)", ft_errnoname(errno_value),
+					   ft_strerror(errno_value));
+		ft_dprintf(STDERR_FILENO, "\n");
+	}
 }

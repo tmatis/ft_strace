@@ -1,8 +1,9 @@
 #include <ft_strace_utils.h>
 #include <stdlib.h>
 #include <sys/ptrace.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <ft_strace_utils.h>
+#include <ft_printf.h>
 
 /**
  * @brief Setup tracing for tracee
@@ -12,27 +13,20 @@
  */
 int setup_tracing(pid_t pid)
 {
-	if (waitpid(pid, NULL, WUNTRACED) < 0)
-	{
-		log_error("setup_tracing", "waitpid failed", true);
-		return 1;
-	}
 	// PTRACE_SEIZE attach the tracee without stopping it
 	if (ptrace(PTRACE_SEIZE, pid, NULL, NULL) < 0)
 	{
-		log_error("setup_tracing", "ptrace failed", true);
+		log_error("setup_tracing", "ptrace(PTRACE_SEIZE) failed", true);
 		return 1;
 	}
-	// PTRACE_SETOPTIONS set the options for the tracee
-	if (ptrace(PTRACE_SETOPTIONS, pid, NULL, PTRACE_O_TRACESYSGOOD) < 0)
-	{
-		log_error("setup_tracing", "ptrace failed", true);
-		return 1;
-	}
-	// PTRACE_INTERRUPT send SIGSTOP to the tracee
 	if (ptrace(PTRACE_INTERRUPT, pid, NULL, NULL) < 0)
 	{
-		log_error("setup_tracing", "ptrace failed", true);
+		log_error("setup_tracing", "ptrace(PTRACE_INTERRUPT) failed", true);
+		return 1;
+	}
+	if (initial_wait(pid, NULL, 0) < 0)
+	{
+		log_error("setup_tracing", "initial_wait failed", true);
 		return 1;
 	}
 	return 0;

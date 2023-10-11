@@ -146,6 +146,7 @@ static const char *error_names[] = {
 const char *ft_errnoname(int errnum)
 {
 	if (errnum < 0 || (unsigned)(errnum) >= sizeof(error_names) / sizeof(error_names[0]))
-		return "EUKNOWN";
+		return "UNKNOWN";
+
 	return error_names[errnum];
 }

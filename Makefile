@@ -25,7 +25,8 @@ SRCS += config.c
 
 # utils srcs
 
-SRCS += utils/log_error.c
+SRCS += utils/log_error.c \
+		utils/initial_wait.c
 
 # execution srcs
 
@@ -52,6 +53,10 @@ SRCS += registers/registers_get_param.c \
 		registers/registers_get_return.c \
 		registers/registers_get_syscall.c \
 		registers/registers_get_type.c
+
+# signals srcs
+
+SRCS += signals/signals_block.c
 
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))

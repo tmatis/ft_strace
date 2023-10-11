@@ -1,7 +1,6 @@
 #include <execution.h>
 #include <ft_test.h>
 #include <signal.h>
-#include <sys/wait.h>
 
 START_TEST(exec_program_not_found,
 		   "Test if exec_program returns EXEC_ERROR when the program is not found")

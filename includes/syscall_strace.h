@@ -36,7 +36,7 @@ typedef enum
 {
 	NOT_ENCOUNTERED,
 	ENCOUNTERED,
-	ERROR
+	ERROR,
 } execve_status_t;
 
 typedef struct
@@ -46,8 +46,7 @@ typedef struct
 } analysis_routine_data_t;
 
 #define NO_STATUS -1
-
-#define ELEM_COUNT(x) (sizeof(x) / sizeof(x[0]))
+#define SIG_RAISED -2
 
 /**
  * @brief Get the syscall description corresponding to the syscall number
@@ -112,4 +111,4 @@ bool_t syscall_is_execve(uint64_t syscall_no, register_type_t type);
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *data);
+int syscall_handle(pid_t pid, analysis_routine_data_t *data, int cont_signal);

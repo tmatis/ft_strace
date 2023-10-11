@@ -3,6 +3,8 @@
 #include <execution.h>
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
+#include <signals_strace.h>
+#include <signal.h>
 
 int main(int argc, char **argv, char **envp)
 {
@@ -30,5 +32,11 @@ int main(int argc, char **argv, char **envp)
 	}
 	if (setup_tracing(pid))
 		return 1;
-	return (analysis_routine(pid));
+	int status = analysis_routine(pid);
+	if (status == ROUTINE_ERROR)
+		return 1;
+	signals_unblock();
+	if (WIFSIGNALED(status))
+		raise(WTERMSIG(status));
+	return WEXITSTATUS(status);
 }

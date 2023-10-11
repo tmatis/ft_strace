@@ -1,6 +1,7 @@
 #include "syscall_32.h"
 #include "syscall_64.h"
 #include <ft_printf.h>
+#include <macros.h>
 #include <syscall_strace.h>
 
 /**
