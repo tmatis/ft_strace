@@ -18,7 +18,7 @@
 void log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 {
 	int64_t buffer_size = (int64_t)registers_get_return(context->regs, context->type);
-	if (buffer_size < 0)
+	if (buffer_size < 0 && context->after_syscall)
 	{
 		ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		return;

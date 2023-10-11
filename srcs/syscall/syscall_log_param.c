@@ -49,14 +49,19 @@ void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, 
 	uint64_t syscall_no = registers_get_syscall(regs, regs_type);
 	const syscall_description_t *syscall_desc = syscall_get_description(syscall_no, regs_type);
 	arg_type_t arg_type = syscall_desc->arg_types[arg_index];
+	bool_t after_syscall = true;
 	if (arg_type < 0)
+	{
 		arg_type = -arg_type;
+		after_syscall = false;
+	}
 	uint64_t arg = registers_get_param(regs, regs_type, arg_index);
 	syscall_log_param_t param = {
 		.pid = pid,
 		.arg_index = arg_index,
 		.regs = regs,
 		.type = regs_type,
+		.after_syscall = after_syscall,
 	};
 	log_functions[arg_type](arg, &param);
 }

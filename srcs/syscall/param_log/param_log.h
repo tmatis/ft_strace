@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bool_t.h>
 #include <registers.h>
 #include <stdint.h>
 #include <sys/types.h>
@@ -10,6 +11,7 @@ typedef struct
 	uint8_t arg_index;
 	user_regs_t *regs;
 	register_type_t type;
+	bool_t after_syscall;
 } syscall_log_param_t;
 
 typedef void (*log_function_t)();
