@@ -71,7 +71,7 @@ static size_t compute_escaped_size(const char *str, size_t size)
 				size_computed += 1 + compute_number_of_digits(str[i]);
 		}
 	}
-	return size_computed;
+	return size_computed + 1;
 }
 
 /**
