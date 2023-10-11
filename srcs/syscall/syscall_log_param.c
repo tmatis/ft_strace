@@ -91,6 +91,7 @@ void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type)
 		.arg_index = -1,
 		.regs = regs,
 		.type = regs_type,
+		.after_syscall = true,
 	};
 	log_functions[return_type](return_value, &param);
 }

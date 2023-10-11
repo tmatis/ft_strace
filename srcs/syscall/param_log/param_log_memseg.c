@@ -18,10 +18,14 @@
 void log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 {
 	int64_t buffer_size = (int64_t)registers_get_return(context->regs, context->type);
-	if (buffer_size < 0 && context->after_syscall)
+	if (buffer_size < 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-		return;
+		if (context->after_syscall)
+		{
+			ft_dprintf(STDERR_FILENO, "%p", (void *)value);
+			return;
+		}
+		buffer_size = registers_get_param(context->regs, context->type, context->arg_index + 1);
 	}
 	size_t to_read = buffer_size > MAX_PRINT_SIZE ? MAX_PRINT_SIZE : buffer_size;
 	char *buffer = malloc(to_read);
