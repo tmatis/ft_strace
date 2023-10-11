@@ -75,7 +75,12 @@ void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type)
 	arg_type_t return_type = syscall_desc->return_type;
 	if (return_type < 0)
 		return_type = -return_type;
-	uint64_t return_value = registers_get_return(regs, regs_type);
+	int64_t return_value = registers_get_return(regs, regs_type);
+	if (return_value < 0 && return_value >= -4096)
+	{
+		ft_dprintf(STDERR_FILENO, "-1");
+		return;
+	}
 	syscall_log_param_t param = {
 		.pid = pid,
 		.arg_index = -1,
