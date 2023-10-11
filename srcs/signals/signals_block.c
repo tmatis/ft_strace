@@ -8,7 +8,7 @@
  */
 void signals_block(void)
 {
-	sigset_t blocked;
+	sigset_t blocked = {0};
 	int to_block[] = {SIGHUP, SIGINT, SIGQUIT, SIGPIPE, SIGTERM};
 
 	for (size_t i = 0; i < ELEM_COUNT(to_block); i++)
