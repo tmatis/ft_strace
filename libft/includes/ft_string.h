@@ -160,4 +160,21 @@ char *ft_escape(const char *str, size_t size);
  */
 const char *ft_errnoname(int errnum);
 
+/**
+ * @brief Return the name of the signal
+ *
+ * @param sig the signal
+ * @return const char* the name of the signal
+ */
+const char *ft_signalname(int sig);
+
+/**
+ * @brief Return the code name for the given signal and si_code
+ * 
+ * @param sig the signal number
+ * @param si_code the si_code of the signal
+ * @return const char* the code name
+ */
+const char *ft_sicodename(int sig, int si_code);
+
 #endif

@@ -29,7 +29,9 @@ SRCS +=	string/ft_strlen.c \
 		string/ft_memcmp.c \
 		string/ft_strerror.c \
 		string/ft_escape.c \
-		string/ft_errnoname.c
+		string/ft_errnoname.c \
+		string/ft_signalname.c \
+		string/ft_sicodename.c
 
 # char files
 

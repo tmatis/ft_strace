@@ -6,7 +6,7 @@
 #include <sys/ptrace.h>
 #include <sys/wait.h>
 #include <syscall_strace.h>
-#include <string.h>
+#include <ft_string.h>
 
 /**
  * @brief Handle the status of the tracee
@@ -28,7 +28,7 @@ static int handle_status(int status, int *cont_signal)
 	}
 	if (WIFSIGNALED(status))
 	{
-		ft_printf("+++ killed by %d +++\n", WTERMSIG(status));
+		ft_printf("+++ killed by %s +++\n", ft_signalname(WTERMSIG(status)));
 		return status;
 	}
 	if (WIFSTOPPED(status))
@@ -42,15 +42,26 @@ static int handle_status(int status, int *cont_signal)
 	return NO_STATUS;
 }
 
-void handle_signal(pid_t pid)
+/**
+ * @brief Handle the signal raised by the tracee
+ * 
+ * @param pid the pid of the tracee
+ */
+static void handle_signal(pid_t pid)
 {
-	siginfo_t siginfo;
+	siginfo_t siginfo = {0};
 	if (ptrace(PTRACE_GETSIGINFO, pid, 0, &siginfo) < 0)
 	{
 		log_error("handle_signal", "ptrace(PTRACE_GETSIGINFO) failed", true);
 		return;
 	}
-	ft_printf("--- %s ---\n", strsignal(siginfo.si_signo));
+	ft_printf("--- %s {si_signo=%s, si_code=%s, si_pid=%d, si_uid=%d} ---\n",
+			  ft_signalname(siginfo.si_signo),
+			  ft_signalname(siginfo.si_signo),
+			  ft_sicodename(siginfo.si_signo, siginfo.si_code),
+			  siginfo.si_pid,
+			  siginfo.si_uid);
+
 }
 
 /**
