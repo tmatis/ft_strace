@@ -1,3 +1,4 @@
+#include <config.h>
 #include <execution.h>
 #include <ft_test.h>
 
@@ -31,7 +32,9 @@ START_TEST(test_search_in_path_null_path,
 {
 	char *path = NULL;
 	char *command = "ls";
-
+	config_t *config = get_config();
+	args_t args = {0};
+	parse_args(1, (char *[]){"./test"}, &args, config);
 	record_output record = launch_record();
 	char *result = search_in_path(command, path);
 	char *output = stop_record(&record);
