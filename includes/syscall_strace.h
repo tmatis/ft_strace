@@ -15,6 +15,8 @@
 #define HEX 3
 #define STRING 4
 #define MEMSEG 5
+#define OPEN_FLAGS 6
+#define OPEN_MODE 7
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
@@ -111,4 +113,4 @@ bool_t syscall_is_execve(uint64_t syscall_no, register_type_t type);
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *data, int cont_signal);
+int syscall_handle(pid_t pid, analysis_routine_data_t *data, int *cont_signal);

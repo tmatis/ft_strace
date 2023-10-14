@@ -1,5 +1,6 @@
 #include "param_log/param_log.h"
 #include <ft_printf.h>
+#include <macros.h>
 #include <registers.h>
 #include <sys/types.h>
 #include <syscall_strace.h>
@@ -20,11 +21,6 @@ static void log_HEX(uint64_t value)
 	ft_dprintf(STDERR_FILENO, "%#llx", value);
 }
 
-static void log_STRING(uint64_t value)
-{
-	ft_dprintf(STDERR_FILENO, "%#llx", value);
-}
-
 static void log_NONE(uint64_t value)
 {
 	(void)value;
@@ -32,10 +28,12 @@ static void log_NONE(uint64_t value)
 }
 
 static const log_function_t log_functions[] = {
-	[NONE] = log_NONE, [INT] = log_INT,		  [SIGNED_INT] = log_UNSIGNED_INT,
-	[HEX] = log_HEX,   [STRING] = log_STRING, [MEMSEG] = log_MEMSEG,
+	[NONE] = log_NONE,	   [INT] = log_INT,		  [SIGNED_INT] = log_UNSIGNED_INT, [HEX] = log_HEX,
+	[STRING] = log_STRING, [MEMSEG] = log_MEMSEG, [OPEN_FLAGS] = log_OPEN_FLAGS,
+	[OPEN_MODE] = log_OPEN_MODE,
 };
 
+typedef void (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
 /**
  * @brief Log a syscall parameter
  *
@@ -63,7 +61,10 @@ void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, 
 		.type = regs_type,
 		.after_syscall = after_syscall,
 	};
-	log_functions[arg_type](arg, &param);
+	if (arg_type < (int)ELEM_COUNT(log_functions))
+		((log_function_with_param_t)log_functions[arg_type])(arg, &param);
+	else
+		ft_dprintf(STDERR_FILENO, "?");
 }
 
 /**
@@ -93,5 +94,8 @@ void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type)
 		.type = regs_type,
 		.after_syscall = true,
 	};
-	log_functions[return_type](return_value, &param);
+	if (return_type < (int)ELEM_COUNT(log_functions))
+		((log_function_with_param_t)log_functions[return_type])(return_value, &param);
+	else
+		ft_dprintf(STDERR_FILENO, "?");
 }

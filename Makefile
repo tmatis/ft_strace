@@ -44,7 +44,10 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/syscall_log.c \
 		syscall/syscall_log_param.c  \
 		syscall/syscall_is_execve.c \
-		syscall/param_log/param_log_memseg.c \
+		syscall/param_log/log_memseg.c \
+		syscall/param_log/log_string.c \
+		syscall/param_log/log_open_flags.c \
+		syscall/param_log/log_open_mode.c \
 		syscall/syscall_handle.c
 
 # registers srcs
@@ -56,7 +59,8 @@ SRCS += registers/registers_get_param.c \
 
 # signals srcs
 
-SRCS += signals/signals_block.c
+SRCS += signals/signals_block.c \
+		signals/signals_handle.c
 
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
