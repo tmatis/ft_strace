@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #include <user_registers.h>
 
+#define PADDING_SIZE 42
+
 #define X_86_64_EXECVE_SYSCALL 59
 #define X_86_32_EXECVE_SYSCALL 11
 
@@ -61,9 +63,12 @@ const syscall_description_t *syscall_get_description(uint64_t syscall_no, regist
 /**
  * @brief Log the name of the syscall and its parameters
  *
+ * @param pid The pid of the process
  * @param regs_before The registers before the syscall
+ * @param type the registers type
+ * @return int the number of bytes written
  */
-void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t type);
+int syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t register_type);
 
 /**
  * @brief Log a syscall parameter
@@ -72,8 +77,9 @@ void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_
  * @param regs the registers
  * @param regs_type the registers type
  * @param arg_index the argument index
+ * @return int the number of bytes written
  */
-void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, uint8_t arg_index);
+int syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, uint8_t arg_index);
 
 /**
  * @brief Log remaining parameters of the syscall and return value
@@ -82,9 +88,10 @@ void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, 
  * @param syscall_no The syscall number
  * @param regs_after The registers after the syscall
  * @param regs_after_type The registers type after the syscall
+ * @param bytes_written The number of bytes written before
  */
 void syscall_log_params_return(pid_t pid, int syscall_no, user_regs_t *regs_after,
-							   register_type_t regs_after_type);
+							   register_type_t regs_after_type, int bytes_written);
 
 /**
  * @brief Log the return value of a syscall

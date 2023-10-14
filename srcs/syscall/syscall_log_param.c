@@ -5,26 +5,26 @@
 #include <sys/types.h>
 #include <syscall_strace.h>
 
-static void log_INT(uint64_t value)
+static int log_INT(uint64_t value)
 {
 	int64_t signed_value = (int64_t)value;
-	ft_dprintf(STDERR_FILENO, "%lld", signed_value);
+	return ft_dprintf(STDERR_FILENO, "%lld", signed_value);
 }
 
-static void log_UNSIGNED_INT(uint64_t value)
+static int log_UNSIGNED_INT(uint64_t value)
 {
-	ft_dprintf(STDERR_FILENO, "%llu", value);
+	return ft_dprintf(STDERR_FILENO, "%llu", value);
 }
 
-static void log_HEX(uint64_t value)
+static int log_HEX(uint64_t value)
 {
-	ft_dprintf(STDERR_FILENO, "%#llx", value);
+	return ft_dprintf(STDERR_FILENO, "%#llx", value);
 }
 
-static void log_NONE(uint64_t value)
+static int log_NONE(uint64_t value)
 {
 	(void)value;
-	ft_dprintf(STDERR_FILENO, "?");
+	return ft_dprintf(STDERR_FILENO, "?");
 }
 
 static const log_function_t log_functions[] = {
@@ -33,7 +33,8 @@ static const log_function_t log_functions[] = {
 	[OPEN_MODE] = log_OPEN_MODE,
 };
 
-typedef void (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
+typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
+
 /**
  * @brief Log a syscall parameter
  *
@@ -41,8 +42,9 @@ typedef void (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *c
  * @param regs the registers
  * @param regs_type the registers type
  * @param arg_index the argument index
+ * @return int the number of bytes written
  */
-void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, uint8_t arg_index)
+int syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, uint8_t arg_index)
 {
 	uint64_t syscall_no = registers_get_syscall(regs, regs_type);
 	const syscall_description_t *syscall_desc = syscall_get_description(syscall_no, regs_type);
@@ -62,9 +64,9 @@ void syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, 
 		.after_syscall = after_syscall,
 	};
 	if (arg_type < (int)ELEM_COUNT(log_functions))
-		((log_function_with_param_t)log_functions[arg_type])(arg, &param);
+		return ((log_function_with_param_t)log_functions[arg_type])(arg, &param);
 	else
-		ft_dprintf(STDERR_FILENO, "?");
+		return ft_dprintf(STDERR_FILENO, "?");
 }
 
 /**

@@ -14,7 +14,7 @@ typedef struct
 	bool_t after_syscall;
 } syscall_log_param_t;
 
-typedef void (*log_function_t)();
+typedef int (*log_function_t)();
 
 /**
  * @brief log memory segment
@@ -22,7 +22,7 @@ typedef void (*log_function_t)();
  * @param value the value
  * @param context the context of the syscall
  */
-void log_MEMSEG(uint64_t value, syscall_log_param_t *context);
+int log_MEMSEG(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log a string
@@ -30,18 +30,18 @@ void log_MEMSEG(uint64_t value, syscall_log_param_t *context);
  * @param value the value
  * @param context the context of the syscall
  */
-void log_STRING(uint64_t value, syscall_log_param_t *context);
+int log_STRING(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log open flags
  * 
  * @param value the value to log
  */
-void log_OPEN_FLAGS(uint64_t value);
+int log_OPEN_FLAGS(uint64_t value);
 
 /**
  * @brief Log open mode
  * 
  * @param value the value to log
  */
-void log_OPEN_MODE(uint64_t value);
+int log_OPEN_MODE(uint64_t value);

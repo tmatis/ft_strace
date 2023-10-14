@@ -15,21 +15,24 @@
  * @param pid The pid of the process
  * @param regs_before The registers before the syscall
  * @param type the registers type
+ * @return int the number of bytes written
  */
-void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t register_type)
+int syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t register_type)
 {
+	int size_written = 0;
 	uint64_t syscall_no = registers_get_syscall(regs_before, register_type);
 	const syscall_description_t *syscall_desc = syscall_get_description(syscall_no, register_type);
-	ft_dprintf(STDERR_FILENO, "%s(", syscall_desc->name);
+	size_written += ft_dprintf(STDERR_FILENO, "%s(", syscall_desc->name);
 	const size_t param_count = ELEM_COUNT(syscall_desc->arg_types);
 	for (uint8_t i = 0; i < param_count; i++)
 	{
 		if (syscall_desc->arg_types[i] == NONE || syscall_desc->arg_types[i] > 0)
 			break;
-		syscall_log_param(pid, regs_before, register_type, i);
+		size_written += syscall_log_param(pid, regs_before, register_type, i);
 		if (!(i == param_count - 1 || syscall_desc->arg_types[i + 1] == NONE))
-			ft_dprintf(STDERR_FILENO, ", ");
+			size_written += ft_dprintf(STDERR_FILENO, ", ");
 	}
+	return size_written;
 }
 
 /**
@@ -39,9 +42,10 @@ void syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_
  * @param syscall_no The syscall number
  * @param regs_after The registers after the syscall
  * @param regs_after_type The registers type after the syscall
+ * @param bytes_written The number of bytes written before
  */
 void syscall_log_params_return(pid_t pid, int syscall_no, user_regs_t *regs_after,
-							   register_type_t regs_after_type)
+							   register_type_t regs_after_type, int size_written)
 {
 	const syscall_description_t *syscall_desc =
 		syscall_get_description(syscall_no, regs_after_type);
@@ -59,11 +63,13 @@ void syscall_log_params_return(pid_t pid, int syscall_no, user_regs_t *regs_afte
 			break;
 		if (syscall_desc->arg_types[i] < 0)
 			continue;
-		syscall_log_param(pid, regs_after, regs_after_type, i);
+		size_written += syscall_log_param(pid, regs_after, regs_after_type, i);
 		if (!(i == param_count - 1 || syscall_desc->arg_types[i + 1] == NONE))
-			ft_dprintf(STDERR_FILENO, ", ");
+			size_written += ft_dprintf(STDERR_FILENO, ", ");
 	}
-	ft_dprintf(STDERR_FILENO, ") = ");
+	size_written += ft_dprintf(STDERR_FILENO, ")");
+	// write padding
+	ft_dprintf(STDERR_FILENO, "%*s", PADDING_SIZE - size_written, " = ");
 	if (errno_value == ERESTARTSYS) // if ERESTARTSYS
 	{
 		ft_dprintf(STDERR_FILENO, "?");

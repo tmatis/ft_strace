@@ -1,11 +1,11 @@
 #include <elf.h>
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
+#include <signals_strace.h>
 #include <sys/ptrace.h>
 #include <sys/uio.h>
 #include <sys/wait.h>
 #include <syscall_strace.h>
-#include <signals_strace.h>
 
 /**
  * @brief Handle the syscall before it is executed
@@ -18,7 +18,7 @@
  * logged, 0 otherwise
  */
 static int handle_before_syscall(pid_t pid, analysis_routine_data_t *data, uint64_t *syscall_no,
-								 bool_t *is_execve)
+								 bool_t *is_execve, int *size_written)
 {
 	user_regs_t regs_before;
 	struct iovec regs_before_iov;
@@ -46,7 +46,7 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *data, uint6
 		return NO_STATUS;
 	bool_t should_log = data->status == ENCOUNTERED || (data->status != ERROR && *is_execve);
 	if (should_log)
-		syscall_log_name_params(pid, &regs_before, register_type_before);
+		*size_written = syscall_log_name_params(pid, &regs_before, register_type_before);
 	return should_log;
 }
 
@@ -61,7 +61,7 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *data, uint6
  * @return int NO_STATUS in every case
  */
 static int handle_syscall_after(pid_t pid, analysis_routine_data_t *data, uint64_t syscall_no,
-								int should_log, bool_t is_execve)
+								int should_log, bool_t is_execve, int size_written)
 {
 	user_regs_t regs_after;
 	struct iovec regs_after_iov;
@@ -79,7 +79,7 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *data, uint64
 						   ? ERROR
 						   : ENCOUNTERED;
 	if (should_log)
-		syscall_log_params_return(pid, syscall_no, &regs_after, register_type_after);
+		syscall_log_params_return(pid, syscall_no, &regs_after, register_type_after, size_written);
 	return NO_STATUS;
 }
 
@@ -95,7 +95,8 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *data, int *cont_signal)
 {
 	uint64_t syscall_no;
 	bool_t is_execve;
-	int should_log = handle_before_syscall(pid, data, &syscall_no, &is_execve);
+	int size_written = 0;
+	int should_log = handle_before_syscall(pid, data, &syscall_no, &is_execve, &size_written);
 	if (should_log == NO_STATUS)
 		return NO_STATUS;
 	if (ptrace(PTRACE_SYSCALL, pid, NULL, *cont_signal) < 0)
@@ -112,8 +113,9 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *data, int *cont_signal)
 	}
 	if (WIFEXITED(status) || WIFSIGNALED(status))
 	{
-		ft_dprintf(STDERR_FILENO, ") = ?\n");
+		ft_dprintf(STDERR_FILENO, ")%*s", PADDING_SIZE - size_written - 1, " = ");
+		ft_dprintf(STDERR_FILENO, "?\n");
 		return status;
 	}
-	return handle_syscall_after(pid, data, syscall_no, should_log, is_execve);
+	return handle_syscall_after(pid, data, syscall_no, should_log, is_execve, size_written);
 }

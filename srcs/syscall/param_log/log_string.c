@@ -32,7 +32,7 @@ static void buffer_add_char(buffer_t *buffer, char c)
  * @param value the value
  * @param context the context
  */
-void log_STRING(uint64_t value, syscall_log_param_t *context)
+int log_STRING(uint64_t value, syscall_log_param_t *context)
 {
 	buffer_t buffer = {
 		.buffer = malloc(DEFAULT_BUFFER_SIZE),
@@ -54,12 +54,13 @@ void log_STRING(uint64_t value, syscall_log_param_t *context)
 		{
 			log_error("log_STRING", "process_vm_readv failed", true);
 			free(buffer.buffer);
-			return;
+			return 0;
 		}
 		buffer_add_char(&buffer, c);
 	}
 	char *escaped_buffer = ft_escape(buffer.buffer, buffer.index - 1);
-	ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
+	int written_bytes = ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
 	free(escaped_buffer);
 	free(buffer.buffer);
+	return written_bytes;
 }

@@ -15,15 +15,14 @@
  * @param value the value
  * @param context the context
  */
-void log_MEMSEG(uint64_t value, syscall_log_param_t *context)
+int log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 {
 	int64_t buffer_size = (int64_t)registers_get_return(context->regs, context->type);
 	if (buffer_size < 0)
 	{
 		if (context->after_syscall)
 		{
-			ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-			return;
+			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		}
 		buffer_size = registers_get_param(context->regs, context->type, context->arg_index + 1);
 	}
@@ -38,13 +37,15 @@ void log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
 	{
 		log_error("log_MEM", "process_vm_readv failed", true);
-		return;
+		return 0;
 	}
 	char *escaped_buffer = ft_escape(buffer, to_read);
+	int size_written;
 	if (buffer_size > MAX_PRINT_SIZE)
-		ft_dprintf(STDERR_FILENO, "\"%s\"...", escaped_buffer);
+		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"...", escaped_buffer);
 	else
-		ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
+		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
 	free(escaped_buffer);
 	free(buffer);
+	return size_written;
 }

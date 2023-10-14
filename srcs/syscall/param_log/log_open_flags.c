@@ -41,18 +41,26 @@ static const flag_str_t flags[] = {
  * 
  * @param value the value to log
  */
-void log_OPEN_FLAGS(uint64_t value)
+int log_OPEN_FLAGS(uint64_t value)
 {
+    int size_written = 0;
     bool_t first = true;
     for (size_t i = 0; i < ELEM_COUNT(flags); i++)
     {
         if (value & flags[i].flag)
         {
             if (!first)
-                ft_dprintf(STDERR_FILENO, "|");
-            ft_dprintf(STDERR_FILENO, "%s", flags[i].str);
+                size_written += ft_dprintf(STDERR_FILENO, "|");
+            size_written += ft_dprintf(STDERR_FILENO, "%s", flags[i].str);
             first = false;
             value &= ~flags[i].flag;
         }
     }
+    if (value)
+    {
+        if (!first)
+            size_written += ft_dprintf(STDERR_FILENO, "|");
+        size_written += ft_dprintf(STDERR_FILENO, "%#llx", value);
+    }
+    return size_written;
 }

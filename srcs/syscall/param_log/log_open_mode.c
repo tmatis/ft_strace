@@ -6,7 +6,7 @@
  * 
  * @param value the value to log
  */
-void log_OPEN_MODE(uint64_t value)
+int log_OPEN_MODE(uint64_t value)
 {
-    ft_dprintf(STDERR_FILENO, "%#o", value);
+    return ft_dprintf(STDERR_FILENO, "%#o", value);
 }
