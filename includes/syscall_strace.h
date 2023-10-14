@@ -19,6 +19,10 @@
 #define MEMSEG 5
 #define OPEN_FLAGS 6
 #define OPEN_MODE 7
+#define STAT_STRUCT 8
+#define POLL_FDS 9
+#define POLL_FDS_AFTER 10
+#define SEEK_WHENCE 11
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

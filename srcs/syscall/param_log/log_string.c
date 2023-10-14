@@ -34,6 +34,8 @@ static void buffer_add_char(buffer_t *buffer, char c)
  */
 int log_STRING(uint64_t value, syscall_log_param_t *context)
 {
+	if (value == 0)
+		return ft_dprintf(STDERR_FILENO, "NULL");
 	buffer_t buffer = {
 		.buffer = malloc(DEFAULT_BUFFER_SIZE),
 		.size_buffer = DEFAULT_BUFFER_SIZE,

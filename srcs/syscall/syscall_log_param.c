@@ -7,13 +7,12 @@
 
 static int log_INT(uint64_t value)
 {
-	int64_t signed_value = (int64_t)value;
-	return ft_dprintf(STDERR_FILENO, "%lld", signed_value);
+	return ft_dprintf(STDERR_FILENO, "%llu", value);
 }
 
-static int log_UNSIGNED_INT(uint64_t value)
+static int log_SIGNED_INT(int64_t value)
 {
-	return ft_dprintf(STDERR_FILENO, "%llu", value);
+	return ft_dprintf(STDERR_FILENO, "%d", value);
 }
 
 static int log_HEX(uint64_t value)
@@ -27,10 +26,21 @@ static int log_NONE(uint64_t value)
 	return ft_dprintf(STDERR_FILENO, "?");
 }
 
+#define ADD_LOGGER(name) [name] = log_##name
+
 static const log_function_t log_functions[] = {
-	[NONE] = log_NONE,	   [INT] = log_INT,		  [SIGNED_INT] = log_UNSIGNED_INT, [HEX] = log_HEX,
-	[STRING] = log_STRING, [MEMSEG] = log_MEMSEG, [OPEN_FLAGS] = log_OPEN_FLAGS,
-	[OPEN_MODE] = log_OPEN_MODE,
+	ADD_LOGGER(NONE),
+	ADD_LOGGER(INT),
+	ADD_LOGGER(SIGNED_INT),
+	ADD_LOGGER(HEX),
+	ADD_LOGGER(STRING),
+	ADD_LOGGER(MEMSEG),
+	ADD_LOGGER(OPEN_FLAGS),
+	ADD_LOGGER(OPEN_MODE),
+	ADD_LOGGER(STAT_STRUCT),
+	ADD_LOGGER(POLL_FDS),
+	ADD_LOGGER(POLL_FDS_AFTER),
+	ADD_LOGGER(SEEK_WHENCE),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
