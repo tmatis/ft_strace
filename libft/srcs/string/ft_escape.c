@@ -28,8 +28,8 @@ typedef struct
 } escaped_char_t;
 
 static const escaped_char_t escaped_chars[] = {
-	{'\a', "\\a"}, {'\b', "\\b"}, {'\f', "\\f"}, {'\n', "\\n"},
-	{'\r', "\\r"}, {'\t', "\\t"}, {'\v', "\\v"},
+	{'\a', "\\a"}, {'\b', "\\b"}, {'\f', "\\f"},  {'\n', "\\n"},  {'\r', "\\r"},
+	{'\t', "\\t"}, {'\v', "\\v"}, {'\"', "\\\""}, {'\\', "\\\\"},
 };
 
 /**
@@ -60,16 +60,13 @@ static size_t compute_escaped_size(const char *str, size_t size)
 	size_t size_computed = 0;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (ft_isprint(str[i]))
+		const char *escaped_equivalent = get_escaped_equivalent(str[i]);
+		if (escaped_equivalent != NULL)
+			size_computed += ft_strlen(escaped_equivalent);
+		else if (ft_isprint(str[i]))
 			size_computed++;
 		else
-		{
-			const char *escaped_equivalent = get_escaped_equivalent(str[i]);
-			if (escaped_equivalent != NULL)
-				size_computed += ft_strlen(escaped_equivalent);
-			else
-				size_computed += 1 + compute_number_of_digits(str[i]);
-		}
+			size_computed += 1 + compute_number_of_digits(str[i]);
 	}
 	return size_computed + 1;
 }
@@ -90,33 +87,29 @@ char *ft_escape(const char *str, size_t size)
 	size_t j = 0;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (ft_isprint(str[i]))
+		const char *escaped_equivalent = get_escaped_equivalent(str[i]);
+		if (escaped_equivalent != NULL)
+		{
+			int added = ft_snprintf(escaped_str + j, escaped_size - j, "%s", escaped_equivalent);
+			if (added < 0)
+			{
+				free(escaped_str);
+				return NULL;
+			}
+			j += added;
+		}
+		else if (ft_isprint(str[i]))
 			escaped_str[j++] = str[i];
 		else
 		{
-			const char *escaped_equivalent = get_escaped_equivalent(str[i]);
-			if (escaped_equivalent != NULL)
+			int added =
+				ft_snprintf(escaped_str + j, escaped_size - j, "\\%u", (unsigned char)str[i]);
+			if (added < 0)
 			{
-				int added =
-					ft_snprintf(escaped_str + j, escaped_size - j, "%s", escaped_equivalent);
-				if (added < 0)
-				{
-					free(escaped_str);
-					return NULL;
-				}
-				j += added;
+				free(escaped_str);
+				return NULL;
 			}
-			else
-			{
-				int added =
-					ft_snprintf(escaped_str + j, escaped_size - j, "\\%u", (unsigned char)str[i]);
-				if (added < 0)
-				{
-					free(escaped_str);
-					return NULL;
-				}
-				j += added;
-			}
+			j += added;
 		}
 	}
 	return escaped_str;
