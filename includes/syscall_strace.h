@@ -38,9 +38,9 @@ typedef struct
 
 typedef enum
 {
-	NOT_ENCOUNTERED,
-	ENCOUNTERED,
-	ERROR,
+	EXECVE_NOT_ENCOUNTERED,
+	EXECVE_ENCOUNTERED,
+	EXECVE_ERROR,
 } execve_status_t;
 
 typedef struct
@@ -116,8 +116,8 @@ bool_t syscall_is_execve(uint64_t syscall_no, register_type_t type);
  * @brief Handle a syscall
  *
  * @param pid the pid of the tracee
- * @param data the data of the analysis routine
+ * @param analysis_state the analysis_state of the analysis routine
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *data, int *cont_signal);
+int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal);

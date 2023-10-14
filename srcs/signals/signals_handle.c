@@ -14,7 +14,7 @@
  *
  * @param pid the pid of the tracee
  */
-int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *data)
+int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysis_state)
 {
 	siginfo_t siginfo = {0};
 	if (ptrace(PTRACE_GETSIGINFO, pid, 0, &siginfo) < 0)
@@ -31,7 +31,7 @@ int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *data)
 		*cont_signal = SIGSTOP;
 		return SIG_RAISED;
 	}
-	if (data->status == ENCOUNTERED)
+	if (analysis_state->status == EXECVE_ENCOUNTERED)
 	{
 		ft_printf("--- %s {si_signo=%s, si_code=%s, si_pid=%d, si_uid=%d",
 				  ft_signalname(siginfo.si_signo), ft_signalname(siginfo.si_signo),

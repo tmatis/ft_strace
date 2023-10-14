@@ -18,7 +18,7 @@
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-static int handle_status(pid_t pid, int status, int *cont_signal, analysis_routine_data_t *data)
+static int handle_status(pid_t pid, int status, int *cont_signal, analysis_routine_data_t *analysis_state)
 {
 	if (status == NO_STATUS)
 		return NO_STATUS;
@@ -33,7 +33,7 @@ static int handle_status(pid_t pid, int status, int *cont_signal, analysis_routi
 		return status;
 	}
 	if (WIFSTOPPED(status))
-		return signals_handle(pid, cont_signal, data);
+		return signals_handle(pid, cont_signal, analysis_state);
 	return NO_STATUS;
 }
 
@@ -45,8 +45,8 @@ static int handle_status(pid_t pid, int status, int *cont_signal, analysis_routi
  */
 int analysis_routine(pid_t pid)
 {
-	analysis_routine_data_t data = {
-		.status = NOT_ENCOUNTERED,
+	analysis_routine_data_t analysis_state = {
+		.status = EXECVE_NOT_ENCOUNTERED,
 		.register_type = X86_64,
 	};
 	int cont_signal = 0;
@@ -64,13 +64,13 @@ int analysis_routine(pid_t pid)
 			log_error("analysis_routine", "waitpid failed", true);
 			return ROUTINE_ERROR;
 		}
-		int status_code = handle_status(pid, status, &cont_signal, &data);
+		int status_code = handle_status(pid, status, &cont_signal, &analysis_state);
 		if (status_code == SIG_RAISED)
 			continue;
 		if (status_code != NO_STATUS)
 			return status_code;
 		status_code =
-			handle_status(pid, syscall_handle(pid, &data, &cont_signal), &cont_signal, &data);
+			handle_status(pid, syscall_handle(pid, &analysis_state, &cont_signal), &cont_signal, &analysis_state);
 		if (status_code == SIG_RAISED)
 			continue;
 		if (status_code != NO_STATUS)

@@ -20,4 +20,4 @@ void signals_unblock(void);
  *
  * @param pid the pid of the tracee
  */
-int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *data);
+int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysis_state);
