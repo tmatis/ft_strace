@@ -1,5 +1,6 @@
 #define _XOPEN_SOURCE
 #define _XOPEN_SOURCE_EXTENDED 1
+#include <ft_printf.h>
 
 #include <signal.h>
 
@@ -82,6 +83,9 @@ const char *ft_sicodename(int sig, int si_code)
 		{
 			SICODE_NAME(TRAP_BRKPT);
 			SICODE_NAME(TRAP_TRACE);
+            SICODE_NAME(TRAP_BRANCH);
+            SICODE_NAME(TRAP_HWBKPT);
+            SICODE_NAME(TRAP_UNK);
 		}
 		break;
 	case SIGCHLD:
@@ -107,5 +111,7 @@ const char *ft_sicodename(int sig, int si_code)
 		}
 		break;
 	}
-	return "UNKNOWN";
+    static char buff[64];
+    ft_snprintf(buff, sizeof(buff), "UNKNOWN (%d)", si_code);
+    return buff;
 }
