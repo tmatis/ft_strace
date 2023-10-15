@@ -97,12 +97,14 @@ int syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, u
  *
  * @param pid The pid of the process
  * @param syscall_no The syscall number
+ * @param regs_before_type The registers type before the syscall
  * @param regs_after The registers after the syscall
  * @param regs_after_type The registers type after the syscall
  * @param bytes_written The number of bytes written before
  */
-void syscall_log_params_return(pid_t pid, int syscall_no, user_regs_t *regs_after,
-							   register_type_t regs_after_type, int bytes_written);
+void syscall_log_params_return(pid_t pid, int syscall_no, register_type_t regs_before_type,
+							   user_regs_t *regs_after, register_type_t regs_after_type,
+							   int size_written);
 
 /**
  * @brief Log the return value of a syscall

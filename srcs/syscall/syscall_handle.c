@@ -13,11 +13,13 @@
  * @param pid the pid of the tracee
  * @param analysis_state the analysis_state of the analysis routine
  * @param syscall_no the syscall number pointer to be filled
+ * @param register_type_before the register type pointer to be filled
  * @param is_execve pointer to be filled with whether the syscall is an execve
  * @return int NO_STATUS if the caller must return, 1 if the syscall must be
  * logged, 0 otherwise
  */
-static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_state, uint64_t *syscall_no,
+static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_state,
+								 uint64_t *syscall_no, register_type_t *register_type_before,
 								 bool_t *is_execve, int *size_written)
 {
 	user_regs_t regs_before;
@@ -30,23 +32,24 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
 		log_error("handle_syscall", "ptrace(PTRACE_GETREGS)(1) failed", true);
 		return NO_STATUS;
 	}
-	register_type_t register_type_before = registers_get_type(regs_before_iov.iov_len);
-	if (analysis_state->register_type != register_type_before)
+	*register_type_before = registers_get_type(regs_before_iov.iov_len);
+	if (analysis_state->register_type != *register_type_before)
 	{
-		analysis_state->register_type = register_type_before;
+		analysis_state->register_type = *register_type_before;
 		ft_dprintf(STDERR_FILENO, "[ Process PID=%d runs in 32 bit mode. ]\n", pid);
 	}
-	*syscall_no = registers_get_syscall(&regs_before, register_type_before);
+	*syscall_no = registers_get_syscall(&regs_before, *register_type_before);
 	if (*syscall_no > MAX_SYSCALL_NO)
 		return NO_STATUS;
-	*is_execve = syscall_is_execve(*syscall_no, register_type_before);
+	*is_execve = syscall_is_execve(*syscall_no, *register_type_before);
 	if (analysis_state->status == EXECVE_ERROR && !*is_execve)
 		return NO_STATUS;
 	if (analysis_state->status == EXECVE_NOT_ENCOUNTERED && !*is_execve)
 		return NO_STATUS;
-	bool_t should_log = analysis_state->status == EXECVE_ENCOUNTERED || (analysis_state->status != EXECVE_ERROR && *is_execve);
+	bool_t should_log = analysis_state->status == EXECVE_ENCOUNTERED ||
+						(analysis_state->status != EXECVE_ERROR && *is_execve);
 	if (should_log)
-		*size_written = syscall_log_name_params(pid, &regs_before, register_type_before);
+		*size_written = syscall_log_name_params(pid, &regs_before, *register_type_before);
 	return should_log;
 }
 
@@ -56,11 +59,13 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
  * @param pid the pid of the tracee
  * @param analysis_state the analysis_state of the analysis routine
  * @param syscall_no the syscall number
+ * @param register_type_before the register type
  * @param should_log whether the syscall should be logged
  * @param is_execve whether the syscall is an execve
  * @return int NO_STATUS in every case
  */
-static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_state, uint64_t syscall_no,
+static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_state,
+								uint64_t syscall_no, register_type_t register_type_before,
 								int should_log, bool_t is_execve, int size_written)
 {
 	user_regs_t regs_after;
@@ -76,10 +81,11 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 	register_type_t register_type_after = registers_get_type(regs_after_iov.iov_len);
 	if (analysis_state->status == EXECVE_NOT_ENCOUNTERED && is_execve)
 		analysis_state->status = (int64_t)registers_get_return(&regs_after, register_type_after) < 0
-						   ? EXECVE_ERROR
-						   : EXECVE_ENCOUNTERED;
+									 ? EXECVE_ERROR
+									 : EXECVE_ENCOUNTERED;
 	if (should_log)
-		syscall_log_params_return(pid, syscall_no, &regs_after, register_type_after, size_written);
+		syscall_log_params_return(pid, syscall_no, register_type_before, &regs_after,
+								  register_type_after, size_written);
 	return NO_STATUS;
 }
 
@@ -94,9 +100,11 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal)
 {
 	uint64_t syscall_no;
+	register_type_t register_type_before;
 	bool_t is_execve;
 	int size_written = 0;
-	int should_log = handle_before_syscall(pid, analysis_state, &syscall_no, &is_execve, &size_written);
+	int should_log = handle_before_syscall(pid, analysis_state, &syscall_no, &register_type_before,
+										   &is_execve, &size_written);
 	if (should_log == NO_STATUS)
 		return NO_STATUS;
 	if (ptrace(PTRACE_SYSCALL, pid, NULL, *cont_signal) < 0)
@@ -117,5 +125,6 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont
 		ft_dprintf(STDERR_FILENO, "?\n");
 		return status;
 	}
-	return handle_syscall_after(pid, analysis_state, syscall_no, should_log, is_execve, size_written);
+	return handle_syscall_after(pid, analysis_state, syscall_no, register_type_before, should_log,
+								is_execve, size_written);
 }

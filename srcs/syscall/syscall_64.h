@@ -25,4 +25,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[12] = {"brk", PTR, {-PTR, NONE}},
 	[13] = {"rt_sigaction", SIGNED_INT, {-SIGNAL_NAME, -SIGACTION_STRUCT, SIGACTION_STRUCT, INT}},
 	[14] = {"rt_sigprocmask", SIGNED_INT, {-SIGPROCMASK_HOW, -SIGSET_STRUCT, SIGSET_STRUCT, INT, NONE}},
+	[15] = {"rt_sigreturn", SIGNED_INT, {-PTR, NONE}}
 };
