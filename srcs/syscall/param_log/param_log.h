@@ -147,7 +147,7 @@ int log_SEEK_WHENCE(uint64_t value);
  * @param value the value to log
  * @return int the number of bytes written
  */
-int log_MMAP_PROT(uint64_t value);
+int log_MEM_PROT(uint64_t value);
 
 /**
  * @brief Log mmap flags

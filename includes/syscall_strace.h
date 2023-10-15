@@ -24,7 +24,7 @@
 #define POLL_FDS_AFTER 10
 #define SEEK_WHENCE 11
 #define PTR 12
-#define MMAP_PROT 13
+#define MEM_PROT 13
 #define MMAP_FLAGS 14
 
 /**

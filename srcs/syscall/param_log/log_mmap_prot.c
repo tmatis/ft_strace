@@ -15,7 +15,7 @@ static const flag_str_t mmap_prot_flags[] = {
  * @param value the value to log
  * @return int the number of bytes written
  */
-int log_MMAP_PROT(uint64_t value)
+int log_MEM_PROT(uint64_t value)
 {
 	if (value == 0)
 		return ft_dprintf(STDERR_FILENO, "PROT_NONE");

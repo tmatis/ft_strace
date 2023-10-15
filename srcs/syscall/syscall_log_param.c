@@ -21,7 +21,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(POLL_FDS_AFTER),
 	ADD_LOGGER(SEEK_WHENCE),
 	ADD_LOGGER(PTR),
-	ADD_LOGGER(MMAP_PROT),
+	ADD_LOGGER(MEM_PROT),
 	ADD_LOGGER(MMAP_FLAGS),
 };
 
