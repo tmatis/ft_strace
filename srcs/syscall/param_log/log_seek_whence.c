@@ -16,10 +16,5 @@ static const flag_str_t flags[] = {
  */
 int log_SEEK_WHENCE(uint64_t value)
 {
-	for (size_t i = 0; i < ELEM_COUNT(flags); i++)
-	{
-		if (value == flags[i].flag)
-			return ft_dprintf(STDERR_FILENO, "%s", flags[i].str);
-	}
-	return ft_dprintf(STDERR_FILENO, "%#llx", value);
+	return option_log(value, flags, ELEM_COUNT(flags));
 }

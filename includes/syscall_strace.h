@@ -26,6 +26,10 @@
 #define PTR 12
 #define MEM_PROT 13
 #define MMAP_FLAGS 14
+#define SIGNAL_NAME 15
+#define SIGACTION_STRUCT 16
+#define SIGSET_STRUCT 17
+#define SIGPROCMASK_HOW 18
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

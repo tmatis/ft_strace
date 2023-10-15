@@ -23,9 +23,7 @@ int log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 	if (buffer_size < 0)
 	{
 		if (context->after_syscall)
-		{
 			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-		}
 		buffer_size = registers_get_param(context->regs, context->type, context->arg_index + 1);
 	}
 	size_t to_read = buffer_size > MAX_PRINT_SIZE ? MAX_PRINT_SIZE : buffer_size;

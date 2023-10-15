@@ -38,6 +38,16 @@ typedef int (*log_function_t)();
 int flags_log(uint64_t flags, const flag_str_t *flag_strs, size_t flag_strs_size);
 
 /**
+ * @brief Log a value from a list of options
+ * 
+ * @param value the value to log
+ * @param options the list of options
+ * @param options_size the size of the list of options
+ * @return int the number of bytes written
+ */
+int option_log(uint64_t value, const flag_str_t *options, size_t options_size);
+
+/**
  * @brief log a hexadecimal value
  * 
  * @param value 
@@ -156,3 +166,44 @@ int log_MEM_PROT(uint64_t value);
  * @return int the number of bytes written
  */
 int log_MMAP_FLAGS(uint64_t value);
+
+/**
+ * @brief Log a signal name
+ * 
+ * @param value 
+ * @return int 
+ */
+int log_SIGNAL_NAME(uint64_t value);
+
+/**
+ * @brief log sigaction struct
+ * 
+ * @param value 
+ * @return int 
+ */
+int log_SIGACTION_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log sigset in local memory
+ * 
+ * @param sigset
+ * @return int 
+ */
+int log_local_sigset_struct(sigset_t *sigset);
+
+/**
+ * @brief log a sigset_t struct
+ * 
+ * @param value 
+ * @param context 
+ * @return int 
+ */
+int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log sigprocmask how
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_SIGPROCMASK_HOW(uint64_t value);

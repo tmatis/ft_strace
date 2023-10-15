@@ -21,4 +21,8 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[8] = {"lseek", SIGNED_INT, {-SIGNED_INT, -SIGNED_INT, -SEEK_WHENCE, NONE}},
 	[9] = {"mmap", PTR, {-PTR, -INT, -MEM_PROT, -MMAP_FLAGS, -SIGNED_INT, HEX}},
 	[10] = {"mprotect", SIGNED_INT, {-PTR, -SIGNED_INT, -MEM_PROT, NONE}},
+	[11] = {"munmap", SIGNED_INT, {-PTR, -SIGNED_INT, NONE}},
+	[12] = {"brk", PTR, {-PTR, NONE}},
+	[13] = {"rt_sigaction", SIGNED_INT, {-SIGNAL_NAME, -SIGACTION_STRUCT, SIGACTION_STRUCT, INT}},
+	[14] = {"rt_sigprocmask", SIGNED_INT, {-SIGPROCMASK_HOW, -SIGSET_STRUCT, SIGSET_STRUCT, INT, NONE}},
 };

@@ -23,6 +23,10 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(PTR),
 	ADD_LOGGER(MEM_PROT),
 	ADD_LOGGER(MMAP_FLAGS),
+	ADD_LOGGER(SIGNAL_NAME),
+	ADD_LOGGER(SIGACTION_STRUCT),
+	ADD_LOGGER(SIGSET_STRUCT),
+	ADD_LOGGER(SIGPROCMASK_HOW),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
