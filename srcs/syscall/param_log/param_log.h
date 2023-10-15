@@ -28,6 +28,45 @@ typedef struct
 typedef int (*log_function_t)();
 
 /**
+ * @brief log a hexadecimal value
+ * 
+ * @param value 
+ * @return int 
+ */
+int log_HEX(uint64_t value);
+
+/**
+ * @brief Log an unsigned integer
+ * 
+ * @param value value to log
+ * @return int number of bytes written
+ */
+int log_INT(uint64_t value);
+
+/**
+ * @brief Log an unsigned integer
+ * 
+ * @param value value to log
+ * @return int number of bytes written
+ */
+int log_SIGNED_INT(int64_t value);
+
+/**
+ * @brief Log an unsigned integer
+ * 
+ * @param value value to log
+ * @return int number of bytes written
+ */
+int log_PTR(uint64_t value);
+
+/**
+ * @brief Log ?
+ * 
+ * @return int number of bytes written
+ */
+int log_NONE(void);
+
+/**
  * @brief log memory segment
  *
  * @param value the value

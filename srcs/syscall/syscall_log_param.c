@@ -5,27 +5,6 @@
 #include <sys/types.h>
 #include <syscall_strace.h>
 
-static int log_INT(uint64_t value)
-{
-	return ft_dprintf(STDERR_FILENO, "%llu", value);
-}
-
-static int log_SIGNED_INT(int64_t value)
-{
-	return ft_dprintf(STDERR_FILENO, "%d", value);
-}
-
-static int log_HEX(uint64_t value)
-{
-	return ft_dprintf(STDERR_FILENO, "%#llx", value);
-}
-
-static int log_NONE(uint64_t value)
-{
-	(void)value;
-	return ft_dprintf(STDERR_FILENO, "?");
-}
-
 #define ADD_LOGGER(name) [name] = log_##name
 
 static const log_function_t log_functions[] = {
@@ -41,6 +20,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(POLL_FDS),
 	ADD_LOGGER(POLL_FDS_AFTER),
 	ADD_LOGGER(SEEK_WHENCE),
+	ADD_LOGGER(PTR),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

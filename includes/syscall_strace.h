@@ -23,6 +23,9 @@
 #define POLL_FDS 9
 #define POLL_FDS_AFTER 10
 #define SEEK_WHENCE 11
+#define PTR 12
+#define MMAP_PROT 13
+#define MMAP_FLAGS 14
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
