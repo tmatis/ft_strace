@@ -18,4 +18,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[5] = {"fstat", SIGNED_INT, {-INT, STAT_STRUCT, NONE}},
 	[6] = {"lstat", SIGNED_INT, {-STRING, STAT_STRUCT, NONE}},
 	[7] = {"poll", POLL_FDS_AFTER, {-POLL_FDS, -INT, -SIGNED_INT, NONE}},
-	[8] = {"lseek", SIGNED_INT, {-SIGNED_INT, -SIGNED_INT, -SEEK_WHENCE, NONE}}};
+	[8] = {"lseek", SIGNED_INT, {-SIGNED_INT, -SIGNED_INT, -SEEK_WHENCE, NONE}},
+	[9] = {"mmap", PTR, {-PTR, -INT, -MMAP_PROT, -MMAP_FLAGS, -SIGNED_INT, HEX}}};

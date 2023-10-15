@@ -28,6 +28,16 @@ typedef struct
 typedef int (*log_function_t)();
 
 /**
+ * @brief Log a set of flags
+ *
+ * @param flags the flags to log
+ * @param flag_strs the flags strings
+ * @param flag_strs_size the size of the flag strings array
+ * @return int the number of bytes written
+ */
+int flags_log(uint64_t flags, const flag_str_t *flag_strs, size_t flag_strs_size);
+
+/**
  * @brief log a hexadecimal value
  * 
  * @param value 
@@ -130,3 +140,19 @@ int log_POLL_FDS_AFTER(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_SEEK_WHENCE(uint64_t value);
+
+/**
+ * @brief Log mmap protection flags
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MMAP_PROT(uint64_t value);
+
+/**
+ * @brief Log mmap flags
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MMAP_FLAGS(uint64_t value);
