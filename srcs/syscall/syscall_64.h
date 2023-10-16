@@ -28,4 +28,7 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[15] = {"rt_sigreturn", INT, {-PTR, NONE}},
 	[16] = {"ioctl", INT, {-INT, -INT, -INT, NONE}},
 	[17] = {"pread64", INT, {-INT, MEMSEG, INT, INT, NONE}},
-	[18] = {"pwrite64", INT, {-INT, -MEMSEG, -INT, -INT, NONE}}};
+	[18] = {"pwrite64", INT, {-INT, -MEMSEG, -INT, -INT, NONE}},
+	[19] = {"readv", INT, {-INT, IOVEC_STRUCT, INT, NONE}},
+	[20] = {"writev", INT, {-INT, -IOVEC_STRUCT, -INT, NONE}},
+};

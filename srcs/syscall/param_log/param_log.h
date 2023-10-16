@@ -87,6 +87,16 @@ int log_PTR(uint64_t value);
 int log_NONE(void);
 
 /**
+ * @brief Log a memory segment from a remote process
+ * 
+ * @param pid the pid of the remote process
+ * @param remote_ptr the pointer to the memory segment in the remote process
+ * @param buffer_size the size of the memory segment
+ * @return int 
+ */
+int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size);
+
+/**
  * @brief log memory segment
  *
  * @param value the value
@@ -207,3 +217,12 @@ int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_SIGPROCMASK_HOW(uint64_t value);
+
+/**
+ * @brief Log iovec struct
+ *
+ * @param value the pointer to the iovec struct in remote process
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context);

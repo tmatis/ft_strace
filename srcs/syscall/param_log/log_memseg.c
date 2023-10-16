@@ -10,6 +10,45 @@
 #define MAX_PRINT_SIZE 32
 
 /**
+ * @brief Log a memory segment from a remote process
+ * 
+ * @param pid the pid of the remote process
+ * @param remote_ptr the pointer to the memory segment in the remote process
+ * @param buffer_size the size of the memory segment
+ * @return int 
+ */
+int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size)
+{
+	size_t to_read = buffer_size > MAX_PRINT_SIZE ? MAX_PRINT_SIZE : buffer_size;
+	char *buffer = malloc(to_read);
+	if (!buffer)
+	{
+		log_error("log_MEM", "malloc failed", true);
+		return 0;
+	}
+	struct iovec local;
+	struct iovec remote;
+	local.iov_base = buffer;
+	local.iov_len = to_read;
+	remote.iov_base = remote_ptr;
+	remote.iov_len = to_read;
+	if (process_vm_readv(pid, &local, 1, &remote, 1, 0) < 0)
+	{
+		log_error("log_MEM", "process_vm_readv failed", true);
+		return 0;
+	}
+	char *escaped_buffer = ft_escape(buffer, to_read);
+	int size_written;
+	if (buffer_size > MAX_PRINT_SIZE)
+		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"...", escaped_buffer);
+	else
+		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
+	free(escaped_buffer);
+	free(buffer);
+	return size_written;
+}
+
+/**
  * @brief log memory segment
  *
  * @param value the value
@@ -26,31 +65,5 @@ int log_MEMSEG(uint64_t value, syscall_log_param_t *context)
 			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		buffer_size = registers_get_param(context->regs, context->type, context->arg_index + 1);
 	}
-	size_t to_read = buffer_size > MAX_PRINT_SIZE ? MAX_PRINT_SIZE : buffer_size;
-	char *buffer = malloc(to_read);
-	if (!buffer)
-	{
-		log_error("log_MEM", "malloc failed", true);
-		return 0;
-	}
-	struct iovec local;
-	struct iovec remote;
-	local.iov_base = buffer;
-	local.iov_len = to_read;
-	remote.iov_base = (void *)value;
-	remote.iov_len = to_read;
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_MEM", "process_vm_readv failed", true);
-		return 0;
-	}
-	char *escaped_buffer = ft_escape(buffer, to_read);
-	int size_written;
-	if (buffer_size > MAX_PRINT_SIZE)
-		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"...", escaped_buffer);
-	else
-		size_written = ft_dprintf(STDERR_FILENO, "\"%s\"", escaped_buffer);
-	free(escaped_buffer);
-	free(buffer);
-	return size_written;
+	return log_memseg_remote(context->pid, (void *)value, buffer_size);
 }
