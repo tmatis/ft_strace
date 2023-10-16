@@ -36,6 +36,9 @@
 #define FD_SET_STRUCT 22
 #define TIMEVAL_STRUCT 23
 #define SELECT_RETURN 24
+#define MREMAP_FLAGS 25
+#define MSYNC_FLAGS 26
+#define MADVISE_ADVISE 27
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

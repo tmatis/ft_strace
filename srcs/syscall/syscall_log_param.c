@@ -33,6 +33,9 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(FD_SET_STRUCT),
 	ADD_LOGGER(TIMEVAL_STRUCT),
 	ADD_LOGGER(SELECT_RETURN),
+	ADD_LOGGER(MREMAP_FLAGS),
+	ADD_LOGGER(MSYNC_FLAGS),
+	ADD_LOGGER(MADVISE_ADVISE),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

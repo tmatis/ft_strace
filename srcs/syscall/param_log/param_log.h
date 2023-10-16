@@ -44,9 +44,11 @@ int flags_log(uint64_t flags, const flag_str_t *flag_strs, size_t flag_strs_size
  * @param value the value to log
  * @param options the list of options
  * @param options_size the size of the list of options
+ * @param default_name the default name to use if the value is not found
  * @return int the number of bytes written
  */
-int option_log(uint64_t value, const flag_str_t *options, size_t options_size);
+int option_log(uint64_t value, const flag_str_t *options, size_t options_size,
+			   const char *default_name);
 
 /**
  * @brief log a hexadecimal value
@@ -271,3 +273,27 @@ int log_TIMEVAL_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_SELECT_RETURN(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief log mremap flags
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MREMAP_FLAGS(uint64_t value);
+
+/**
+ * @brief Log msync flags
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MSYNC_FLAGS(uint64_t value);
+
+/**
+ * @brief Log madvise advice
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MADVISE_ADVISE(uint64_t value);

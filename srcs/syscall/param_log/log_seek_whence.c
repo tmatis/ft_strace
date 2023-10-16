@@ -16,5 +16,5 @@ static const flag_str_t flags[] = {
  */
 int log_SEEK_WHENCE(uint64_t value)
 {
-	return option_log(value, flags, ELEM_COUNT(flags));
+	return option_log(value, flags, ELEM_COUNT(flags), "SEEK_???");
 }
