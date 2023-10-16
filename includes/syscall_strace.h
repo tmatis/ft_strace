@@ -33,6 +33,9 @@
 #define IOVEC_STRUCT 19
 #define ACCESS_MODE 20
 #define PIPEFDS 21
+#define FD_SET_STRUCT 22
+#define TIMEVAL_STRUCT 23
+#define SELECT_RETURN 24
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

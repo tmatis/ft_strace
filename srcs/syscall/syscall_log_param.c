@@ -30,6 +30,9 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(IOVEC_STRUCT),
 	ADD_LOGGER(ACCESS_MODE),
 	ADD_LOGGER(PIPEFDS),
+	ADD_LOGGER(FD_SET_STRUCT),
+	ADD_LOGGER(TIMEVAL_STRUCT),
+	ADD_LOGGER(SELECT_RETURN),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
@@ -61,6 +64,7 @@ int syscall_log_param(pid_t pid, user_regs_t *regs, register_type_t regs_type, u
 		.regs = regs,
 		.type = regs_type,
 		.after_syscall = after_syscall,
+		.is_return_log = false,
 	};
 	if (arg_type < (int)ELEM_COUNT(log_functions))
 		return ((log_function_with_param_t)log_functions[arg_type])(arg, &param);
@@ -94,6 +98,7 @@ void syscall_log_return(pid_t pid, user_regs_t *regs, register_type_t regs_type)
 		.regs = regs,
 		.type = regs_type,
 		.after_syscall = true,
+		.is_return_log = true,
 	};
 	if (return_type < (int)ELEM_COUNT(log_functions))
 		((log_function_with_param_t)log_functions[return_type])(return_value, &param);

@@ -12,6 +12,7 @@ typedef struct
 	user_regs_t *regs;
 	register_type_t type;
 	bool_t after_syscall;
+	bool_t is_return_log;
 } syscall_log_param_t;
 
 typedef struct
@@ -243,3 +244,30 @@ int log_ACCESS_MODE(uint64_t value);
  * @return int the number of bytes written
  */
 int log_PIPEFDS(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log a fd_set struct
+ * 
+ * @param value the ptr to fd_set
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_FD_SET_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief log a timeval struct
+ * 
+ * @param value the ptr to timeval struct
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_TIMEVAL_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log select return
+ * 
+ * @param value return value
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_SELECT_RETURN(uint64_t value, syscall_log_param_t *context);
