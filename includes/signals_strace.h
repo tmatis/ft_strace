@@ -5,7 +5,7 @@
 
 /**
  * @brief Block signals
- * 
+ *
  */
 void signals_block(void);
 

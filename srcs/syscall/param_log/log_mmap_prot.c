@@ -1,7 +1,7 @@
 #include "param_log.h"
 #include <ft_printf.h>
-#include <sys/mman.h>
 #include <macros.h>
+#include <sys/mman.h>
 
 static const flag_str_t mmap_prot_flags[] = {
 	FLAG_STR(PROT_READ),

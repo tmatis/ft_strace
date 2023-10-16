@@ -3,9 +3,9 @@
 
 /**
  * @brief log a hexadecimal value
- * 
- * @param value 
- * @return int 
+ *
+ * @param value
+ * @return int
  */
 int log_HEX(uint64_t value)
 {

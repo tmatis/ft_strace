@@ -10,7 +10,7 @@
 
 /**
  * @brief Return the code name for the given signal and si_code
- * 
+ *
  * @param sig the signal number
  * @param si_code the si_code of the signal
  * @return const char* the code name
@@ -83,9 +83,9 @@ const char *ft_sicodename(int sig, int si_code)
 		{
 			SICODE_NAME(TRAP_BRKPT);
 			SICODE_NAME(TRAP_TRACE);
-            SICODE_NAME(TRAP_BRANCH);
-            SICODE_NAME(TRAP_HWBKPT);
-            SICODE_NAME(TRAP_UNK);
+			SICODE_NAME(TRAP_BRANCH);
+			SICODE_NAME(TRAP_HWBKPT);
+			SICODE_NAME(TRAP_UNK);
 		}
 		break;
 	case SIGCHLD:
@@ -111,7 +111,7 @@ const char *ft_sicodename(int sig, int si_code)
 		}
 		break;
 	}
-    static char buff[64];
-    ft_snprintf(buff, sizeof(buff), "UNKNOWN (%d)", si_code);
-    return buff;
+	static char buff[64];
+	ft_snprintf(buff, sizeof(buff), "UNKNOWN (%d)", si_code);
+	return buff;
 }

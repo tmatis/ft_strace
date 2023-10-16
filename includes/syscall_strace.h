@@ -31,6 +31,7 @@
 #define SIGSET_STRUCT 17
 #define SIGPROCMASK_HOW 18
 #define IOVEC_STRUCT 19
+#define ACCESS_MODE 20
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

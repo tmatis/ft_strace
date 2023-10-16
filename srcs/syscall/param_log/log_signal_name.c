@@ -4,11 +4,11 @@
 
 /**
  * @brief Log a signal name
- * 
- * @param value 
- * @return int 
+ *
+ * @param value
+ * @return int
  */
 int log_SIGNAL_NAME(uint64_t value)
 {
-    return ft_dprintf(STDERR_FILENO, "%s", ft_signalname(value));
+	return ft_dprintf(STDERR_FILENO, "%s", ft_signalname(value));
 }

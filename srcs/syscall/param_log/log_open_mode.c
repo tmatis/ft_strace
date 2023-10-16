@@ -3,10 +3,10 @@
 
 /**
  * @brief Log open mode
- * 
+ *
  * @param value the value to log
  */
 int log_OPEN_MODE(uint64_t value)
 {
-    return ft_dprintf(STDERR_FILENO, "%#o", value);
+	return ft_dprintf(STDERR_FILENO, "%#o", value);
 }

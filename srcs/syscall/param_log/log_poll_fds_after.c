@@ -82,9 +82,9 @@ int log_POLL_FDS_AFTER(uint64_t value, syscall_log_param_t *context)
 		return 0;
 	}
 	size_written += ft_dprintf(STDERR_FILENO, " [{");
-    for (size_t i = 0; i < fd_count; i++)
-        size_written += log_poll_fd(fds, i);
-    size_written += ft_dprintf(STDERR_FILENO, "}]");
-    free(fds);
-    return size_written;
+	for (size_t i = 0; i < fd_count; i++)
+		size_written += log_poll_fd(fds, i);
+	size_written += ft_dprintf(STDERR_FILENO, "}]");
+	free(fds);
+	return size_written;
 }

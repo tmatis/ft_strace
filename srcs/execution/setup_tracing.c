@@ -1,9 +1,8 @@
+#include <ft_printf.h>
 #include <ft_strace_utils.h>
 #include <stdlib.h>
 #include <sys/ptrace.h>
 #include <unistd.h>
-#include <ft_strace_utils.h>
-#include <ft_printf.h>
 
 /**
  * @brief Setup tracing for tracee

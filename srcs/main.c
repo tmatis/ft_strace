@@ -3,8 +3,8 @@
 #include <execution.h>
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
-#include <signals_strace.h>
 #include <signal.h>
+#include <signals_strace.h>
 
 int main(int argc, char **argv, char **envp)
 {

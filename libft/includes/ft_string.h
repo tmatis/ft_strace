@@ -170,7 +170,7 @@ const char *ft_signalname(int sig);
 
 /**
  * @brief Return the code name for the given signal and si_code
- * 
+ *
  * @param sig the signal number
  * @param si_code the si_code of the signal
  * @return const char* the code name

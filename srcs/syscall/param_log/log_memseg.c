@@ -11,11 +11,11 @@
 
 /**
  * @brief Log a memory segment from a remote process
- * 
+ *
  * @param pid the pid of the remote process
  * @param remote_ptr the pointer to the memory segment in the remote process
  * @param buffer_size the size of the memory segment
- * @return int 
+ * @return int
  */
 int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size)
 {

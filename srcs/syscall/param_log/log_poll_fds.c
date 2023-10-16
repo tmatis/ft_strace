@@ -16,14 +16,14 @@ static const flag_str_t flags[] = {
 
 static int log_poll_fd(struct pollfd *fds, size_t i)
 {
-    size_t size_written = 0;
+	size_t size_written = 0;
 	if (i != 0)
 		size_written += ft_dprintf(STDERR_FILENO, ", ");
 	size_written += ft_dprintf(STDERR_FILENO, "{fd=%d, events=", fds[i].fd);
 	if (fds[i].events == 0)
 	{
 		size_written += ft_dprintf(STDERR_FILENO, "0");
-        return size_written;
+		return size_written;
 	}
 	bool_t first = true;
 	for (size_t j = 0; j < ELEM_COUNT(flags); j++)
@@ -44,7 +44,7 @@ static int log_poll_fd(struct pollfd *fds, size_t i)
 		size_written += ft_dprintf(STDERR_FILENO, "%#x", fds[i].events);
 	}
 	size_written += ft_dprintf(STDERR_FILENO, "}");
-    return size_written;
+	return size_written;
 }
 
 /**
@@ -84,7 +84,7 @@ int log_POLL_FDS(uint64_t value, syscall_log_param_t *context)
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "[");
 	for (uint64_t i = 0; i < fd_count; i++)
-        size_written += log_poll_fd(fds, i);
+		size_written += log_poll_fd(fds, i);
 	size_written += ft_dprintf(STDERR_FILENO, "]");
 	free(fds);
 	return size_written;

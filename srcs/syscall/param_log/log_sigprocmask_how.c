@@ -5,8 +5,8 @@
 
 static const flag_str_t flags[] = {
 	FLAG_STR(SIG_BLOCK),
-    FLAG_STR(SIG_UNBLOCK),
-    FLAG_STR(SIG_SETMASK),
+	FLAG_STR(SIG_UNBLOCK),
+	FLAG_STR(SIG_SETMASK),
 };
 
 /**
@@ -17,5 +17,5 @@ static const flag_str_t flags[] = {
  */
 int log_SIGPROCMASK_HOW(uint64_t value)
 {
-    return option_log(value, flags, ELEM_COUNT(flags));
+	return option_log(value, flags, ELEM_COUNT(flags));
 }

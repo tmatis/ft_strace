@@ -26,9 +26,9 @@ const char *skip_sigprefix(const char *str)
 
 /**
  * @brief Log sigset in local memory
- * 
+ *
  * @param sigset
- * @return int 
+ * @return int
  */
 int log_local_sigset_struct(sigset_t *sigset)
 {
@@ -45,7 +45,7 @@ int log_local_sigset_struct(sigset_t *sigset)
 		}
 	}
 	size_written += ft_dprintf(STDERR_FILENO, "]");
-    return size_written;
+	return size_written;
 }
 
 /**
@@ -65,7 +65,7 @@ int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context)
 		if (return_syscall < 0)
 			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 	}
-    sigset_t sigset;
+	sigset_t sigset;
 	struct iovec local = {.iov_base = &sigset, .iov_len = sizeof(sigset_t)};
 	struct iovec remote = {.iov_base = (void *)value, .iov_len = sizeof(sigset_t)};
 	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)

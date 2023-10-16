@@ -39,7 +39,7 @@ int flags_log(uint64_t flags, const flag_str_t *flag_strs, size_t flag_strs_size
 
 /**
  * @brief Log a value from a list of options
- * 
+ *
  * @param value the value to log
  * @param options the list of options
  * @param options_size the size of the list of options
@@ -49,15 +49,15 @@ int option_log(uint64_t value, const flag_str_t *options, size_t options_size);
 
 /**
  * @brief log a hexadecimal value
- * 
- * @param value 
- * @return int 
+ *
+ * @param value
+ * @return int
  */
 int log_HEX(uint64_t value);
 
 /**
  * @brief Log an unsigned integer
- * 
+ *
  * @param value value to log
  * @return int number of bytes written
  */
@@ -65,7 +65,7 @@ int log_INT(uint64_t value);
 
 /**
  * @brief Log an unsigned integer
- * 
+ *
  * @param value value to log
  * @return int number of bytes written
  */
@@ -73,7 +73,7 @@ int log_SIGNED_INT(int64_t value);
 
 /**
  * @brief Log an unsigned integer
- * 
+ *
  * @param value value to log
  * @return int number of bytes written
  */
@@ -81,18 +81,18 @@ int log_PTR(uint64_t value);
 
 /**
  * @brief Log ?
- * 
+ *
  * @return int number of bytes written
  */
 int log_NONE(void);
 
 /**
  * @brief Log a memory segment from a remote process
- * 
+ *
  * @param pid the pid of the remote process
  * @param remote_ptr the pointer to the memory segment in the remote process
  * @param buffer_size the size of the memory segment
- * @return int 
+ * @return int
  */
 int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size);
 
@@ -137,10 +137,10 @@ int log_STAT_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log poll fds
- * 
- * @param value 
- * @param context 
- * @return int 
+ *
+ * @param value
+ * @param context
+ * @return int
  */
 int log_POLL_FDS(uint64_t value, syscall_log_param_t *context);
 
@@ -155,7 +155,7 @@ int log_POLL_FDS_AFTER(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log whence
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -163,7 +163,7 @@ int log_SEEK_WHENCE(uint64_t value);
 
 /**
  * @brief Log mmap protection flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -179,34 +179,34 @@ int log_MMAP_FLAGS(uint64_t value);
 
 /**
  * @brief Log a signal name
- * 
- * @param value 
- * @return int 
+ *
+ * @param value
+ * @return int
  */
 int log_SIGNAL_NAME(uint64_t value);
 
 /**
  * @brief log sigaction struct
- * 
- * @param value 
- * @return int 
+ *
+ * @param value
+ * @return int
  */
 int log_SIGACTION_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log sigset in local memory
- * 
+ *
  * @param sigset
- * @return int 
+ * @return int
  */
 int log_local_sigset_struct(sigset_t *sigset);
 
 /**
  * @brief log a sigset_t struct
- * 
- * @param value 
- * @param context 
- * @return int 
+ *
+ * @param value
+ * @param context
+ * @return int
  */
 int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context);
 
@@ -226,3 +226,11 @@ int log_SIGPROCMASK_HOW(uint64_t value);
  * @return int the number of bytes written
  */
 int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log access mode flags
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_ACCESS_MODE(uint64_t value);

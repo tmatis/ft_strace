@@ -18,7 +18,8 @@
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-static int handle_status(pid_t pid, int status, int *cont_signal, analysis_routine_data_t *analysis_state)
+static int handle_status(pid_t pid, int status, int *cont_signal,
+						 analysis_routine_data_t *analysis_state)
 {
 	if (status == NO_STATUS)
 		return NO_STATUS;
@@ -69,8 +70,8 @@ int analysis_routine(pid_t pid)
 			continue;
 		if (status_code != NO_STATUS)
 			return status_code;
-		status_code =
-			handle_status(pid, syscall_handle(pid, &analysis_state, &cont_signal), &cont_signal, &analysis_state);
+		status_code = handle_status(pid, syscall_handle(pid, &analysis_state, &cont_signal),
+									&cont_signal, &analysis_state);
 		if (status_code == SIG_RAISED)
 			continue;
 		if (status_code != NO_STATUS)

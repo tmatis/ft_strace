@@ -3,7 +3,7 @@
 
 /**
  * @brief Log an unsigned integer
- * 
+ *
  * @param value value to log
  * @return int number of bytes written
  */

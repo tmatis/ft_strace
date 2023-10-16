@@ -48,12 +48,12 @@ static bool_t is_fail(syscall_log_param_t *context)
  */
 static uint64_t get_len(struct iovec *iov, syscall_log_param_t *context, int64_t *total_len)
 {
-    if (context->after_syscall)
-    {
-        int64_t to_log = MIN(iov->iov_len, (uint64_t)*total_len);
-        *total_len -= to_log;
-        return to_log;
-    }
+	if (context->after_syscall)
+	{
+		int64_t to_log = MIN(iov->iov_len, (uint64_t)*total_len);
+		*total_len -= to_log;
+		return to_log;
+	}
 	return iov->iov_len;
 }
 
@@ -94,16 +94,16 @@ int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context)
 	}
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "[");
-    bool_t first = true;
+	bool_t first = true;
 	for (uint64_t i = 0; i < vlen; i++)
 	{
-        if (!first)
-            size_written += ft_dprintf(STDERR_FILENO, ", ");
-        first = false;
+		if (!first)
+			size_written += ft_dprintf(STDERR_FILENO, ", ");
+		first = false;
 		size_written += ft_dprintf(STDERR_FILENO, "{");
 		size_written += ft_dprintf(STDERR_FILENO, ".iov_base=");
-		size_written +=
-			log_iov_base(context->pid, &iov[i], is_fail(context), get_len(&iov[i], context, &total_len));
+		size_written += log_iov_base(context->pid, &iov[i], is_fail(context),
+									 get_len(&iov[i], context, &total_len));
 		size_written += ft_dprintf(STDERR_FILENO, ", .iov_len=%lu", iov[i].iov_len);
 		size_written += ft_dprintf(STDERR_FILENO, "}");
 	}
