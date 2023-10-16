@@ -234,3 +234,12 @@ int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_ACCESS_MODE(uint64_t value);
+
+/**
+ * @brief Log pipe fds
+ * 
+ * @param value the ptr to fds
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_PIPEFDS(uint64_t value, syscall_log_param_t *context);

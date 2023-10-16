@@ -29,6 +29,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(SIGPROCMASK_HOW),
 	ADD_LOGGER(IOVEC_STRUCT),
 	ADD_LOGGER(ACCESS_MODE),
+	ADD_LOGGER(PIPEFDS),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

@@ -67,6 +67,7 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_sigprocmask_how.c \
 		syscall/param_log/log_iovec_struct.c \
 		syscall/param_log/log_access_mode.c \
+		syscall/param_log/log_pipefds.c \
 		syscall/syscall_handle.c
 
 # registers srcs

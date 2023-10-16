@@ -32,4 +32,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[19] = {"readv", INT, {-INT, IOVEC_STRUCT, INT, NONE}},
 	[20] = {"writev", INT, {-INT, -IOVEC_STRUCT, -INT, NONE}},
 	[21] = {"access", INT, {-STRING, -ACCESS_MODE, NONE}},
+	[22] = {"pipe", INT, {PIPEFDS, NONE}},
 };
