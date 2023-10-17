@@ -51,6 +51,9 @@
 #define IPPROTO 37
 #define SOCKADDR_STRUCT 38
 #define SEND_FLAGS 39
+#define MSGHDR_STRUCT 40
+#define INT_PTR 41
+#define SHUTDOWN_HOW 42
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

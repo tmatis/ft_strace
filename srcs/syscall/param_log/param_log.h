@@ -4,6 +4,7 @@
 #include <registers.h>
 #include <stdint.h>
 #include <sys/types.h>
+#include <sys/uio.h>
 
 typedef struct
 {
@@ -25,6 +26,8 @@ typedef struct
 	{                                                                                              \
 		flag, #flag                                                                                \
 	}
+
+#define NO_SIZE -1
 
 typedef int (*log_function_t)();
 
@@ -222,6 +225,19 @@ int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_SIGPROCMASK_HOW(uint64_t value);
 
 /**
+ * @brief Log iovec struct in local process but with remote iov_base
+ *
+ * @param pid the pid of the remote process
+ * @param iov the iovec struct
+ * @param vlen the number of iovec struct
+ * @param total_len the total len read or -1 if not known
+ * @param is_fail true if syscall failed
+ * @return int the number of bytes written
+ */
+int log_iovec_struct_local(int pid, struct iovec *iov, uint64_t vlen, int64_t total_len,
+						   bool_t is_fail);
+
+/**
  * @brief Log iovec struct
  *
  * @param value the pointer to the iovec struct in remote process
@@ -240,7 +256,7 @@ int log_ACCESS_MODE(uint64_t value);
 
 /**
  * @brief Log pipe fds
- * 
+ *
  * @param value the ptr to fds
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -249,7 +265,7 @@ int log_PIPEFDS(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log a fd_set struct
- * 
+ *
  * @param value the ptr to fd_set
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -258,7 +274,7 @@ int log_FD_SET_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief log a timeval struct
- * 
+ *
  * @param value the ptr to timeval struct
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -267,7 +283,7 @@ int log_TIMEVAL_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log select return
- * 
+ *
  * @param value return value
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -276,7 +292,7 @@ int log_SELECT_RETURN(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief log mremap flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -284,7 +300,7 @@ int log_MREMAP_FLAGS(uint64_t value);
 
 /**
  * @brief Log msync flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -292,7 +308,7 @@ int log_MSYNC_FLAGS(uint64_t value);
 
 /**
  * @brief Log madvise advice
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -300,7 +316,7 @@ int log_MADVISE_ADVISE(uint64_t value);
 
 /**
  * @brief Log shmget flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -308,7 +324,7 @@ int log_SHMGET_FLAGS(uint64_t value);
 
 /**
  * @brief Log shmat flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -316,7 +332,7 @@ int log_SHMAT_FLAGS(uint64_t value);
 
 /**
  * @brief Log shmid_ds struct
- * 
+ *
  * @param value the value to log
  * @param context the syscall_log_param_t struct
  * @return int the number of bytes written
@@ -325,7 +341,7 @@ int log_SHMID_DS_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log shmctl cmd
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -333,7 +349,7 @@ int log_SHMCTL_CMD(uint64_t value);
 
 /**
  * @brief Log a timespec struct
- * 
+ *
  * @param value the ptr to timespec
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -342,7 +358,7 @@ int log_KERNEL_TIMESPEC_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log a itimerval struct
- * 
+ *
  * @param value the ptr to itimerval
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -351,7 +367,7 @@ int log_ITIMERVAL_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log setitimer which
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -359,7 +375,7 @@ int log_ITIMER_WHICH(uint64_t value);
 
 /**
  * @brief Log address family
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -367,7 +383,7 @@ int log_ADDRESS_FAMILY(uint64_t value);
 
 /**
  * @brief Log socket types
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -375,7 +391,7 @@ int log_SOCKET_TYPE(uint64_t value);
 
 /**
  * @brief Log ip protocol
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -383,7 +399,7 @@ int log_IPPROTO(uint64_t value);
 
 /**
  * @brief Log a sockaddr struct
- * 
+ *
  * @param value the ptr to sockaddr
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -392,8 +408,33 @@ int log_SOCKADDR_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log send flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
 int log_SEND_FLAGS(uint64_t value);
+
+/**
+ * @brief Log a msghdr struct
+ *
+ * @param value the ptr to msghdr
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log int ptr
+ * 
+ * @param value the ptr to int
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_INT_PTR(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log shutdown how flags
+ *
+ * @param value the value to log
+ */
+int log_SHUTDOWN_HOW(uint64_t value);
