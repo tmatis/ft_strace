@@ -41,4 +41,10 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[26] = {"msync", INT, {-PTR, -INT, -MSYNC_FLAGS, NONE}},
 	[27] = {"mincore", INT, {-PTR, -INT, -PTR, NONE}},
 	[28] = {"madvise", INT, {-PTR, -INT, -MADVISE_ADVISE, NONE}},
+	[29] = {"shmget", INT, {-HEX, -INT, -SHMGET_FLAGS, NONE}},
+	[30] = {"shmat", PTR, {-INT, -PTR, -SHMAT_FLAGS, NONE}},
+	[31] = {"shmctl", INT, {-INT, -SHMCTL_CMD, SHMID_DS_STRUCT, NONE}},
+	[32] = {"dup", INT, {-INT, NONE}},
+	[33] = {"dup2", INT, {-INT, -INT, NONE}},
+	[34] = {"pause", INT, {NONE}},
 };

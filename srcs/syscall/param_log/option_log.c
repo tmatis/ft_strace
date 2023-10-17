@@ -18,5 +18,7 @@ int option_log(uint64_t value, const flag_str_t *options, size_t options_size,
 		if (options[i].flag == value)
 			return ft_dprintf(STDERR_FILENO, "%s", options[i].str);
 	}
+	if (!default_name)
+		return ft_dprintf(STDERR_FILENO, "%#llx", value);
 	return ft_dprintf(STDERR_FILENO, "%#llx /* %s */", value, default_name);
 }

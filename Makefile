@@ -74,6 +74,10 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_mremap_flags.c \
 		syscall/param_log/log_msync_flags.c \
 		syscall/param_log/log_madvise_advise.c \
+		syscall/param_log/log_shmget_flags.c \
+		syscall/param_log/log_shmat_flags.c \
+		syscall/param_log/log_shmid_ds_struct.c \
+		syscall/param_log/log_shmctl_cmd.c \
 		syscall/syscall_handle.c
 
 # registers srcs
