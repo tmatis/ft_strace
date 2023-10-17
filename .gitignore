@@ -17,3 +17,8 @@ ft_strace_debug
 # Editor
 
 /.vscode
+
+# temp tests files
+
+test
+test.c
