@@ -78,6 +78,14 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_shmat_flags.c \
 		syscall/param_log/log_shmid_ds_struct.c \
 		syscall/param_log/log_shmctl_cmd.c \
+		syscall/param_log/log_kernel_timespec_struct.c \
+		syscall/param_log/log_itimerval_struct.c \
+		syscall/param_log/log_itimer_which.c \
+		syscall/param_log/log_address_family.c \
+		syscall/param_log/log_socket_type.c \
+		syscall/param_log/log_ipproto.c \
+		syscall/param_log/log_sockaddr_struct.c \
+		syscall/param_log/log_send_flags.c \
 		syscall/syscall_handle.c
 
 # registers srcs

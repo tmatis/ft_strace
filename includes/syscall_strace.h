@@ -43,6 +43,14 @@
 #define SHMAT_FLAGS 29
 #define SHMID_DS_STRUCT 30
 #define SHMCTL_CMD 31
+#define KERNEL_TIMESPEC_STRUCT 32
+#define ITIMERVAL_STRUCT 33
+#define ITIMER_WHICH 34
+#define ADDRESS_FAMILY 35
+#define SOCKET_TYPE 36
+#define IPPROTO 37
+#define SOCKADDR_STRUCT 38
+#define SEND_FLAGS 39
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

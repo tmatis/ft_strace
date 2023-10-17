@@ -330,3 +330,70 @@ int log_SHMID_DS_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_SHMCTL_CMD(uint64_t value);
+
+/**
+ * @brief Log a timespec struct
+ * 
+ * @param value the ptr to timespec
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_KERNEL_TIMESPEC_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log a itimerval struct
+ * 
+ * @param value the ptr to itimerval
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_ITIMERVAL_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log setitimer which
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_ITIMER_WHICH(uint64_t value);
+
+/**
+ * @brief Log address family
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_ADDRESS_FAMILY(uint64_t value);
+
+/**
+ * @brief Log socket types
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_SOCKET_TYPE(uint64_t value);
+
+/**
+ * @brief Log ip protocol
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_IPPROTO(uint64_t value);
+
+/**
+ * @brief Log a sockaddr struct
+ * 
+ * @param value the ptr to sockaddr
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_SOCKADDR_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log send flags
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_SEND_FLAGS(uint64_t value);

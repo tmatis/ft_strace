@@ -40,6 +40,14 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(SHMAT_FLAGS),
 	ADD_LOGGER(SHMID_DS_STRUCT),
 	ADD_LOGGER(SHMCTL_CMD),
+	ADD_LOGGER(KERNEL_TIMESPEC_STRUCT),
+	ADD_LOGGER(ITIMERVAL_STRUCT),
+	ADD_LOGGER(ITIMER_WHICH),
+	ADD_LOGGER(ADDRESS_FAMILY),
+	ADD_LOGGER(SOCKET_TYPE),
+	ADD_LOGGER(IPPROTO),
+	ADD_LOGGER(SOCKADDR_STRUCT),
+	ADD_LOGGER(SEND_FLAGS),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
