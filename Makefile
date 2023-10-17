@@ -89,6 +89,8 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_msghdr_struct.c \
 		syscall/param_log/log_int_ptr.c \
 		syscall/param_log/log_shutdown_how.c \
+		syscall/param_log/log_argv.c \
+		syscall/param_log/log_envp.c \
 		syscall/syscall_handle.c
 
 # registers srcs

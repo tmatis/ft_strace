@@ -71,4 +71,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[56] = {"clone", INT, {-INT, -INT, INT_PTR, INT_PTR, INT, NONE}},
 	[57] = {"fork", INT, {NONE}},
 	[58] = {"vfork", INT, {NONE}},
+	[59] = {"execve", INT, {-STRING, -ARGV, -ENVP, NONE}},
 };

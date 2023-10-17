@@ -51,6 +51,8 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(MSGHDR_STRUCT),
 	ADD_LOGGER(INT_PTR),
 	ADD_LOGGER(SHUTDOWN_HOW),
+	ADD_LOGGER(ARGV),
+	ADD_LOGGER(ENVP),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

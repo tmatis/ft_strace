@@ -54,6 +54,8 @@
 #define MSGHDR_STRUCT 40
 #define INT_PTR 41
 #define SHUTDOWN_HOW 42
+#define ARGV 43
+#define ENVP 44
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

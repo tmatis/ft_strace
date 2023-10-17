@@ -111,6 +111,16 @@ int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size);
 int log_MEMSEG(uint64_t value, syscall_log_param_t *context);
 
 /**
+ * @brief Log a remote string
+ * 
+ * @param pid the pid of the remote process
+ * @param remote_str the remote string
+ * @param max_size the max size of the string
+ * @return int the number of bytes written
+ */
+int log_remote_string(pid_t pid, char *remote_str, int max_size);
+
+/**
  * @brief Log a string
  *
  * @param value the value
@@ -438,3 +448,21 @@ int log_INT_PTR(uint64_t value, syscall_log_param_t *context);
  * @param value the value to log
  */
 int log_SHUTDOWN_HOW(uint64_t value);
+
+/**
+ * @brief Log argv
+ * 
+ * @param value argv
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_ARGV(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log envp struct
+ * 
+ * @param value the ptr to envp
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_ENVP(uint64_t value, syscall_log_param_t *context);
