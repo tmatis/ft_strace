@@ -104,23 +104,15 @@ int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context)
 		log_error("log_IOVEC_STRUCT", "malloc failed", true);
 		return 0;
 	}
-	struct iovec local = {
-		.iov_base = iov,
-		.iov_len = sizeof(struct iovec) * vlen,
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(struct iovec) * vlen,
-	};
-	int64_t total_len = NO_SIZE;
-	if (context->after_syscall)
-		total_len = registers_get_return(context->regs, context->type);
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
+	if (remote_memcpy(iov, context->pid, (void *)value, sizeof(struct iovec) * vlen) < 0)
 	{
-		log_error("log_IOVEC_STRUCT", "process_vm_readv failed", true);
+		log_error("log_IOVEC_STRUCT", "remote_memcpy failed", true);
 		free(iov);
 		return 0;
 	}
+	int64_t total_len = NO_SIZE;
+	if (context->after_syscall)
+		total_len = registers_get_return(context->regs, context->type);
 	int size_written =
 		log_iovec_struct_local(context->pid, iov, vlen, total_len, get_is_fail(context));
 	free(iov);

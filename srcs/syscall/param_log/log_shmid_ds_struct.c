@@ -15,27 +15,7 @@
  */
 int log_SHMID_DS_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-	if (value == 0)
-		return ft_dprintf(STDERR_FILENO, "NULL");
-	if (context->after_syscall)
-	{
-		if ((int64_t)registers_get_return(context->regs, context->type) < 0)
-			return log_PTR(value);
-	}
-	struct shmid_ds shmid_ds;
-	struct iovec local = {
-		.iov_base = &shmid_ds,
-		.iov_len = sizeof(shmid_ds),
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(shmid_ds),
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_SHMID_DS_STRUCT", "process_vm_readv failed", true);
-		return 0;
-	}
+	STRUCT_HANDLE(struct shmid_ds, shmid_ds);
 	return ft_dprintf(
 		STDERR_FILENO,
 		"{shm_perm={uid=%d, gid=%d, mode=%#o, key=%d, cuid=%d, cgid=%d}, shm_segsz=%llu, "

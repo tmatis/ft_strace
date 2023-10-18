@@ -57,15 +57,7 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 		total_len = ret;
 	}
 	struct msghdr msghdr;
-	struct iovec local = {
-		.iov_base = &msghdr,
-		.iov_len = sizeof(msghdr),
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(msghdr),
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
+	if (remote_memcpy(&msghdr, context->pid, (void *)value, sizeof(struct msghdr)) < 0)
 	{
 		log_error("log_msghdr_struct", "process_vm_readv failed", true);
 		return 0;
@@ -74,10 +66,10 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 	size_written += ft_dprintf(STDERR_FILENO, "{msg_name=");
 	size_written += log_SOCKADDR_STRUCT((uint64_t)msghdr.msg_name, context);
 	size_written += ft_dprintf(STDERR_FILENO, ", msg_namelen=%u, msg_iov=", msghdr.msg_namelen);
-	size_written += log_remote_iovec_struct(msghdr.msg_iov, msghdr.msg_iovlen, context->pid, total_len);
-		size_written +=
-		ft_dprintf(STDERR_FILENO,
-				   ", msg_iovlen=%u, msg_control=%p, msg_controllen=%u, msg_flags=%u}",
-				   msghdr.msg_iovlen, msghdr.msg_control, msghdr.msg_controllen, msghdr.msg_flags);
+	size_written +=
+		log_remote_iovec_struct(msghdr.msg_iov, msghdr.msg_iovlen, context->pid, total_len);
+	size_written += ft_dprintf(
+		STDERR_FILENO, ", msg_iovlen=%u, msg_control=%p, msg_controllen=%u, msg_flags=%u}",
+		msghdr.msg_iovlen, msghdr.msg_control, msghdr.msg_controllen, msghdr.msg_flags);
 	return size_written;
 }

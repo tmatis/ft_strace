@@ -44,8 +44,10 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/syscall_log.c \
 		syscall/syscall_log_param.c  \
 		syscall/syscall_is_execve.c \
-		syscall/param_log/flags_log.c \
-		syscall/param_log/option_log.c \
+		syscall/param_log/utils/flags_log.c \
+		syscall/param_log/utils/option_log.c \
+		syscall/param_log/utils/remote_memcpy.c \
+		syscall/param_log/utils/handle_ptr.c \
 		syscall/param_log/log_int.c \
 		syscall/param_log/log_signed_int.c \
 		syscall/param_log/log_none.c \
@@ -91,6 +93,9 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_shutdown_how.c \
 		syscall/param_log/log_argv.c \
 		syscall/param_log/log_envp.c \
+		syscall/param_log/log_wait_options.c \
+		syscall/param_log/log_wait_status.c \
+		syscall/param_log/log_rusage_struct.c \
 		syscall/syscall_handle.c
 
 # registers srcs

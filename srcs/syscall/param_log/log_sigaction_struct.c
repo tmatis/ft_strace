@@ -42,23 +42,9 @@ static int log_sa_handler(__sighandler_t handler)
  */
 int log_SIGACTION_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-	if (value == 0)
-		return ft_dprintf(STDERR_FILENO, "NULL");
-	if (context->after_syscall)
-	{
-		int64_t return_value = registers_get_return(context->regs, context->type);
-		if (return_value < 0)
-			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-	}
-	struct kernel_sigaction sigaction;
-	struct iovec local = {.iov_base = &sigaction, .iov_len = sizeof(struct sigaction)};
-	struct iovec remote = {.iov_base = (void *)value, .iov_len = sizeof(struct sigaction)};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_SIGACTION_STRUCT", "process_vm_readv failed", true);
-		return 0;
-	}
-	int size_written = ft_dprintf(STDERR_FILENO, "{sa_handler=");
+	STRUCT_HANDLE(struct kernel_sigaction, sigaction);
+	int size_written = 0;
+	size_written += ft_dprintf(STDERR_FILENO, "{sa_handler=");
 	size_written += log_sa_handler(sigaction._sa_handler);
 	size_written += ft_dprintf(STDERR_FILENO, ", sa_mask=");
 	size_written += log_local_sigset_struct(&sigaction.sa_mask);

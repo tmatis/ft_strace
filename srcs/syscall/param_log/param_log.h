@@ -54,6 +54,39 @@ int option_log(uint64_t value, const flag_str_t *options, size_t options_size,
 			   const char *default_name);
 
 /**
+ * @brief Copy memory from a process to another
+ *
+ * @param dest the destination address
+ * @param pid the pid of the process to copy from
+ * @param src the source address
+ * @param len the length of the memory to copy
+ * @return int 0 on success, -1 on error
+ */
+int remote_memcpy(void *dest, pid_t pid, void *src, size_t len);
+
+/**
+ * @brief Handle a pointer value
+ * 
+ * @param value the pointer value
+ * @param context the syscall context
+ * @param size_written the number of bytes written
+ * @return void* 
+ */
+void *handle_ptr(uint64_t value, syscall_log_param_t *context, int *size_written);
+
+#define STRUCT_HANDLE(struct_type, struct_name)                                                                 \
+	int _size_written = 0;                                                                          \
+	void *remote_ptr = handle_ptr(value, context, &_size_written);                                  \
+	if (remote_ptr == NULL)                                                                        \
+		return _size_written;                                                                       \
+	struct_type struct_name;                                                                \
+	if (remote_memcpy(&struct_name, context->pid, remote_ptr, sizeof(struct_type)) < 0)     \
+	{                                                                                              \
+		log_error("log_" #struct_type, "failed to read struct", true);                             \
+		return _size_written;                                                                       \
+	}
+
+/**
  * @brief log a hexadecimal value
  *
  * @param value
@@ -112,7 +145,7 @@ int log_MEMSEG(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log a remote string
- * 
+ *
  * @param pid the pid of the remote process
  * @param remote_str the remote string
  * @param max_size the max size of the string
@@ -435,7 +468,7 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log int ptr
- * 
+ *
  * @param value the ptr to int
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -451,7 +484,7 @@ int log_SHUTDOWN_HOW(uint64_t value);
 
 /**
  * @brief Log argv
- * 
+ *
  * @param value argv
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -460,9 +493,35 @@ int log_ARGV(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log envp struct
- * 
+ *
  * @param value the ptr to envp
  * @param context the context of the syscall
  * @return int the number of bytes written
  */
 int log_ENVP(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log wait options
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_WAIT_OPTIONS(uint64_t value);
+
+/**
+ * @brief Log wait status
+ *
+ * @param value the ptr to wait status
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_WAIT_STATUS(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log a rusage struct
+ *
+ * @param value the ptr to rusage
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_RUSAGE_STRUCT(uint64_t value, syscall_log_param_t *context);

@@ -67,15 +67,7 @@ int log_POLL_FDS(uint64_t value, syscall_log_param_t *context)
 		log_error("log_POLL_FDS", "malloc failed", true);
 		return 0;
 	}
-	struct iovec local = {
-		.iov_base = fds,
-		.iov_len = sizeof(struct pollfd) * fd_count,
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(struct pollfd) * fd_count,
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
+	if (remote_memcpy(fds, context->pid, (void *)value, sizeof(struct pollfd) * fd_count) < 0)
 	{
 		log_error("log_POLL_FDS", "process_vm_readv failed", true);
 		free(fds);

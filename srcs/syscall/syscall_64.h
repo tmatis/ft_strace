@@ -72,4 +72,7 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[57] = {"fork", INT, {NONE}},
 	[58] = {"vfork", INT, {NONE}},
 	[59] = {"execve", INT, {-STRING, -ARGV, -ENVP, NONE}},
+	[60] = {"exit", INT, {-INT, NONE}},
+	[61] = {"wait4", INT, {-INT, WAIT_STATUS, WAIT_OPTIONS, RUSAGE_STRUCT}},
+	[62] = {"kill", INT, {-INT, -SIGNAL_NAME}},
 };

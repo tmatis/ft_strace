@@ -22,27 +22,6 @@ typedef struct kernel_timespec
  */
 int log_KERNEL_TIMESPEC_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-    if (value == 0)
-        return ft_dprintf(STDERR_FILENO, "NULL");
-    if (context->after_syscall)
-    {
-        int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
-        if (ret < 0)
-            return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-    }
-    kernel_timespec_t timespec;
-    struct iovec local = {
-        .iov_base = &timespec,
-        .iov_len = sizeof(timespec),
-    };
-    struct iovec remote = {
-        .iov_base = (void *)value,
-        .iov_len = sizeof(timespec),
-    };
-    if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-    {
-        log_error("log_kernel_timespec_struct", "process_vm_readv failed", true);
-        return 0;
-    }
+    STRUCT_HANDLE(kernel_timespec_t, timespec);
     return ft_dprintf(STDERR_FILENO, "{tv_sec=%ld, tv_nsec=%ld}", timespec.tv_sec, timespec.tv_nsec);
 }

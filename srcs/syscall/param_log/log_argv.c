@@ -28,19 +28,8 @@ int log_ARGV(uint64_t value, syscall_log_param_t *context)
 	while (true)
 	{
 		char *addr_remote_str = NULL;
-		struct iovec local = {
-			.iov_base = &addr_remote_str,
-			.iov_len = sizeof(char *),
-		};
-		struct iovec remote = {
-			.iov_base = str_tab,
-			.iov_len = sizeof(char *),
-		};
-		if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-		{
-			log_error("log_ARGV", "process_vm_readv failed", true);
-			return 0;
-		}
+		if (remote_memcpy(&addr_remote_str, context->pid, str_tab, sizeof(char *)) < 0)
+			break;
 		if (addr_remote_str == NULL)
 			break;
 		if (!first)

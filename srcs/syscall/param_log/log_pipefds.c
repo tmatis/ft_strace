@@ -16,24 +16,12 @@
  */
 int log_PIPEFDS(uint64_t value, syscall_log_param_t *context)
 {
-    if (value == 0)
-        return ft_dprintf(STDERR_FILENO, "NULL");
-    if (context->after_syscall)
-    {
-        int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
-        if (ret < 0)
-            return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-    }
+    int size_written = 0;
+    void *remote_ptr = handle_ptr(value, context, &size_written);
+    if (remote_ptr == NULL)
+        return size_written;
     int fds[2];
-    struct iovec local = {
-        .iov_base = fds,
-        .iov_len = sizeof(fds),
-    };
-    struct iovec remote = {
-        .iov_base = (void *)value,
-        .iov_len = sizeof(fds),
-    };
-    if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
+    if (remote_memcpy(fds, context->pid, remote_ptr, sizeof(fds)) < 0)
     {
         log_error("log_PIPEFDS", "process_vm_readv failed", true);
         return 0;

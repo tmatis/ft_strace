@@ -18,28 +18,7 @@
  */
 int log_SOCKADDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-    if (value == 0)
-        return ft_dprintf(STDERR_FILENO, "NULL");
-    if (context->after_syscall)
-    {
-        int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
-        if (ret < 0)
-            return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-    }
-    struct sockaddr sockaddr;
-    struct iovec local = {
-        .iov_base = &sockaddr,
-        .iov_len = sizeof(sockaddr),
-    };
-    struct iovec remote = {
-        .iov_base = (void *)value,
-        .iov_len = sizeof(sockaddr),
-    };
-    if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-    {
-        log_error("log_SOCKADDR_STRUCT", "process_vm_readv failed", true);
-        return 0;
-    }
+    STRUCT_HANDLE(struct sockaddr, sockaddr);
     if (sockaddr.sa_family == AF_INET)
     {
         struct sockaddr_in *sockaddr_in = (struct sockaddr_in *)&sockaddr;

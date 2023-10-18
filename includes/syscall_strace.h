@@ -56,6 +56,9 @@
 #define SHUTDOWN_HOW 42
 #define ARGV 43
 #define ENVP 44
+#define WAIT_OPTIONS 45
+#define WAIT_STATUS 46
+#define RUSAGE_STRUCT 47
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

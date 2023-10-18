@@ -67,15 +67,8 @@ int log_POLL_FDS_AFTER(uint64_t value, syscall_log_param_t *context)
 		return 0;
 	}
 	unsigned int fd_count = registers_get_param(context->regs, context->type, 1);
-	struct iovec local = {
-		.iov_base = fds,
-		.iov_len = sizeof(struct pollfd) * fd_count,
-	};
-	struct iovec remote = {
-		.iov_base = (void *)registers_get_param(context->regs, context->type, 0),
-		.iov_len = sizeof(struct pollfd) * fd_count,
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
+	void *remote = (void *)registers_get_param(context->regs, context->type, 0);
+	if (remote_memcpy(fds, context->pid, remote, sizeof(struct pollfd) * fd_count) < 0)
 	{
 		log_error("log_POLL_FDS_AFTER", "process_vm_readv failed", true);
 		free(fds);

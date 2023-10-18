@@ -57,21 +57,6 @@ int log_local_sigset_struct(sigset_t *sigset)
  */
 int log_SIGSET_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-	if (value == 0)
-		return ft_dprintf(STDERR_FILENO, "NULL");
-	if (context->after_syscall)
-	{
-		int64_t return_syscall = registers_get_return(context->regs, context->type);
-		if (return_syscall < 0)
-			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-	}
-	sigset_t sigset;
-	struct iovec local = {.iov_base = &sigset, .iov_len = sizeof(sigset_t)};
-	struct iovec remote = {.iov_base = (void *)value, .iov_len = sizeof(sigset_t)};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_SIGSET_STRUCT", "process_vm_readv failed", true);
-		return 0;
-	}
+	STRUCT_HANDLE(sigset_t, sigset);
 	return log_local_sigset_struct(&sigset);
 }

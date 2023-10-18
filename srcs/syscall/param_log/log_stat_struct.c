@@ -23,28 +23,7 @@ static const flag_str_t flags[] = {
  */
 int log_STAT_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-	if (value == 0)
-		return ft_dprintf(STDERR_FILENO, "NULL");
-	if (context->after_syscall)
-	{
-		int64_t ret = registers_get_return(context->regs, context->type);
-		if (ret < 0)
-			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-	}
-	struct stat stat;
-	struct iovec local = {
-		.iov_base = &stat,
-		.iov_len = sizeof(stat),
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(stat),
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_STAT_STRUCT", "process_vm_readv failed", true);
-		return 0;
-	}
+	STRUCT_HANDLE(struct stat, stat);
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "{st_mode=");
 	bool_t first = true;

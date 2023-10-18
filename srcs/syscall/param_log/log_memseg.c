@@ -26,15 +26,10 @@ int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size)
 		log_error("log_MEM", "malloc failed", true);
 		return 0;
 	}
-	struct iovec local;
-	struct iovec remote;
-	local.iov_base = buffer;
-	local.iov_len = to_read;
-	remote.iov_base = remote_ptr;
-	remote.iov_len = to_read;
-	if (process_vm_readv(pid, &local, 1, &remote, 1, 0) < 0)
+	if (remote_memcpy(buffer, pid, remote_ptr, to_read) < 0)
 	{
-		log_error("log_MEM", "process_vm_readv failed", true);
+		free(buffer);
+		log_error("log_MEM", "remote_memcpy failed", true);
 		return 0;
 	}
 	char *escaped_buffer = ft_escape(buffer, to_read);
