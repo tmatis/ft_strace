@@ -72,7 +72,7 @@ void syscall_log_params_return(pid_t pid, int syscall_no, register_type_t regs_b
 	size_written += ft_dprintf(STDERR_FILENO, ")");
 	// write padding
 	ft_dprintf(STDERR_FILENO, "%*s", PADDING_SIZE - size_written, " = ");
-	if (errno_value == ERESTARTSYS) // if ERESTARTSYS
+	if (errno_value == ERESTARTSYS)
 	{
 		ft_dprintf(STDERR_FILENO, "?");
 		ft_dprintf(STDERR_FILENO, " %s (%s)", "ERESTARTSYS",

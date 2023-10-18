@@ -36,7 +36,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(MREMAP_FLAGS),
 	ADD_LOGGER(MSYNC_FLAGS),
 	ADD_LOGGER(MADVISE_ADVISE),
-	ADD_LOGGER(SHMGET_FLAGS),
+	ADD_LOGGER(IPCS_FLAGS),
 	ADD_LOGGER(SHMAT_FLAGS),
 	ADD_LOGGER(SHMID_DS_STRUCT),
 	ADD_LOGGER(SHMCTL_CMD),
@@ -56,6 +56,11 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(WAIT_OPTIONS),
 	ADD_LOGGER(WAIT_STATUS),
 	ADD_LOGGER(RUSAGE_STRUCT),
+	ADD_LOGGER(UTSNAME_STRUCT),
+	ADD_LOGGER(SEMBUF_STRUCT),
+	ADD_LOGGER(SEMCTL_CMD),
+	ADD_LOGGER(MSGBUF_STRUCT),
+	ADD_LOGGER(MSGFLG),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

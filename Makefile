@@ -76,7 +76,6 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_mremap_flags.c \
 		syscall/param_log/log_msync_flags.c \
 		syscall/param_log/log_madvise_advise.c \
-		syscall/param_log/log_shmget_flags.c \
 		syscall/param_log/log_shmat_flags.c \
 		syscall/param_log/log_shmid_ds_struct.c \
 		syscall/param_log/log_shmctl_cmd.c \
@@ -96,6 +95,12 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_wait_options.c \
 		syscall/param_log/log_wait_status.c \
 		syscall/param_log/log_rusage_struct.c \
+		syscall/param_log/log_utsname_struct.c \
+		syscall/param_log/log_sembuf_struct.c \
+		syscall/param_log/log_ipcs_flags.c \
+		syscall/param_log/log_semctl_cmd.c \
+		syscall/param_log/log_msgbuf_struct.c \
+		syscall/param_log/log_msgflg.c \
 		syscall/syscall_handle.c
 
 # registers srcs

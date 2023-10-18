@@ -39,7 +39,7 @@
 #define MREMAP_FLAGS 25
 #define MSYNC_FLAGS 26
 #define MADVISE_ADVISE 27
-#define SHMGET_FLAGS 28
+#define IPCS_FLAGS 28
 #define SHMAT_FLAGS 29
 #define SHMID_DS_STRUCT 30
 #define SHMCTL_CMD 31
@@ -59,6 +59,11 @@
 #define WAIT_OPTIONS 45
 #define WAIT_STATUS 46
 #define RUSAGE_STRUCT 47
+#define UTSNAME_STRUCT 48
+#define SEMBUF_STRUCT 49
+#define SEMCTL_CMD 50
+#define MSGBUF_STRUCT 51
+#define MSGFLG 52
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/uio.h>
+#include <ft_strace_utils.h>
 
 typedef struct
 {
@@ -66,24 +67,24 @@ int remote_memcpy(void *dest, pid_t pid, void *src, size_t len);
 
 /**
  * @brief Handle a pointer value
- * 
+ *
  * @param value the pointer value
  * @param context the syscall context
  * @param size_written the number of bytes written
- * @return void* 
+ * @return void*
  */
 void *handle_ptr(uint64_t value, syscall_log_param_t *context, int *size_written);
 
-#define STRUCT_HANDLE(struct_type, struct_name)                                                                 \
-	int _size_written = 0;                                                                          \
-	void *remote_ptr = handle_ptr(value, context, &_size_written);                                  \
+#define STRUCT_HANDLE(struct_type, struct_name)                                                    \
+	int _size_written = 0;                                                                         \
+	void *remote_ptr = handle_ptr(value, context, &_size_written);                                 \
 	if (remote_ptr == NULL)                                                                        \
-		return _size_written;                                                                       \
-	struct_type struct_name;                                                                \
-	if (remote_memcpy(&struct_name, context->pid, remote_ptr, sizeof(struct_type)) < 0)     \
+		return _size_written;                                                                      \
+	struct_type struct_name;                                                                       \
+	if (remote_memcpy(&struct_name, context->pid, remote_ptr, sizeof(struct_type)) < 0)            \
 	{                                                                                              \
 		log_error("log_" #struct_type, "failed to read struct", true);                             \
-		return _size_written;                                                                       \
+		return _size_written;                                                                      \
 	}
 
 /**
@@ -358,14 +359,6 @@ int log_MSYNC_FLAGS(uint64_t value);
 int log_MADVISE_ADVISE(uint64_t value);
 
 /**
- * @brief Log shmget flags
- *
- * @param value the value to log
- * @return int the number of bytes written
- */
-int log_SHMGET_FLAGS(uint64_t value);
-
-/**
  * @brief Log shmat flags
  *
  * @param value the value to log
@@ -525,3 +518,54 @@ int log_WAIT_STATUS(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_RUSAGE_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log a utsname struct
+ *
+ * @param value the ptr to utsname struct
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_UTSNAME_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log ipcs flags
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_IPCS_FLAGS(uint64_t value);
+
+/**
+ * @brief Log sembuf struct
+ *
+ * @param value the ptr to sembuf
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_SEMBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log shmctl cmd
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_SEMCTL_CMD(uint64_t value);
+
+/**
+ * @brief Log a msgbuf struct
+ * 
+ * @param value the pointer to the msgbuf struct
+ * @param context the syscall context
+ * @return int the number of bytes written
+ */
+int log_MSGBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log msgflg
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MSGFLG(uint64_t value);
