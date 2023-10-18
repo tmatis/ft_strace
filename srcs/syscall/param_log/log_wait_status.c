@@ -56,28 +56,7 @@ static int log_wait_status(int status)
  */
 int log_WAIT_STATUS(uint64_t value, syscall_log_param_t *context)
 {
-	if (value == 0)
-		return ft_dprintf(STDERR_FILENO, "NULL");
-	if (context->after_syscall)
-	{
-		int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
-		if (ret < 0)
-			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
-	}
-	int status;
-	struct iovec local = {
-		.iov_base = &status,
-		.iov_len = sizeof(status),
-	};
-	struct iovec remote = {
-		.iov_base = (void *)value,
-		.iov_len = sizeof(status),
-	};
-	if (process_vm_readv(context->pid, &local, 1, &remote, 1, 0) < 0)
-	{
-		log_error("log_WAIT_STATUS", "process_vm_readv failed", true);
-		return 0;
-	}
+	STRUCT_HANDLE(int, status);
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "[");
     size_written += log_wait_status(status);
