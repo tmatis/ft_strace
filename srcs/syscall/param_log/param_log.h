@@ -644,3 +644,12 @@ int log_RUSAGE_WHO(uint64_t value);
  * @return int the number of bytes written
  */
 int log_SYSINFO_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log tms struct
+ *
+ * @param value the ptr to tms struct
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_TMS_STRUCT(uint64_t value, syscall_log_param_t *context);

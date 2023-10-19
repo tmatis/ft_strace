@@ -112,4 +112,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[97] = {"getrlimit", INT, {-RLIMIT_RESOURCE, RLIMIT_STRUCT, NONE}},
 	[98] = {"getrusage", INT, {-RUSAGE_WHO, RUSAGE_STRUCT, NONE}},
 	[99] = {"sysinfo", INT, {SYSINFO_STRUCT, NONE}},
+	[100] = {"times", INT, {TMS_STRUCT, NONE}},
 };
