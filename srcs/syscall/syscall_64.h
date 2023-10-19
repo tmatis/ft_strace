@@ -111,4 +111,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[96] = {"gettimeofday", INT, {TIMEVAL_STRUCT, TIMEZONE_STRUCT, NONE}},
 	[97] = {"getrlimit", INT, {-RLIMIT_RESOURCE, RLIMIT_STRUCT, NONE}},
 	[98] = {"getrusage", INT, {-RUSAGE_WHO, RUSAGE_STRUCT, NONE}},
+	[99] = {"sysinfo", INT, {SYSINFO_STRUCT, NONE}},
 };

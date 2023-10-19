@@ -635,3 +635,12 @@ int log_RLIMIT_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_RUSAGE_WHO(uint64_t value);
+
+/**
+ * @brief Log sysinfo struct
+ *
+ * @param value the ptr to sysinfo struct
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_SYSINFO_STRUCT(uint64_t value, syscall_log_param_t *context);

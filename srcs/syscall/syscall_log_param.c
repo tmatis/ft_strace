@@ -69,6 +69,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(RLIMIT_RESOURCE),
 	ADD_LOGGER(RLIMIT_STRUCT),
 	ADD_LOGGER(RUSAGE_WHO),
+	ADD_LOGGER(SYSINFO_STRUCT),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

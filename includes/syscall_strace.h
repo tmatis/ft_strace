@@ -72,6 +72,7 @@
 #define RLIMIT_RESOURCE 58
 #define RLIMIT_STRUCT 59
 #define RUSAGE_WHO 60
+#define SYSINFO_STRUCT 61
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
