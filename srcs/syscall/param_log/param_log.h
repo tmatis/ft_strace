@@ -602,3 +602,11 @@ int log_FCNTL_CMD(uint64_t value);
  * @return int the number of bytes written
  */
 int log_FLOCK_CMD(uint64_t value);
+
+/**
+ * @brief Log timezone struct
+ *
+ * @param value the ptr to timezone struct
+ * @return int the number of bytes written
+ */
+int log_TIMEZONE_STRUCT(uint64_t value, syscall_log_param_t *context);

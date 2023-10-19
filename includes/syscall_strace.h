@@ -68,6 +68,7 @@
 #define MSQID_DS_STRUCT 54
 #define FCNTL_CMD 55
 #define FLOCK_CMD 56
+#define TIMEZONE_STRUCT 57
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

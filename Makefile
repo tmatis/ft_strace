@@ -105,6 +105,7 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_msqid_ds_struct.c \
 		syscall/param_log/log_fcntl_cmd.c \
 		syscall/param_log/log_flock_cmd.c \
+		syscall/param_log/log_timezone_struct.c \
 		syscall/syscall_handle.c
 
 # registers srcs
