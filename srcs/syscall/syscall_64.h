@@ -108,5 +108,7 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[93] = {"fchown", INT, {-INT, -INT, -INT, NONE}},
 	[94] = {"lchown", INT, {-STRING, -INT, -INT, NONE}},
 	[95] = {"umask", INT, {-OPEN_MODE, NONE}},
-	[96] = {"gettimeofday", INT, {TIMEVAL_STRUCT, TIMEZONE_STRUCT, NONE}}
+	[96] = {"gettimeofday", INT, {TIMEVAL_STRUCT, TIMEZONE_STRUCT, NONE}},
+	[97] = {"getrlimit", INT, {-RLIMIT_RESOURCE, RLIMIT_STRUCT, NONE}},
+	[98] = {"getrusage", INT, {-RUSAGE_WHO, RUSAGE_STRUCT, NONE}},
 };

@@ -610,3 +610,28 @@ int log_FLOCK_CMD(uint64_t value);
  * @return int the number of bytes written
  */
 int log_TIMEZONE_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log rlimit resource
+ *
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_RLIMIT_RESOURCE(uint64_t value);
+
+/**
+ * @brief Log rlimit struct
+ * 
+ * @param value the value to log
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_RLIMIT_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log rusage who
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_RUSAGE_WHO(uint64_t value);
