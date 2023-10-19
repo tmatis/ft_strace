@@ -64,6 +64,8 @@
 #define SEMCTL_CMD 50
 #define MSGBUF_STRUCT 51
 #define MSGFLG 52
+#define MSGCTL_CMD 53
+#define MSQID_DS_STRUCT 54
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

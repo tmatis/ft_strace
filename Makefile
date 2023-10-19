@@ -101,6 +101,8 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_semctl_cmd.c \
 		syscall/param_log/log_msgbuf_struct.c \
 		syscall/param_log/log_msgflg.c \
+		syscall/param_log/log_msgctl_cmd.c \
+		syscall/param_log/log_msqid_ds_struct.c \
 		syscall/syscall_handle.c
 
 # registers srcs

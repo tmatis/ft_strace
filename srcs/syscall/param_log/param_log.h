@@ -569,3 +569,20 @@ int log_MSGBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_MSGFLG(uint64_t value);
+
+/**
+ * @brief Log shmctl cmd
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_MSGCTL_CMD(uint64_t value);
+
+/**
+ * @brief Log a msqid_ds struct
+ * 
+ * @param value the value to log
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_MSQID_DS_STRUCT(uint64_t value, syscall_log_param_t *context);

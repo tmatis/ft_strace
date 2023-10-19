@@ -83,4 +83,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[68] = {"msgget", INT, {-HEX, -IPCS_FLAGS, NONE}},
 	[69] = {"msgsnd", INT, {-INT, -MSGBUF_STRUCT, -INT, -MSGFLG, NONE}},
 	[70] = {"msgrcv", INT, {-INT, MSGBUF_STRUCT, INT, INT, MSGFLG, NONE}},
+	[71] = {"msgctl", INT, {-INT, -MSGCTL_CMD, MSQID_DS_STRUCT, NONE}},
 };

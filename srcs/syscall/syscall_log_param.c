@@ -61,6 +61,8 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(SEMCTL_CMD),
 	ADD_LOGGER(MSGBUF_STRUCT),
 	ADD_LOGGER(MSGFLG),
+	ADD_LOGGER(MSGCTL_CMD),
+	ADD_LOGGER(MSQID_DS_STRUCT),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
