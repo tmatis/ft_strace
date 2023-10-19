@@ -84,4 +84,11 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[69] = {"msgsnd", INT, {-INT, -MSGBUF_STRUCT, -INT, -MSGFLG, NONE}},
 	[70] = {"msgrcv", INT, {-INT, MSGBUF_STRUCT, INT, INT, MSGFLG, NONE}},
 	[71] = {"msgctl", INT, {-INT, -MSGCTL_CMD, MSQID_DS_STRUCT, NONE}},
+	[72] = {"fcntl", INT, {-INT, -FCNTL_CMD, -HEX, NONE}},
+	[73] = {"flock", INT, {-INT, -FLOCK_CMD, NONE}},
+	[74] = {"fsync", INT, {-INT, NONE}},
+	[75] = {"fdatasync", INT, {-INT, NONE}},
+	[76] = {"truncate", INT, {-STRING, -INT, NONE}},
+	[77] = {"ftruncate", INT, {-INT, -INT, NONE}},
+	
 };
