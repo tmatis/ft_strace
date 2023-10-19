@@ -653,3 +653,11 @@ int log_SYSINFO_STRUCT(uint64_t value, syscall_log_param_t *context);
  * @return int the number of bytes written
  */
 int log_TMS_STRUCT(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log ptrace request
+ * 
+ * @param value the value to log
+ * @return int the number of bytes written
+ */
+int log_PTRACE_REQUEST(uint64_t value);

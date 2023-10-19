@@ -113,4 +113,5 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[98] = {"getrusage", INT, {-RUSAGE_WHO, RUSAGE_STRUCT, NONE}},
 	[99] = {"sysinfo", INT, {SYSINFO_STRUCT, NONE}},
 	[100] = {"times", INT, {TMS_STRUCT, NONE}},
+	[101] = {"ptrace", INT, {-PTRACE_REQUEST, -INT, -PTR, -HEX}},
 };
