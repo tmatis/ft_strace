@@ -118,6 +118,8 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_sigaltstack_struct.c \
 		syscall/param_log/log_utimbuf_struct.c \
 		syscall/param_log/log_personality_flags.c \
+		syscall/param_log/log_ustat_struct.c \
+		syscall/param_log/log_statfs_struct.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

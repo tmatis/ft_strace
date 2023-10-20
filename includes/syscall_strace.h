@@ -81,6 +81,8 @@
 #define SIGALTSTACK_STRUCT 67
 #define UTIMBUF_STRUCT 68
 #define PERSONALITY_FLAGS 69
+#define USTAT_STRUCT 70
+#define STATFS_STRUCT 71
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

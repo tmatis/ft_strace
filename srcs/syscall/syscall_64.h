@@ -148,4 +148,7 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[133] = {"mknod", INT, {-STRING, -OPEN_MODE, -INT, NONE}},
 	[134] = {"uselib", INT, {-STRING, NONE}},
 	[135] = {"personality", INT, {-PERSONALITY_FLAGS, NONE}},
+	[136] = {"ustat", INT, {-INT, USTAT_STRUCT, NONE}},
+	[137] = {"statfs", INT, {-STRING, STAT_STRUCT, NONE}},
+	[138] = {"fstatfs", INT, {-INT, STAT_STRUCT, NONE}},
 };
