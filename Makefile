@@ -121,6 +121,13 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_ustat_struct.c \
 		syscall/param_log/log_statfs_struct.c \
 		syscall/param_log/log_priority_which.c \
+		syscall/param_log/log_sched_param_struct.c \
+		syscall/param_log/log_sched_setscheduler_policy.c \
+		syscall/param_log/log_mlockall_flags.c \
+		syscall/param_log/log_prctl_option.c \
+		syscall/param_log/log_kernel_timex_struct.c \
+		syscall/param_log/log_mount_flags.c \
+		syscall/param_log/log_swap_flags.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

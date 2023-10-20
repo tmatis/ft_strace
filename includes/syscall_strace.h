@@ -84,6 +84,13 @@
 #define USTAT_STRUCT 70
 #define STATFS_STRUCT 71
 #define PRIORITY_WHICH 72
+#define SCHED_PARAM_STRUCT 73
+#define SCHED_SETCHEDULER_POLICY 74
+#define MLOCKALL_FLAGS 75
+#define PRCTL_OPTION 76
+#define KERNEL_TIMEX_STRUCT 77
+#define MOUNT_FLAGS 78
+#define SWAP_FLAGS 79
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

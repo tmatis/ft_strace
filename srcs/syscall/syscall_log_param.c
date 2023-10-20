@@ -81,6 +81,13 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(USTAT_STRUCT),
 	ADD_LOGGER(STATFS_STRUCT),
 	ADD_LOGGER(PRIORITY_WHICH),
+	ADD_LOGGER(SCHED_PARAM_STRUCT),
+	ADD_LOGGER(SCHED_SETCHEDULER_POLICY),
+	ADD_LOGGER(MLOCKALL_FLAGS),
+	ADD_LOGGER(PRCTL_OPTION),
+	ADD_LOGGER(KERNEL_TIMEX_STRUCT),
+	ADD_LOGGER(MOUNT_FLAGS),
+	ADD_LOGGER(SWAP_FLAGS),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
