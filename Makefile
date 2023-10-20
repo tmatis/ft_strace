@@ -113,6 +113,11 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_tms_struct.c \
 		syscall/param_log/log_ptrace_request.c \
 		syscall/param_log/log_syslog_type.c \
+		syscall/param_log/log_int_array.c \
+		syscall/param_log/log_siginfo.c \
+		syscall/param_log/log_sigaltstack_struct.c \
+		syscall/param_log/log_utimbuf_struct.c \
+		syscall/param_log/log_personality_flags.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

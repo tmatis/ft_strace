@@ -669,3 +669,24 @@ int log_PTRACE_REQUEST(uint64_t value);
  * @return int the number of bytes written
  */
 int log_SYSLOG_TYPE(uint64_t value);
+
+/**
+ * @brief Log a int array
+ * 
+ * @param value the pointer to the array
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_INT_ARRAY(uint64_t value, syscall_log_param_t *context);
+
+/**
+ * @brief Log siginfo struct
+ * 
+ * @param value the pointer to the siginfo struct
+ * @param context the context of the syscall
+ * @return int the number of bytes written
+ */
+int log_SIGINFO(uint64_t value, syscall_log_param_t *context);
+int log_SIGALTSTACK_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_UTIMBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_PERSONALITY_FLAGS(uint64_t value);

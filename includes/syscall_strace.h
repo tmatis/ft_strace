@@ -76,6 +76,11 @@
 #define TMS_STRUCT 62
 #define PTRACE_REQUEST 63
 #define SYSLOG_TYPE 64
+#define INT_ARRAY 65
+#define SIGINFO 66
+#define SIGALTSTACK_STRUCT 67
+#define UTIMBUF_STRUCT 68
+#define PERSONALITY_FLAGS 69
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
