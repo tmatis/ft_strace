@@ -206,4 +206,11 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[191] = {"getxattr", INT, {-STRING, -STRING, -PTR, -INT, NONE}},
 	[192] = {"lgetxattr", INT, {-STRING, -STRING, -PTR, -INT, NONE}},
 	[193] = {"fgetxattr", INT, {-INT, -STRING, -PTR, -INT, NONE}},
+	[194] = {"listxattr", INT, {-STRING, -STRING, -INT, NONE}},
+	[195] = {"llistxattr", INT, {-STRING, -STRING, -INT, NONE}},
+	[196] = {"flistxattr", INT, {-INT, -STRING, -INT, NONE}},
+	[197] = {"removexattr", INT, {-STRING, -STRING, NONE}},
+	[198] = {"lremovexattr", INT, {-STRING, -STRING, NONE}},
+	[199] = {"fremovexattr", INT, {-INT, -STRING, NONE}},
+	[200] = {"tkill", INT, {-INT, -SIGNAL_NAME, NONE}},
 };
