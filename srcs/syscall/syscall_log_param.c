@@ -72,6 +72,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(SYSINFO_STRUCT),
 	ADD_LOGGER(TMS_STRUCT),
 	ADD_LOGGER(PTRACE_REQUEST),
+	ADD_LOGGER(SYSLOG_TYPE),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

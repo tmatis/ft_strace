@@ -75,6 +75,7 @@
 #define SYSINFO_STRUCT 61
 #define TMS_STRUCT 62
 #define PTRACE_REQUEST 63
+#define SYSLOG_TYPE 64
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

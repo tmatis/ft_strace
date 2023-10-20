@@ -112,6 +112,7 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_sysinfo_struct.c \
 		syscall/param_log/log_tms_struct.c \
 		syscall/param_log/log_ptrace_request.c \
+		syscall/param_log/log_syslog_type.c \
 		syscall/syscall_handle.c \
 
 # registers srcs
