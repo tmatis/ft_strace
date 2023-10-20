@@ -151,4 +151,7 @@ static const syscall_description_t x86_64_syscalls[] = {
 	[136] = {"ustat", INT, {-INT, USTAT_STRUCT, NONE}},
 	[137] = {"statfs", INT, {-STRING, STAT_STRUCT, NONE}},
 	[138] = {"fstatfs", INT, {-INT, STAT_STRUCT, NONE}},
+	[139] = {"sysfs", INT, {-INT, -HEX, -HEX, NONE}},
+	[140] = {"getpriority", INT, {-PRIORITY_WHICH, -INT, NONE}},
+	[141] = {"setpriority", INT, {-PRIORITY_WHICH, -INT, -INT, NONE}},
 };

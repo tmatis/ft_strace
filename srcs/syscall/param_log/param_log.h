@@ -692,3 +692,4 @@ int log_UTIMBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_PERSONALITY_FLAGS(uint64_t value);
 int log_USTAT_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_STATFS_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_PRIORITY_WHICH(uint64_t uvalue);

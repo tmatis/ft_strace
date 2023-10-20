@@ -83,6 +83,7 @@
 #define PERSONALITY_FLAGS 69
 #define USTAT_STRUCT 70
 #define STATFS_STRUCT 71
+#define PRIORITY_WHICH 72
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
