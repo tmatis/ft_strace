@@ -88,6 +88,12 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(KERNEL_TIMEX_STRUCT),
 	ADD_LOGGER(MOUNT_FLAGS),
 	ADD_LOGGER(SWAP_FLAGS),
+	ADD_LOGGER(TIME_T),
+	ADD_LOGGER(IO_EVENT_STRUCT),
+	ADD_LOGGER(EPOLL_EVENT_STRUCT),
+	ADD_LOGGER(EPOLL_CTL_CMD),
+	ADD_LOGGER(EPOLL_EVENT_STRUCT_ARRAY),
+	ADD_LOGGER(ADVISE),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

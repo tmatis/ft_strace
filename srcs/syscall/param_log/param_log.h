@@ -1,11 +1,12 @@
 #pragma once
 
 #include <bool_t.h>
+#include <ft_strace_utils.h>
 #include <registers.h>
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#include <ft_strace_utils.h>
+#include <sys/epoll.h>
 
 typedef struct
 {
@@ -547,7 +548,7 @@ int log_SEMBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log shmctl cmd
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -555,7 +556,7 @@ int log_SEMCTL_CMD(uint64_t value);
 
 /**
  * @brief Log a msgbuf struct
- * 
+ *
  * @param value the pointer to the msgbuf struct
  * @param context the syscall context
  * @return int the number of bytes written
@@ -564,7 +565,7 @@ int log_MSGBUF_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log msgflg
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -572,7 +573,7 @@ int log_MSGFLG(uint64_t value);
 
 /**
  * @brief Log shmctl cmd
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -580,7 +581,7 @@ int log_MSGCTL_CMD(uint64_t value);
 
 /**
  * @brief Log a msqid_ds struct
- * 
+ *
  * @param value the value to log
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -589,7 +590,7 @@ int log_MSQID_DS_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log fcntl cmd
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -621,7 +622,7 @@ int log_RLIMIT_RESOURCE(uint64_t value);
 
 /**
  * @brief Log rlimit struct
- * 
+ *
  * @param value the value to log
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -630,7 +631,7 @@ int log_RLIMIT_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log rusage who
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -656,7 +657,7 @@ int log_TMS_STRUCT(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log ptrace request
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -664,7 +665,7 @@ int log_PTRACE_REQUEST(uint64_t value);
 
 /**
  * @brief Log syslog types
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
@@ -672,7 +673,7 @@ int log_SYSLOG_TYPE(uint64_t value);
 
 /**
  * @brief Log a int array
- * 
+ *
  * @param value the pointer to the array
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -681,7 +682,7 @@ int log_INT_ARRAY(uint64_t value, syscall_log_param_t *context);
 
 /**
  * @brief Log siginfo struct
- * 
+ *
  * @param value the pointer to the siginfo struct
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -700,3 +701,10 @@ int log_PRCTL_OPTION(uint64_t value);
 int log_KERNEL_TIMEX_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_MOUNT_FLAGS(uint64_t value);
 int log_SWAP_FLAGS(uint64_t value);
+int log_TIME_T(uint64_t value, syscall_log_param_t *context);
+int log_IO_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_EPOLL_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_EPOLL_CTL_CMD(uint64_t value);
+int log_local_epoll_event_struct(struct epoll_event *local_struct);
+int log_EPOLL_EVENT_STRUCT_ARRAY(uint64_t value, syscall_log_param_t *context);
+int log_ADVISE(uint64_t value);

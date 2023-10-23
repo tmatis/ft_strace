@@ -91,6 +91,12 @@
 #define KERNEL_TIMEX_STRUCT 77
 #define MOUNT_FLAGS 78
 #define SWAP_FLAGS 79
+#define TIME_T 80
+#define IO_EVENT_STRUCT 81
+#define EPOLL_EVENT_STRUCT 82
+#define EPOLL_CTL_CMD 83
+#define EPOLL_EVENT_STRUCT_ARRAY 84
+#define ADVISE 85
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

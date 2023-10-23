@@ -56,5 +56,5 @@ static const flag_str_t prctl_option_flags[] = {
 
 int log_PRCTL_OPTION(uint64_t value)
 {
-    return option_log(value, prctl_option_flags, ELEM_COUNT(prctl_option_flags), "PR_???");
+    return option_log(value, prctl_option_flags, ELEM_COUNT(prctl_option_flags), "ARCH_???");
 }

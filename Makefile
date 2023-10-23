@@ -128,6 +128,12 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_kernel_timex_struct.c \
 		syscall/param_log/log_mount_flags.c \
 		syscall/param_log/log_swap_flags.c \
+		syscall/param_log/log_time_t.c \
+		syscall/param_log/log_io_event_struct.c \
+		syscall/param_log/log_epoll_event_struct.c \
+		syscall/param_log/log_epoll_ctl_cmd.c \
+		syscall/param_log/log_epoll_event_struct_array.c \
+		syscall/param_log/log_advice.c \
 		syscall/syscall_handle.c \
 
 # registers srcs
