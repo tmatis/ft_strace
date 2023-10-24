@@ -134,6 +134,10 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_epoll_ctl_cmd.c \
 		syscall/param_log/log_epoll_event_struct_array.c \
 		syscall/param_log/log_advice.c \
+		syscall/param_log/log_clockid_t.c \
+		syscall/param_log/log_sigevent_struct.c \
+		syscall/param_log/log_timer_settime_flags.c \
+		syscall/param_log/log_itimerspec_struct.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

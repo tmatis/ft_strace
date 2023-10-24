@@ -94,6 +94,11 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(EPOLL_CTL_CMD),
 	ADD_LOGGER(EPOLL_EVENT_STRUCT_ARRAY),
 	ADD_LOGGER(ADVISE),
+	ADD_LOGGER(CLOCKID_T),
+	ADD_LOGGER(SIGEVENT_STRUCT),
+	ADD_LOGGER(TIMER_SETTIME_FLAGS),
+	ADD_LOGGER(KERNEL_ITIMERSPEC_STRUCT),
+	ADD_LOGGER(MQ_ATTR_STRUCT),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

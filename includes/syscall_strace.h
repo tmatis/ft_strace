@@ -97,6 +97,11 @@
 #define EPOLL_CTL_CMD 83
 #define EPOLL_EVENT_STRUCT_ARRAY 84
 #define ADVISE 85
+#define CLOCKID_T 86
+#define SIGEVENT_STRUCT 87
+#define TIMER_SETTIME_FLAGS 88
+#define KERNEL_ITIMERSPEC_STRUCT 89
+#define MQ_ATTR_STRUCT 90
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

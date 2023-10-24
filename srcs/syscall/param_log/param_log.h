@@ -708,3 +708,8 @@ int log_EPOLL_CTL_CMD(uint64_t value);
 int log_local_epoll_event_struct(struct epoll_event *local_struct);
 int log_EPOLL_EVENT_STRUCT_ARRAY(uint64_t value, syscall_log_param_t *context);
 int log_ADVISE(uint64_t value);
+int log_CLOCKID_T(uint64_t value);
+int log_SIGEVENT_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_TIMER_SETTIME_FLAGS(uint64_t value);
+int log_KERNEL_ITIMERSPEC_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_MQ_ATTR_STRUCT(uint64_t value, syscall_log_param_t *context);
