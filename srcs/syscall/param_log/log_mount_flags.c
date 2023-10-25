@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <sys/mount.h>
 #include "param_log.h"
 #include <macros.h>
@@ -27,10 +29,6 @@ static const flag_str_t mount_flags[] = {
     FLAG_STR(MS_I_VERSION),
     FLAG_STR(MS_STRICTATIME),
     FLAG_STR(MS_LAZYTIME),
-    FLAG_STR(MS_SUBMOUNT),
-    FLAG_STR(MS_NOREMOTELOCK),
-    FLAG_STR(MS_NOSEC),
-    FLAG_STR(MS_BORN),
     FLAG_STR(MS_ACTIVE),
     FLAG_STR(MS_NOUSER),
     FLAG_STR(MS_MGC_VAL),

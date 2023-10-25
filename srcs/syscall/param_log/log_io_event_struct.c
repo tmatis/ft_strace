@@ -1,6 +1,13 @@
 #include "param_log.h"
 #include <ft_printf.h>
-#include <libaio.h>
+
+struct io_event
+{
+	uint64_t data;
+	uint64_t obj;
+	int64_t res;
+	int64_t res2;
+};
 
 int log_IO_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
