@@ -1,6 +1,6 @@
 #include "param_log.h"
-#include <sys/resource.h>
 #include <macros.h>
+#include <sys/resource.h>
 static const flag_str_t priority_flags[] = {
 	FLAG_STR(PRIO_PROCESS),
 	FLAG_STR(PRIO_PGRP),

@@ -28,7 +28,7 @@ static void buffer_add_char(buffer_t *buffer, char c)
 
 /**
  * @brief Log a remote string
- * 
+ *
  * @param pid the pid of the remote process
  * @param remote_str the remote string
  * @param max_size the max size of the string

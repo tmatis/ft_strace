@@ -10,7 +10,7 @@
 
 /**
  * @brief Log a utsname struct
- * 
+ *
  * @param value the ptr to utsname struct
  * @param context the context of the syscall
  * @return int the number of bytes written

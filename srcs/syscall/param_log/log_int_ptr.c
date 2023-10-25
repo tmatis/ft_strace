@@ -9,13 +9,13 @@
 
 /**
  * @brief Log int ptr
- * 
+ *
  * @param value the ptr to int
  * @param context the context of the syscall
  * @return int the number of bytes written
  */
 int log_INT_PTR(uint64_t value, syscall_log_param_t *context)
 {
-    STRUCT_HANDLE(int, local_value);
-    return ft_dprintf(STDERR_FILENO, "[%d]", local_value);
+	STRUCT_HANDLE(int, local_value);
+	return ft_dprintf(STDERR_FILENO, "[%d]", local_value);
 }

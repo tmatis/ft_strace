@@ -13,7 +13,7 @@
 
 /**
  * @brief Log wait status
- * 
+ *
  * @param status the status to log
  * @return int the number of bytes written
  */
@@ -49,7 +49,7 @@ static int log_wait_status(int status)
 
 /**
  * @brief Log wait status
- * 
+ *
  * @param value the ptr to wait status
  * @param context the context of the syscall
  * @return int the number of bytes written
@@ -59,7 +59,7 @@ int log_WAIT_STATUS(uint64_t value, syscall_log_param_t *context)
 	STRUCT_HANDLE(int, status);
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "[");
-    size_written += log_wait_status(status);
+	size_written += log_wait_status(status);
 	size_written += ft_dprintf(STDERR_FILENO, "]");
 	return size_written;
 }

@@ -38,7 +38,7 @@ int log_IO_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context)
 		size_written += ft_dprintf(STDERR_FILENO, "{.data=%lu, .obj=%lu, .res=%ld, .res2=%ld}",
 								   events[i].data, events[i].obj, events[i].res, events[i].res2);
 	}
-    size_written += ft_dprintf(STDERR_FILENO, "]");
-    free(events);
-    return size_written;
+	size_written += ft_dprintf(STDERR_FILENO, "]");
+	free(events);
+	return size_written;
 }

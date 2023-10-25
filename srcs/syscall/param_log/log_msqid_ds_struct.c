@@ -6,7 +6,7 @@
 
 /**
  * @brief Log a msqid_ds struct
- * 
+ *
  * @param value the value to log
  * @param context the context of the syscall
  * @return int the number of bytes written

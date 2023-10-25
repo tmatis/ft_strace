@@ -1,8 +1,8 @@
 #define _GNU_SOURCE
 
 #include "param_log.h"
-#include <sys/swap.h>
 #include <macros.h>
+#include <sys/swap.h>
 
 static const flag_str_t swap_flags[] = {
 	FLAG_STR(SWAP_FLAG_PREFER),

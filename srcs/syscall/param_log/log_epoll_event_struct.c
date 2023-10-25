@@ -21,7 +21,7 @@ int log_local_epoll_event_struct(struct epoll_event *event)
 	else
 		size_written += ft_dprintf(STDERR_FILENO, "%lu", event->data.u64);
 	size_written += ft_dprintf(STDERR_FILENO, "}");
-    return size_written;
+	return size_written;
 }
 
 int log_EPOLL_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context)

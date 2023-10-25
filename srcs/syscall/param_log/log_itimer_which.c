@@ -11,7 +11,7 @@ static const flag_str_t flags[] = {
 
 /**
  * @brief Log setitimer which
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */

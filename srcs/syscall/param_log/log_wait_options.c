@@ -13,11 +13,11 @@ static const flag_str_t wait_flags[] = {
 
 /**
  * @brief Log wait options
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
 int log_WAIT_OPTIONS(uint64_t value)
 {
-    return flags_log(value, wait_flags, ELEM_COUNT(wait_flags));
+	return flags_log(value, wait_flags, ELEM_COUNT(wait_flags));
 }

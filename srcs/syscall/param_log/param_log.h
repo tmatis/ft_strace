@@ -4,9 +4,9 @@
 #include <ft_strace_utils.h>
 #include <registers.h>
 #include <stdint.h>
+#include <sys/epoll.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#include <sys/epoll.h>
 
 typedef struct
 {

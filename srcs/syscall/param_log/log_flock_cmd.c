@@ -3,8 +3,8 @@
 #include "param_log.h"
 #include <fcntl.h>
 #include <ft_printf.h>
-#include <unistd.h>
 #include <macros.h>
+#include <unistd.h>
 
 #define F_GETOWNER_UIDS 17
 
@@ -19,11 +19,11 @@ static const flag_str_t fcntl_cmds[] = {
 
 /**
  * @brief Log fcntl cmd
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
 int log_FCNTL_CMD(uint64_t value)
 {
-    return option_log(value, fcntl_cmds, ELEM_COUNT(fcntl_cmds), "F_???");
+	return option_log(value, fcntl_cmds, ELEM_COUNT(fcntl_cmds), "F_???");
 }

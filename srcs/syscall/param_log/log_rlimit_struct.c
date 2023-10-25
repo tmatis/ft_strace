@@ -12,11 +12,11 @@ static const flag_str_t rlimit_max[] = {
 
 static int log_rlimit_cur(uint64_t value)
 {
-    uint64_t n_block = value / 1024;
-    uint64_t n_byte = value % 1024;
-    if (n_block == 0 || n_byte != 0)
-        return ft_dprintf(STDERR_FILENO, "%lu", value);
-    return ft_dprintf(STDERR_FILENO, "%lu*1024", n_block);
+	uint64_t n_block = value / 1024;
+	uint64_t n_byte = value % 1024;
+	if (n_block == 0 || n_byte != 0)
+		return ft_dprintf(STDERR_FILENO, "%lu", value);
+	return ft_dprintf(STDERR_FILENO, "%lu*1024", n_block);
 }
 
 /**

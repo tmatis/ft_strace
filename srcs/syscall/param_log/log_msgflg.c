@@ -1,9 +1,9 @@
 #define _GNU_SOURCE
 
-#include <sys/msg.h>
 #include "param_log.h"
 #include <ft_printf.h>
 #include <macros.h>
+#include <sys/msg.h>
 
 static const flag_str_t flags[] = {
 	FLAG_STR(IPC_NOWAIT),
@@ -14,7 +14,7 @@ static const flag_str_t flags[] = {
 
 /**
  * @brief Log msgflg
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */

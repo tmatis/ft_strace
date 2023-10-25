@@ -10,7 +10,7 @@
 
 /**
  * @brief Log a itimerval struct
- * 
+ *
  * @param value the ptr to itimerval
  * @param context the context of the syscall
  * @return int the number of bytes written

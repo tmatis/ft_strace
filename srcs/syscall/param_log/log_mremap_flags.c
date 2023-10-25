@@ -13,11 +13,11 @@ static const flag_str_t mmap_flags[] = {
 
 /**
  * @brief log mremap flags
- * 
+ *
  * @param value the value to log
  * @return int the number of bytes written
  */
 int log_MREMAP_FLAGS(uint64_t value)
 {
-    return flags_log(value, mmap_flags, ELEM_COUNT(mmap_flags));
+	return flags_log(value, mmap_flags, ELEM_COUNT(mmap_flags));
 }
