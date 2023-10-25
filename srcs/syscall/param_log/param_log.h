@@ -713,3 +713,7 @@ int log_SIGEVENT_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_TIMER_SETTIME_FLAGS(uint64_t value);
 int log_KERNEL_ITIMERSPEC_STRUCT(uint64_t value, syscall_log_param_t *context);
 int log_MQ_ATTR_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_WAITID_WHICH(uint64_t value);
+int log_KEYCTL_CMD(uint64_t value);
+int log_IOPRIO_WHICH(uint64_t value);
+int log_OPENAT_DIRFD(int value);

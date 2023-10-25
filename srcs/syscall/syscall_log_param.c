@@ -99,6 +99,10 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(TIMER_SETTIME_FLAGS),
 	ADD_LOGGER(KERNEL_ITIMERSPEC_STRUCT),
 	ADD_LOGGER(MQ_ATTR_STRUCT),
+	ADD_LOGGER(WAITID_WHICH),
+	ADD_LOGGER(KEYCTL_CMD),
+	ADD_LOGGER(IOPRIO_WHICH),
+	ADD_LOGGER(OPENAT_DIRFD),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

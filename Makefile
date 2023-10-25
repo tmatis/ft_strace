@@ -140,6 +140,9 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_itimerspec_struct.c \
 		syscall/param_log/log_mq_attr_struct.c \
 		syscall/param_log/log_waitid_which.c \
+		syscall/param_log/log_keyctl_cmd.c \
+		syscall/param_log/log_ioprio_which.c \
+		syscall/param_log/log_openat_dirfd.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

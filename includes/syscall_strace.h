@@ -102,6 +102,10 @@
 #define TIMER_SETTIME_FLAGS 88
 #define KERNEL_ITIMERSPEC_STRUCT 89
 #define MQ_ATTR_STRUCT 90
+#define WAITID_WHICH 91
+#define KEYCTL_CMD 92
+#define IOPRIO_WHICH 93
+#define OPENAT_DIRFD 94
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
