@@ -52,6 +52,7 @@ static const flag_str_t prctl_option_flags[] = {
 	FLAG_STR(PR_SET_MM_EXE_FILE),
 	FLAG_STR(PR_SET_MM_MAP),
 	FLAG_STR(PR_SET_MM_MAP_SIZE),
+	FLAG_STR(PR_CAPBSET_READ),
 };
 
 int log_PRCTL_OPTION(uint64_t value)

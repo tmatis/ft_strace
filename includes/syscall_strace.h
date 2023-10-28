@@ -106,6 +106,7 @@
 #define KEYCTL_CMD 92
 #define IOPRIO_WHICH 93
 #define OPENAT_DIRFD 94
+#define RLIMIT64_STRUCT 95
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

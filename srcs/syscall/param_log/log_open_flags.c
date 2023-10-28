@@ -22,5 +22,10 @@ static const flag_str_t flags[] = {
  */
 int log_OPEN_FLAGS(uint64_t value)
 {
-	return flags_log(value, flags, ELEM_COUNT(flags));
+	int size_written = 0;
+	size_written += ft_dprintf(STDERR_FILENO, "O_RDONLY");
+	if (value)
+		size_written += ft_dprintf(STDERR_FILENO, "|");
+	size_written += flags_log(value, flags, ELEM_COUNT(flags));
+	return size_written;
 }

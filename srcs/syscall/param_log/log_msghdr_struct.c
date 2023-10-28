@@ -56,6 +56,9 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		total_len = ret;
 	}
+	else
+		total_len =
+			(int64_t)registers_get_param(context->regs, context->type, context->arg_index + 1);
 	struct msghdr msghdr;
 	if (remote_memcpy(&msghdr, context->pid, (void *)value, sizeof(struct msghdr)) < 0)
 	{
