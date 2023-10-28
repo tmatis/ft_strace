@@ -144,6 +144,7 @@ SRCS += syscall/syscall_get_description.c \
 		syscall/param_log/log_ioprio_which.c \
 		syscall/param_log/log_openat_dirfd.c \
 		syscall/param_log/log_rlimit64_struct.c \
+		syscall/param_log/log_newfstatat_flags.c \
 		syscall/syscall_handle.c \
 
 # registers srcs

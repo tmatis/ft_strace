@@ -107,6 +107,7 @@
 #define IOPRIO_WHICH 93
 #define OPENAT_DIRFD 94
 #define RLIMIT64_STRUCT 95
+#define NEWFSTATAT_FLAGS 96
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the

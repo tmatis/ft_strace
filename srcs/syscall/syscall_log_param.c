@@ -104,6 +104,7 @@ static const log_function_t log_functions[] = {
 	ADD_LOGGER(IOPRIO_WHICH),
 	ADD_LOGGER(OPENAT_DIRFD),
 	ADD_LOGGER(RLIMIT64_STRUCT),
+	ADD_LOGGER(NEWFSTATAT_FLAGS),
 };
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);

@@ -718,3 +718,4 @@ int log_KEYCTL_CMD(uint64_t value);
 int log_IOPRIO_WHICH(uint64_t value);
 int log_OPENAT_DIRFD(int value);
 int log_RLIMIT64_STRUCT(uint64_t value, syscall_log_param_t *context);
+int log_NEWFSTATAT_FLAGS(uint64_t value);
