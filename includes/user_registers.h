@@ -13,23 +13,23 @@
  */
 struct i386_user_regs_struct
 {
-	int ebx;
-	int ecx;
-	int edx;
-	int esi;
-	int edi;
-	int ebp;
-	int eax;
-	int xds;
-	int xes;
-	int xfs;
-	int xgs;
-	int orig_eax;
-	int eip;
-	int xcs;
-	int eflags;
-	int esp;
-	int xss;
+	uint32_t ebx;
+	uint32_t ecx;
+	uint32_t edx;
+	uint32_t esi;
+	uint32_t edi;
+	uint32_t ebp;
+	uint32_t eax;
+	uint32_t xds;
+	uint32_t xes;
+	uint32_t xfs;
+	uint32_t xgs;
+	uint32_t orig_eax;
+	uint32_t eip;
+	uint32_t xcs;
+	uint32_t eflags;
+	uint32_t esp;
+	uint32_t xss;
 };
 
 /**
