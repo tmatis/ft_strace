@@ -1,3 +1,4 @@
+#include <config.h>
 #include <elf.h>
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
@@ -48,7 +49,7 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
 		return NO_STATUS;
 	bool_t should_log = analysis_state->status == EXECVE_ENCOUNTERED ||
 						(analysis_state->status != EXECVE_ERROR && *is_execve);
-	if (should_log)
+	if (should_log && !is_option_set(OPT_MASK_STATISTICS, get_config()))
 		*size_written = syscall_log_name_params(pid, &regs_before, *register_type_before);
 	return should_log;
 }
@@ -83,7 +84,7 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 		analysis_state->status = (int64_t)registers_get_return(&regs_after, register_type_after) < 0
 									 ? EXECVE_ERROR
 									 : EXECVE_ENCOUNTERED;
-	if (should_log)
+	if (should_log && !is_option_set(OPT_MASK_STATISTICS, get_config()))
 		syscall_log_params_return(pid, syscall_no, register_type_before, &regs_after,
 								  register_type_after, size_written);
 	return NO_STATUS;
@@ -97,7 +98,8 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal)
+int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal,
+				   bool_t statistic_mode)
 {
 	uint64_t syscall_no;
 	register_type_t register_type_before;
@@ -121,8 +123,11 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont
 	}
 	if (WIFEXITED(status) || WIFSIGNALED(status))
 	{
-		ft_dprintf(STDERR_FILENO, ")%*s", PADDING_SIZE - size_written - 1, " = ");
-		ft_dprintf(STDERR_FILENO, "?\n");
+		if (!statistic_mode)
+		{
+			ft_dprintf(STDERR_FILENO, ")%*s", PADDING_SIZE - size_written - 1, " = ");
+			ft_dprintf(STDERR_FILENO, "?\n");
+		}
 		return status;
 	}
 	return handle_syscall_after(pid, analysis_state, syscall_no, register_type_before, should_log,

@@ -113,4 +113,5 @@ bool_t syscall_is_execve(uint64_t syscall_no, register_type_t type);
  * @return int the status code of the tracee or NO_STATUS if no status code is
  * available
  */
-int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal);
+int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont_signal,
+				   bool_t statistic_mode);

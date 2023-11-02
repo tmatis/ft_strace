@@ -1,5 +1,6 @@
 
 #include <analysis.h>
+#include <config.h>
 #include <errno.h>
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
@@ -19,22 +20,24 @@
  * available
  */
 static int handle_status(pid_t pid, int status, int *cont_signal,
-						 analysis_routine_data_t *analysis_state)
+						 analysis_routine_data_t *analysis_state, bool_t statistic_mode)
 {
 	if (status == NO_STATUS)
 		return NO_STATUS;
 	if (WIFEXITED(status))
 	{
-		ft_printf("+++ exited with %d +++\n", WEXITSTATUS(status));
+		if (!statistic_mode)
+			ft_printf("+++ exited with %d +++\n", WEXITSTATUS(status));
 		return status;
 	}
 	if (WIFSIGNALED(status))
 	{
-		ft_printf("+++ killed by %s +++\n", ft_signalname(WTERMSIG(status)));
+		if (!statistic_mode)
+			ft_printf("+++ killed by %s +++\n", ft_signalname(WTERMSIG(status)));
 		return status;
 	}
 	if (WIFSTOPPED(status))
-		return signals_handle(pid, cont_signal, analysis_state);
+		return signals_handle(pid, cont_signal, analysis_state, !statistic_mode);
 	return NO_STATUS;
 }
 
@@ -46,6 +49,7 @@ static int handle_status(pid_t pid, int status, int *cont_signal,
  */
 int analysis_routine(pid_t pid)
 {
+	const bool_t statistic_mode = is_option_set(OPT_MASK_STATISTICS, get_config());
 	analysis_routine_data_t analysis_state = {
 		.status = EXECVE_NOT_ENCOUNTERED,
 		.register_type = X86_64,
@@ -65,13 +69,14 @@ int analysis_routine(pid_t pid)
 			log_error("analysis_routine", "waitpid failed", true);
 			return ROUTINE_ERROR;
 		}
-		int status_code = handle_status(pid, status, &cont_signal, &analysis_state);
+		int status_code = handle_status(pid, status, &cont_signal, &analysis_state, statistic_mode);
 		if (status_code == SIG_RAISED)
 			continue;
 		if (status_code != NO_STATUS)
 			return status_code;
-		status_code = handle_status(pid, syscall_handle(pid, &analysis_state, &cont_signal),
-									&cont_signal, &analysis_state);
+		status_code =
+			handle_status(pid, syscall_handle(pid, &analysis_state, &cont_signal, statistic_mode),
+						  &cont_signal, &analysis_state, statistic_mode);
 		if (status_code == SIG_RAISED)
 			continue;
 		if (status_code != NO_STATUS)

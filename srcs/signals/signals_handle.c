@@ -10,11 +10,16 @@
 #include <syscall_strace.h>
 
 /**
- * @brief Handle the signal raised by the tracee
+ * @brief Handle signals raised by the tracee
  *
  * @param pid the pid of the tracee
+ * @param cont_signal the ptr to the signal to continue the tracee
+ * @param analysis_state the analysis_state of the analysis routine
+ * @param should_log whether the signal should be logged
+ * @return int SIG_RAISED if a signal was raised, NO_STATUS otherwise
  */
-int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysis_state)
+int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysis_state,
+				   bool_t should_log)
 {
 	siginfo_t siginfo = {0};
 	if (ptrace(PTRACE_GETSIGINFO, pid, 0, &siginfo) < 0)
@@ -31,7 +36,7 @@ int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysi
 		*cont_signal = SIGSTOP;
 		return SIG_RAISED;
 	}
-	if (analysis_state->status == EXECVE_ENCOUNTERED)
+	if (should_log && analysis_state->status == EXECVE_ENCOUNTERED)
 	{
 		ft_printf("--- %s {si_signo=%s, si_code=%s, si_pid=%d, si_uid=%d",
 				  ft_signalname(siginfo.si_signo), ft_signalname(siginfo.si_signo),
