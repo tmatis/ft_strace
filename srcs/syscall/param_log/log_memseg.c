@@ -29,8 +29,7 @@ int log_memseg_remote(pid_t pid, void *remote_ptr, size_t buffer_size)
 	if (remote_memcpy(buffer, pid, remote_ptr, to_read) < 0)
 	{
 		free(buffer);
-		log_error("log_MEM", "remote_memcpy failed", true);
-		return 0;
+		return ft_dprintf(STDERR_FILENO, "%p", remote_ptr);
 	}
 	char *escaped_buffer = ft_escape(buffer, to_read);
 	int size_written;

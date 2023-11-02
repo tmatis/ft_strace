@@ -19,7 +19,7 @@ int log_EPOLL_EVENT_STRUCT_ARRAY(uint64_t value, syscall_log_param_t *context)
 	if (remote_memcpy(events, context->pid, remote_ptr, sizeof(struct epoll_event) * event_count) <
 		0)
 	{
-		log_error("log_EPOLL_EPOLL_EVENT_STRUCT_ARRAY", "remote_memcpy failed", true);
+		size_written += ft_dprintf(STDERR_FILENO, "%p", remote_ptr);
 		free(events);
 		return size_written;
 	}

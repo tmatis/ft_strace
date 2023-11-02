@@ -106,9 +106,9 @@ int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context)
 	}
 	if (remote_memcpy(iov, context->pid, (void *)value, sizeof(struct iovec) * vlen) < 0)
 	{
-		log_error("log_IOVEC_STRUCT", "remote_memcpy failed", true);
+		int size_written = ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		free(iov);
-		return 0;
+		return size_written;
 	}
 	int64_t total_len = NO_SIZE;
 	if (context->after_syscall)

@@ -61,10 +61,7 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 			(int64_t)registers_get_param(context->regs, context->type, context->arg_index + 1);
 	struct msghdr msghdr;
 	if (remote_memcpy(&msghdr, context->pid, (void *)value, sizeof(struct msghdr)) < 0)
-	{
-		log_error("log_msghdr_struct", "process_vm_readv failed", true);
-		return 0;
-	}
+		return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "{msg_name=");
 	size_written += log_SOCKADDR_STRUCT((uint64_t)msghdr.msg_name, context);

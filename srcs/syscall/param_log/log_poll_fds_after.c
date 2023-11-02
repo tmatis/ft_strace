@@ -70,7 +70,7 @@ int log_POLL_FDS_AFTER(uint64_t value, syscall_log_param_t *context)
 	void *remote = (void *)registers_get_param(context->regs, context->type, 0);
 	if (remote_memcpy(fds, context->pid, remote, sizeof(struct pollfd) * fd_count) < 0)
 	{
-		log_error("log_POLL_FDS_AFTER", "process_vm_readv failed", true);
+		size_written += ft_dprintf(STDERR_FILENO, "%p", remote);
 		free(fds);
 		return 0;
 	}

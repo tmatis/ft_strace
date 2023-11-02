@@ -82,7 +82,7 @@ void *handle_ptr(uint64_t value, syscall_log_param_t *context, int *size_written
 	struct_type struct_name;                                                                       \
 	if (remote_memcpy(&struct_name, context->pid, remote_ptr, sizeof(struct_type)) < 0)            \
 	{                                                                                              \
-		log_error("log_" #struct_type, "failed to read struct", true);                             \
+		_size_written += ft_dprintf(STDERR_FILENO, "%p", remote_ptr);                              \
 		return _size_written;                                                                      \
 	}
 

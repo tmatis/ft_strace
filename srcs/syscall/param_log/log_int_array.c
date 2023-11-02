@@ -33,7 +33,7 @@ int log_INT_ARRAY(uint64_t value, syscall_log_param_t *context)
 	}
 	if (remote_memcpy(local_array_ptr, context->pid, (void *)value, array_size * sizeof(int)) < 0)
 	{
-		log_error("log_INT_ARRAY", "remote_memcpy failed", true);
+		size_written += ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		free(local_array_ptr);
 		return size_written;
 	}

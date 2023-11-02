@@ -69,9 +69,8 @@ int log_POLL_FDS(uint64_t value, syscall_log_param_t *context)
 	}
 	if (remote_memcpy(fds, context->pid, (void *)value, sizeof(struct pollfd) * fd_count) < 0)
 	{
-		log_error("log_POLL_FDS", "process_vm_readv failed", true);
 		free(fds);
-		return 0;
+		return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 	}
 	int size_written = 0;
 	size_written += ft_dprintf(STDERR_FILENO, "[");

@@ -3,6 +3,7 @@
 #include <ft_strace_utils.h>
 #include <stdlib.h>
 #include <sys/sem.h>
+#include <stdint.h>
 
 /**
  * @brief Log sembuf struct
@@ -17,7 +18,7 @@ int log_SEMBUF_STRUCT(uint64_t value, syscall_log_param_t *context)
 	void *ptr = handle_ptr(value, context, &size_written);
 	if (ptr == NULL)
 		return size_written;
-	uint n_sem_ops = registers_get_param(context->regs, context->type, 2);
+	uint64_t n_sem_ops = registers_get_param(context->regs, context->type, 2);
 	struct sembuf *sops = malloc(sizeof(struct sembuf) * n_sem_ops);
 	if (!sops)
 	{
@@ -26,13 +27,13 @@ int log_SEMBUF_STRUCT(uint64_t value, syscall_log_param_t *context)
 	}
 	if (remote_memcpy(sops, context->pid, ptr, sizeof(struct sembuf) * n_sem_ops) < 0)
 	{
-		log_error("log_SEMBUF_STRUCT", "remote_memcpy", true);
+		size_written += ft_dprintf(STDERR_FILENO, "%p", ptr);
 		free(sops);
 		return size_written;
 	}
 	size_written += ft_dprintf(STDERR_FILENO, "[");
 	bool_t first = true;
-	for (uint i = 0; i < n_sem_ops; i++)
+	for (uint64_t i = 0; i < n_sem_ops; i++)
 	{
 		if (!first)
 			size_written += ft_dprintf(STDERR_FILENO, ", ");

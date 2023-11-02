@@ -22,9 +22,6 @@ int log_PIPEFDS(uint64_t value, syscall_log_param_t *context)
 		return size_written;
 	int fds[2];
 	if (remote_memcpy(fds, context->pid, remote_ptr, sizeof(fds)) < 0)
-	{
-		log_error("log_PIPEFDS", "process_vm_readv failed", true);
-		return 0;
-	}
+		return ft_dprintf(STDERR_FILENO, "%p", remote_ptr);
 	return ft_dprintf(STDERR_FILENO, "[%ld, %ld]", fds[0], fds[1]);
 }
