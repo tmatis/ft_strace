@@ -1,5 +1,6 @@
 #include <ft_test.h>
 #include <syscall_strace.h>
+#include <param_types.h>
 
 START_TEST(test_read_description, "Test that the description is right for read")
 {
