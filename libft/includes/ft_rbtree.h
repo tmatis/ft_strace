@@ -31,5 +31,6 @@ ft_rbtree_t *ft_rbtree_new(size_t value_size, cmp_f cmp);
 ft_rbtree_node_t *ft_rbtree_insert(ft_rbtree_t *tree, void *value);
 void ft_rbtree_destroy(ft_rbtree_t *tree);
 ft_rbtree_node_t *ft_rbtree_search(ft_rbtree_t *tree, void *value_to_match);
+void ft_rbtree_delete(ft_rbtree_t *tree, ft_rbtree_node_t *to_delete);
 
 #endif
