@@ -3,6 +3,7 @@
 #pragma once
 
 #include <syscall_strace.h>
+#include <param_types.h>
 
 /* here are descriptions of x86 syscalls */
 /* based on

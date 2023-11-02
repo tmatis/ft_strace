@@ -31,8 +31,6 @@ typedef struct
 
 #define NO_SIZE -1
 
-typedef int (*log_function_t)();
-
 /**
  * @brief Log a set of flags
  *
