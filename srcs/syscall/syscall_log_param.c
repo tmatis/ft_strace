@@ -1,11 +1,11 @@
+#include "log_functions.h"
 #include "param_log/param_log.h"
 #include <ft_printf.h>
 #include <macros.h>
+#include <param_types.h>
 #include <registers.h>
 #include <sys/types.h>
 #include <syscall_strace.h>
-#include <param_types.h>
-#include "log_functions.h"
 
 typedef int (*log_function_with_param_t)(uint64_t value, syscall_log_param_t *context);
 

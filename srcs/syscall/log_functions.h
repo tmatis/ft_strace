@@ -1,8 +1,7 @@
-#include <param_types.h>
 #include "param_log/param_log.h"
+#include <param_types.h>
 
 typedef void *log_function_t;
-
 
 #define ADD_LOGGER(name) [name] = log_##name
 

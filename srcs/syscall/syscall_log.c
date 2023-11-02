@@ -2,9 +2,9 @@
 #include <ft_printf.h>
 #include <ft_string.h>
 #include <macros.h>
+#include <param_types.h>
 #include <syscall_strace.h>
 #include <user_registers.h>
-#include <param_types.h>
 
 #define ERROR_RANGE_START 0
 #define ERROR_RANGE_END 4095

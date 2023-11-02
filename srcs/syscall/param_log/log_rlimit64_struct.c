@@ -20,12 +20,12 @@ static int log_rlimit_cur(uint64_t value)
 
 int log_RLIMIT64_STRUCT(uint64_t value, syscall_log_param_t *context)
 {
-    STRUCT_HANDLE(struct rlimit64, rlimit);
-    int size_written = 0;
-    size_written += ft_dprintf(STDERR_FILENO, "{rlim_cur=");
-    size_written += log_rlimit_cur(rlimit.rlim_cur);
-    size_written += ft_dprintf(STDERR_FILENO, ", rlim_max=");
-    size_written += option_log(rlimit.rlim_max, rlimit_max, ELEM_COUNT(rlimit_max), NULL);
-    size_written += ft_dprintf(STDERR_FILENO, "}");
-    return size_written;
+	STRUCT_HANDLE(struct rlimit64, rlimit);
+	int size_written = 0;
+	size_written += ft_dprintf(STDERR_FILENO, "{rlim_cur=");
+	size_written += log_rlimit_cur(rlimit.rlim_cur);
+	size_written += ft_dprintf(STDERR_FILENO, ", rlim_max=");
+	size_written += option_log(rlimit.rlim_max, rlimit_max, ELEM_COUNT(rlimit_max), NULL);
+	size_written += ft_dprintf(STDERR_FILENO, "}");
+	return size_written;
 }
