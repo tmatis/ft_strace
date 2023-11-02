@@ -108,6 +108,7 @@
 #define OPENAT_DIRFD 94
 #define RLIMIT64_STRUCT 95
 #define NEWFSTATAT_FLAGS 96
+#define PRLIMIT_RESOURCE 97
 
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
