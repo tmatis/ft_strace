@@ -69,6 +69,14 @@ SRCS +=	printf/buffer/buffer_printf.c \
 SRCS += units/units.c \
 		units/record_output.c
 
+# rbtree files
+
+SRCS += rbtree/ft_rbtree_new.c \
+		rbtree/ft_rbtree_insert.c \
+		rbtree/ft_rbtree_search.c \
+		rbtree/ft_rbtree_destroy.c \
+		rbtree/ft_rbtree_delete.c
+
 # misc files
 
 SRCS += misc/ft_calloc.c

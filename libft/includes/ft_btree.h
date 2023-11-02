@@ -1,5 +1,4 @@
-#ifndef FT_RBTREE_H
-#define FT_RBTREE_H
+#pragma once
 
 #include <stdlib.h>
 
@@ -152,5 +151,3 @@
 		return f(&root->value) + btree_##type##_count(root->left, f) +                             \
 			   btree_##type##_count(root->right, f);                                               \
 	}
-
-#endif
