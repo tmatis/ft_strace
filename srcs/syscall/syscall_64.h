@@ -1,6 +1,7 @@
 #pragma once
 
 #include <syscall_strace.h>
+#include <param_types.h>
 
 /* here are descriptions of x86_64 syscalls
  * based on
