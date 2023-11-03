@@ -29,9 +29,16 @@ START_TEST(test_delete_10_nodes, "Test deleting 10 nodes")
     {
         ft_rbtree_node_t *node = ft_rbtree_search(tree, &i);
         ft_rbtree_delete(tree, node);
+        for (int j = i + 1; j < 10; j++)
+        {
+            ft_rbtree_node_t *node = ft_rbtree_search(tree, &j);
+            if (node == NULL)
+                fail("A node was not found");
+        }
     }
     assert_null(tree->root);
     assert_equal(tree->node_count, 0);
+    succeed();
     ft_rbtree_destroy(tree);
 }
 END_TEST

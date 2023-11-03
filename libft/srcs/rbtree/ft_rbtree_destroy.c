@@ -4,26 +4,26 @@ void ft_rbtree_destroy(ft_rbtree_t *tree)
 {
 	if (tree == NULL)
 		return;
-	ft_rbtree_node_t *buffRoot = tree->root;
-	while (buffRoot != NULL)
+	ft_rbtree_node_t *buff_root = tree->root;
+	while (buff_root != NULL)
 	{
-		if (buffRoot->left != NULL)
+		if (buff_root->left != NULL)
 		{
-			ft_rbtree_node_t *left = buffRoot->left;
-			buffRoot->left = NULL;
-			buffRoot = left;
+			ft_rbtree_node_t *left = buff_root->left;
+			buff_root->left = NULL;
+			buff_root = left;
 		}
-		else if (buffRoot->right != NULL)
+		else if (buff_root->right != NULL)
 		{
-			ft_rbtree_node_t *right = buffRoot->right;
-			buffRoot->right = NULL;
-			buffRoot = right;
+			ft_rbtree_node_t *right = buff_root->right;
+			buff_root->right = NULL;
+			buff_root = right;
 		}
 		else
 		{
-			ft_rbtree_node_t *parent = buffRoot->parent;
-			free(buffRoot);
-			buffRoot = parent;
+			ft_rbtree_node_t *parent = buff_root->parent;
+			free(buff_root);
+			buff_root = parent;
 		}
 	}
 	free(tree);

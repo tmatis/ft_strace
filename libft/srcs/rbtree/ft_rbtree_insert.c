@@ -37,47 +37,47 @@ static void check_node(ft_rbtree_node_t *node)
 	if (node->color == RBT_BLACK || (node->parent)->color == RBT_BLACK)
 		return;
 	ft_rbtree_node_t *parent = node->parent;
-	ft_rbtree_node_t *grandParent = parent->parent;
-	if (grandParent == NULL)
+	ft_rbtree_node_t *grand_parent = parent->parent;
+	if (grand_parent == NULL)
 	{
 		parent->color = RBT_BLACK;
 		return;
 	}
 
-	if (grandParent->right != NULL && (grandParent->right)->color == RBT_RED &&
-		grandParent->left != NULL && (grandParent->left)->color == RBT_RED)
+	if (grand_parent->right != NULL && (grand_parent->right)->color == RBT_RED &&
+		grand_parent->left != NULL && (grand_parent->left)->color == RBT_RED)
 	{
-		(grandParent->right)->color = RBT_BLACK;
-		(grandParent->left)->color = RBT_BLACK;
-		grandParent->color = RBT_RED;
+		(grand_parent->right)->color = RBT_BLACK;
+		(grand_parent->left)->color = RBT_BLACK;
+		grand_parent->color = RBT_RED;
 		return;
 	}
 	else
 	{
-		ft_rbtree_node_t *greatGrandParent = grandParent->parent;
-		if (grandParent->right == parent)
+		ft_rbtree_node_t *great_grand_parent = grand_parent->parent;
+		if (grand_parent->right == parent)
 		{
 			if (parent->right == node)
 			{
-				grandParent->right = parent->left;
+				grand_parent->right = parent->left;
 				if (parent->left != NULL)
 				{
-					(parent->left)->parent = grandParent;
+					(parent->left)->parent = grand_parent;
 				}
-				parent->left = grandParent;
-				grandParent->parent = parent;
+				parent->left = grand_parent;
+				grand_parent->parent = parent;
 
-				parent->parent = greatGrandParent;
-				if (greatGrandParent != NULL)
+				parent->parent = great_grand_parent;
+				if (great_grand_parent != NULL)
 				{
-					if (greatGrandParent->left != NULL && greatGrandParent->left == grandParent)
-						greatGrandParent->left = parent;
+					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+						great_grand_parent->left = parent;
 					else
-						greatGrandParent->right = parent;
+						great_grand_parent->right = parent;
 				}
 
 				parent->color = RBT_BLACK;
-				grandParent->color = RBT_RED;
+				grand_parent->color = RBT_RED;
 			}
 			else
 			{
@@ -89,50 +89,50 @@ static void check_node(ft_rbtree_node_t *node)
 				child->right = parent;
 				parent->parent = child;
 
-				grandParent->right = child->left;
+				grand_parent->right = child->left;
 				if (child->left != NULL)
 				{
-					(child->left)->parent = grandParent;
+					(child->left)->parent = grand_parent;
 				}
-				child->left = grandParent;
-				grandParent->parent = child;
+				child->left = grand_parent;
+				grand_parent->parent = child;
 
-				child->parent = greatGrandParent;
-				if (greatGrandParent != NULL)
+				child->parent = great_grand_parent;
+				if (great_grand_parent != NULL)
 				{
-					if (greatGrandParent->left != NULL && greatGrandParent->left == grandParent)
-						greatGrandParent->left = child;
+					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+						great_grand_parent->left = child;
 					else
-						greatGrandParent->right = child;
+						great_grand_parent->right = child;
 				}
 
 				child->color = RBT_BLACK;
-				grandParent->color = RBT_RED;
+				grand_parent->color = RBT_RED;
 			}
 		}
 		else
 		{
 			if (parent->left == node)
 			{
-				grandParent->left = parent->right;
+				grand_parent->left = parent->right;
 				if (parent->right != NULL)
 				{
-					(parent->right)->parent = grandParent;
+					(parent->right)->parent = grand_parent;
 				}
-				parent->right = grandParent;
-				grandParent->parent = parent;
+				parent->right = grand_parent;
+				grand_parent->parent = parent;
 
-				parent->parent = greatGrandParent;
-				if (greatGrandParent != NULL)
+				parent->parent = great_grand_parent;
+				if (great_grand_parent != NULL)
 				{
-					if (greatGrandParent->left != NULL && greatGrandParent->left == grandParent)
-						greatGrandParent->left = parent;
+					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+						great_grand_parent->left = parent;
 					else
-						greatGrandParent->right = parent;
+						great_grand_parent->right = parent;
 				}
 
 				parent->color = RBT_BLACK;
-				grandParent->color = RBT_RED;
+				grand_parent->color = RBT_RED;
 			}
 			else
 			{
@@ -142,25 +142,25 @@ static void check_node(ft_rbtree_node_t *node)
 				child->left = parent;
 				parent->parent = child;
 
-				grandParent->left = child->right;
+				grand_parent->left = child->right;
 				if (child->right != NULL)
 				{
-					(child->right)->parent = grandParent;
+					(child->right)->parent = grand_parent;
 				}
-				child->right = grandParent;
-				grandParent->parent = child;
+				child->right = grand_parent;
+				grand_parent->parent = child;
 
-				child->parent = greatGrandParent;
-				if (greatGrandParent != NULL)
+				child->parent = great_grand_parent;
+				if (great_grand_parent != NULL)
 				{
-					if (greatGrandParent->left != NULL && greatGrandParent->left == grandParent)
-						greatGrandParent->left = child;
+					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+						great_grand_parent->left = child;
 					else
-						greatGrandParent->right = child;
+						great_grand_parent->right = child;
 				}
 
 				child->color = RBT_BLACK;
-				grandParent->color = RBT_RED;
+				grand_parent->color = RBT_RED;
 			}
 		}
 	}
@@ -182,23 +182,23 @@ ft_rbtree_node_t *ft_rbtree_insert(ft_rbtree_t *tree, void *value)
 		tree->node_count++;
 		return tree->root;
 	}
-	ft_rbtree_node_t *buffRoot = tree->root;
-	ft_rbtree_node_t *toInsert = NULL;
-	while (buffRoot)
+	ft_rbtree_node_t *buff_root = tree->root;
+	ft_rbtree_node_t *to_insert = NULL;
+	while (buff_root)
 	{
-		if (tree->cmp(value, buffRoot->variable_value) < 0)
+		if (tree->cmp(value, buff_root->variable_value) < 0)
 		{
 			// Go left
-			if (buffRoot->left != NULL)
-				buffRoot = buffRoot->left;
+			if (buff_root->left != NULL)
+				buff_root = buff_root->left;
 			else
 			{
 				// Insert The ft_rbtree_node_t
-				toInsert = new_node(value, tree->value_size, buffRoot);
-				if (toInsert == NULL)
+				to_insert = new_node(value, tree->value_size, buff_root);
+				if (to_insert == NULL)
 					return NULL;
-				buffRoot->left = toInsert;
-				buffRoot = toInsert;
+				buff_root->left = to_insert;
+				buff_root = to_insert;
 
 				// Check For Double Red Problems
 				break;
@@ -207,16 +207,16 @@ ft_rbtree_node_t *ft_rbtree_insert(ft_rbtree_t *tree, void *value)
 		else
 		{
 			// Go right
-			if (buffRoot->right != NULL)
-				buffRoot = buffRoot->right;
+			if (buff_root->right != NULL)
+				buff_root = buff_root->right;
 			else
 			{
 				// Insert The ft_rbtree_node_t
-				toInsert = new_node(value, tree->value_size, buffRoot);
-				if (toInsert == NULL)
+				to_insert = new_node(value, tree->value_size, buff_root);
+				if (to_insert == NULL)
 					return NULL;
-				buffRoot->right = toInsert;
-				buffRoot = toInsert;
+				buff_root->right = to_insert;
+				buff_root = to_insert;
 
 				// Check For Double Red Problems
 				break;
@@ -224,18 +224,18 @@ ft_rbtree_node_t *ft_rbtree_insert(ft_rbtree_t *tree, void *value)
 		}
 	}
 
-	while (buffRoot != tree->root)
+	while (buff_root != tree->root)
 	{
-		check_node(buffRoot);
-		if (buffRoot->parent == NULL)
+		check_node(buff_root);
+		if (buff_root->parent == NULL)
 		{
-			tree->root = buffRoot;
+			tree->root = buff_root;
 			break;
 		}
-		buffRoot = buffRoot->parent;
-		if (buffRoot == tree->root)
-			buffRoot->color = RBT_BLACK;
+		buff_root = buff_root->parent;
+		if (buff_root == tree->root)
+			buff_root->color = RBT_BLACK;
 	}
 	tree->node_count++;
-	return toInsert;
+	return to_insert;
 }
