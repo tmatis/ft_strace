@@ -157,6 +157,20 @@ void count_test_suites(test_suite *suite, tests_summary *summary)
 	summary->function_failed += suite->failed;
 }
 
+static void clear_test_function(test_function *test_function)
+{
+	if (test_function == NULL)
+		return;
+	lst_clear_test_result(&test_function->results);
+}
+
+static void clear_test_suite(test_suite *test_suite)
+{
+	if (test_suite == NULL)
+		return;
+	btree_test_function_clear(&test_suite->functions, clear_test_function);
+}
+
 int display_tests_results(tests_tracker *tracker)
 {
 	btree_test_suite_foreach(tracker->test_suites, display_test_suite);
@@ -165,5 +179,6 @@ int display_tests_results(tests_tracker *tracker)
 	btree_test_suite_foreach_arg(tracker->test_suites,
 								 (void (*)(test_suite *, void *))count_test_suites, &tests_summary);
 	display_test_summary(&tests_summary);
+	btree_test_suite_clear(&tracker->test_suites, clear_test_suite);
 	return tests_summary.function_failed;
 }

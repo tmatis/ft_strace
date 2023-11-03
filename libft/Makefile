@@ -2,7 +2,7 @@ NAME := libft.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -fPIE
 
-ifneq ($(filter debug redebug,$(MAKECMDGOALS)),)
+ifneq ($(filter debug redebug unit,$(MAKECMDGOALS)),)
 	CFLAGS += -g
 endif
 
