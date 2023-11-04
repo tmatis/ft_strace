@@ -239,6 +239,12 @@ static void check_for_case2(ft_rbtree_node_t *to_delete, int delete, int fromDir
 	}
 }
 
+/**
+ * @brief Frees a red-black tree node and its value. And fixes the tree.
+ * 
+ * @param tree the tree to delete from
+ * @param to_delete the node to delete
+ */
 void ft_rbtree_delete(ft_rbtree_t *tree, ft_rbtree_node_t *to_delete)
 {
 	ft_rbtree_node_t *buff_root = to_delete;

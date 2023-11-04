@@ -75,7 +75,8 @@ SRCS += rbtree/ft_rbtree_new.c \
 		rbtree/ft_rbtree_insert.c \
 		rbtree/ft_rbtree_search.c \
 		rbtree/ft_rbtree_destroy.c \
-		rbtree/ft_rbtree_delete.c
+		rbtree/ft_rbtree_delete.c \
+		rbtree/ft_rbtree_foreach.c
 
 # misc files
 
