@@ -22,6 +22,11 @@ static void buffer_add_char(buffer_t *buffer, char c)
 	{
 		buffer->size_buffer *= 2;
 		buffer->buffer = realloc(buffer->buffer, buffer->size_buffer);
+		if (buffer->buffer == NULL)
+		{
+			log_error("log_STRING", "realloc failed", true);
+			return;
+		}
 	}
 	buffer->buffer[buffer->index++] = c;
 }
@@ -43,6 +48,11 @@ int log_remote_string(pid_t pid, char *remote_str, int max_size)
 		.size_buffer = DEFAULT_BUFFER_SIZE,
 		.index = 0,
 	};
+	if (buffer.buffer == NULL)
+	{
+		log_error("log_STRING", "malloc failed", true);
+		return 0;
+	}
 	char c = 1; // dummy value that will be overwritten by the first read
 	while (c != '\0')
 	{
