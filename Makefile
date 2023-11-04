@@ -192,6 +192,7 @@ $(NAME_DEBUG): $(LIBFT_DEBUG) $(OBJS_DEBUG) $(OBJS_MAIN_DEBUG)
 
 
 unit: $(LIBFT) $(OBJS_DEBUG)
+	make -C libft unit
 	libft/scripts/car.sh $(OBJS_DEBUG)
 
 -include $(DEPS_RELEASE)
