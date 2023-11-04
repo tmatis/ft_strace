@@ -1,9 +1,9 @@
 #ifndef FT_TEST_H
 #define FT_TEST_H
 
-#include "ft_btree.h"
 #include "ft_colors.h"
 #include "ft_list.h"
+#include "ft_rbtree.h"
 #include "ft_string.h"
 #include <stddef.h>
 #include <stdio.h>
@@ -31,31 +31,26 @@ typedef struct
 	t_list_test_result *results;
 } test_function;
 
-DEFINE_BTREE_HEADERS(test_function);
-
 typedef struct
 {
 	const char *file_name;
-	btree_test_function *functions;
+	ft_rbtree_t *functions;
 	int time;
 	size_t total;
 	size_t passed;
 	size_t failed;
 } test_suite;
 
-DEFINE_BTREE_HEADERS(test_suite);
-
 void add_test_result(const char *error_message, size_t line, const char *function_name,
-					 const char *description, const char *file_name,
-					 btree_test_suite **test_suites);
+					 const char *description, const char *file_name, ft_rbtree_t **test_suites);
 
 typedef struct
 {
-	btree_test_suite *test_suites;
+	ft_rbtree_t *test_suites;
 } tests_tracker;
 
 void add_test_time(const char *function_name, const char *file_name, int time,
-				   btree_test_suite **test_suites);
+				   ft_rbtree_t *test_suites);
 
 int display_tests_results(tests_tracker *test_tracker);
 
@@ -85,7 +80,7 @@ char *stop_record(record_output *record);
 	add_test_time(__test_name, __FILE__,                                                           \
 				  (__end_time.tv_sec - __start_time.tv_sec) * 1000000 +                            \
 					  (__end_time.tv_usec - __start_time.tv_usec),                                 \
-				  &test_tracker.test_suites);                                                      \
+				  test_tracker.test_suites);                                                       \
 	}
 
 #define TEST_FRAMEWORK                                                                             \
