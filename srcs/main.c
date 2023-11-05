@@ -45,7 +45,11 @@ int main(int argc, char **argv, char **envp)
 	if (status == ROUTINE_ERROR)
 		return 1;
 	if (is_option_set(OPT_MASK_STATISTICS, config))
-		statistics_log(statistics_get());
+	{
+		statistics_t *statistics = statistics_get();
+		statistics_log(statistics);
+		statistics_destroy(statistics);
+	}
 	signals_unblock();
 	if (WIFSIGNALED(status))
 		raise(WTERMSIG(status));
