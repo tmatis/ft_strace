@@ -22,7 +22,8 @@ const char *skip_sigprefix(const char *str)
 	return str;
 }
 
-#define NB_SIG 32
+
+#define NB_SIG 65
 
 /**
  * @brief Log sigset in local memory
@@ -34,7 +35,7 @@ int log_local_sigset_struct(sigset_t *sigset)
 {
 	int size_written = ft_dprintf(STDERR_FILENO, "[");
 	bool_t first = true;
-	for (int i = 2; i < NB_SIG; i++)
+	for (unsigned i = 2; i < NB_SIG; i++)
 	{
 		if (sigismember(sigset, i))
 		{

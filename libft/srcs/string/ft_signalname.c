@@ -1,6 +1,7 @@
 #include <macros.h>
 #include <signal.h>
 #include <stddef.h>
+#include <ft_printf.h>
 
 #define SIGNAL_NAME(signalname) [signalname] = #signalname
 
@@ -50,5 +51,7 @@ const char *ft_signalname(int sig)
 	for (int i = 0; i < (int)ELEM_COUNT(signals); i++)
 		if (i == sig)
 			return signals[i];
-	return "UNKNOWN";
+	static char buf[32];
+	ft_snprintf(buf, sizeof(buf), "SIGRT_%d", sig - ELEM_COUNT(signals));
+	return buf;
 }
