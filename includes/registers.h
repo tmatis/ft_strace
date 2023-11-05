@@ -44,3 +44,7 @@ uint64_t registers_get_param(user_regs_t *regs, register_type_t type, uint8_t pa
  * @return uint64_t the return
  */
 uint64_t registers_get_return(user_regs_t *regs, register_type_t type);
+
+#define REGISTERS_GET_RETURN(regs, type)                                                            \
+	(type == X86_64 ? (int64_t)registers_get_return(regs, type)                                     \
+					: (int32_t)registers_get_return(regs, type))

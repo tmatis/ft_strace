@@ -1,6 +1,7 @@
 #include "../param_log.h"
 #include <ft_printf.h>
 #include <stdint.h>
+#include <registers.h>
 
 /**
  * @brief Handle a pointer value
@@ -19,7 +20,7 @@ void *handle_ptr(uint64_t value, syscall_log_param_t *context, int *size_written
 	}
 	if (context->after_syscall)
 	{
-		int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
+		int64_t ret = REGISTERS_GET_RETURN(context->regs, context->type);
 		if (ret < 0)
 		{
 			*size_written += ft_dprintf(STDERR_FILENO, "%p", (void *)value);

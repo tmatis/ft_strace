@@ -86,7 +86,7 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 	}
 	register_type_t register_type_after = registers_get_type(regs_after_iov.iov_len);
 	if (analysis_state->status == EXECVE_NOT_ENCOUNTERED && is_execve)
-		analysis_state->status = (int32_t)registers_get_return(&regs_after, register_type_after) < 0
+		analysis_state->status = REGISTERS_GET_RETURN(&regs_after, register_type_after) < 0
 									 ? EXECVE_ERROR
 									 : EXECVE_ENCOUNTERED;
 	if (should_log)
@@ -103,7 +103,7 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 			struct timeval total_time;
 			timersub(&after_end, before_start, &total_time);
 			statistics_add_entry(statistics_get(), syscall_no,
-								 (int32_t)registers_get_return(&regs_after, register_type_after) <
+								 REGISTERS_GET_RETURN(&regs_after, register_type_after) <
 									 0,
 								 &total_time, register_type_before);
 		}

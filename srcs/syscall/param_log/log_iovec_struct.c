@@ -33,7 +33,7 @@ static int log_iov_base(pid_t pid, struct iovec *iov, bool_t is_fail, uint64_t l
 static bool_t get_is_fail(syscall_log_param_t *context)
 {
 	if (context->after_syscall)
-		return (int64_t)registers_get_return(context->regs, context->type) < 0;
+		return REGISTERS_GET_RETURN(context->regs, context->type) < 0;
 	return false; // always false before syscall
 }
 
@@ -112,7 +112,7 @@ int log_IOVEC_STRUCT(uint64_t value, syscall_log_param_t *context)
 	}
 	int64_t total_len = NO_SIZE;
 	if (context->after_syscall)
-		total_len = registers_get_return(context->regs, context->type);
+		total_len = REGISTERS_GET_RETURN(context->regs, context->type);
 	int size_written =
 		log_iovec_struct_local(context->pid, iov, vlen, total_len, get_is_fail(context));
 	free(iov);

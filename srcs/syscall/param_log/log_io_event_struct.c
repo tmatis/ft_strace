@@ -15,7 +15,7 @@ int log_IO_EVENT_STRUCT(uint64_t value, syscall_log_param_t *context)
 	void *remote_ptr = handle_ptr(value, context, &size_written);
 	if (remote_ptr == NULL)
 		return size_written;
-	long event_count = registers_get_return(context->regs, context->type);
+	long event_count = REGISTERS_GET_RETURN(context->regs, context->type);
 	struct io_event *events = malloc(sizeof(struct io_event) * event_count);
 	if (events == NULL)
 	{

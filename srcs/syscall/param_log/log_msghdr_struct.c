@@ -51,7 +51,7 @@ int log_MSGHDR_STRUCT(uint64_t value, syscall_log_param_t *context)
 	int total_len = NO_SIZE;
 	if (context->after_syscall)
 	{
-		int64_t ret = (int64_t)registers_get_return(context->regs, context->type);
+		int64_t ret = REGISTERS_GET_RETURN(context->regs, context->type);
 		if (ret < 0)
 			return ft_dprintf(STDERR_FILENO, "%p", (void *)value);
 		total_len = ret;

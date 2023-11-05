@@ -18,7 +18,7 @@ int log_INT_ARRAY(uint64_t value, syscall_log_param_t *context)
 	int size_written = 0;
 	if (value == 0)
 		return ft_dprintf(STDERR_FILENO, "NULL");
-	int64_t array_size = (int64_t)registers_get_return(context->regs, context->type);
+	int64_t array_size = REGISTERS_GET_RETURN(context->regs, context->type);
 	if (array_size < 0)
 	{
 		if (context->after_syscall)
