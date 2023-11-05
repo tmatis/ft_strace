@@ -102,10 +102,10 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 			gettimeofday(&after_end, NULL);
 			struct timeval total_time;
 			timersub(&after_end, before_start, &total_time);
-			statistics_add_entry(statistics_get(), syscall_no,
-								 REGISTERS_GET_RETURN(&regs_after, register_type_after) <
-									 0,
-								 &total_time, register_type_before);
+			statistics_add_entry(
+				statistics_get(), syscall_no,
+				IS_ERROR_RETURN(REGISTERS_GET_RETURN(&regs_after, register_type_after)),
+				&total_time, register_type_before);
 		}
 	}
 	return NO_STATUS;

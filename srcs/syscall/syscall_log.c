@@ -54,7 +54,7 @@ void syscall_log_params_return(pid_t pid, int syscall_no, register_type_t regs_b
 		syscall_get_description(syscall_no, regs_before_type);
 	int64_t return_value = REGISTERS_GET_RETURN(regs_after, regs_after_type);
 	int errno_value = 0;
-	if (return_value < 0 && return_value >= -4096)
+	if (IS_ERROR_RETURN(return_value))
 	{
 		errno_value = -return_value;
 		return_value = -1;

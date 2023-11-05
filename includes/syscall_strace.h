@@ -11,6 +11,8 @@
 #define X_86_64_EXECVE_SYSCALL 59
 #define X_86_32_EXECVE_SYSCALL 11
 
+#define IS_ERROR_RETURN(return_value) ((return_value) < 0 && (return_value) >= -4096)
+
 /**
  * @brief Negative if printed before the syscall, positive if printed after the
  * syscall
