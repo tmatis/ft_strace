@@ -10,5 +10,5 @@ register_type_t registers_get_type(size_t size)
 {
 	if (size == sizeof(struct user_regs_struct))
 		return X86_64;
-	return X86_32;
+	return I386;
 }

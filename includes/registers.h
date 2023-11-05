@@ -5,7 +5,7 @@
 
 typedef enum
 {
-	X86_32,
+	I386,
 	X86_64
 } register_type_t;
 

@@ -26,28 +26,28 @@ static uint64_t registers_get_param_x86_64(user_regs_t *regs, uint8_t param_inde
 }
 
 /**
- * @brief Get the param for x86_32
+ * @brief Get the param for i386
  *
  * @param regs the registers
  * @param param_index the param index
  * @return uint64_t the param
  */
-static uint64_t registers_get_param_x86_32(user_regs_t *regs, uint8_t param_index)
+static uint64_t registers_get_param_i386(user_regs_t *regs, uint8_t param_index)
 {
 	switch (param_index)
 	{
 	case 0:
-		return regs->x86_32.ebx;
+		return regs->i386.ebx;
 	case 1:
-		return regs->x86_32.ecx;
+		return regs->i386.ecx;
 	case 2:
-		return regs->x86_32.edx;
+		return regs->i386.edx;
 	case 3:
-		return regs->x86_32.esi;
+		return regs->i386.esi;
 	case 4:
-		return regs->x86_32.edi;
+		return regs->i386.edi;
 	}
-	return regs->x86_32.ebp;
+	return regs->i386.ebp;
 }
 
 /**
@@ -62,5 +62,5 @@ uint64_t registers_get_param(user_regs_t *regs, register_type_t type, uint8_t pa
 {
 	if (type == X86_64)
 		return registers_get_param_x86_64(regs, param_index);
-	return registers_get_param_x86_32(regs, param_index);
+	return registers_get_param_i386(regs, param_index);
 }

@@ -12,7 +12,7 @@
 
 /* [SYSCALL_NO] = { "SYSCALL_NAME", RETURN_TYPE, { ARG_TYPE1, ARG_TYPE2,
  * ARG_TYPE3, ARG_TYPE4, ARG_TYPE5, ARG_TYPE6 } } */
-static const syscall_description_t x86_32_syscalls[] = {
+static const syscall_description_t i386_syscalls[] = {
 	[0] = {"restart_syscall", SIGNED_INT, {NONE}},
 	[1] = {"fork", INT, {NONE}},
 	[2] = {"exit", INT, {-INT, NONE}},

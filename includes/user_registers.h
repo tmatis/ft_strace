@@ -39,5 +39,5 @@ struct i386_user_regs_struct
 typedef union
 {
 	struct user_regs_struct x86_64;
-	struct i386_user_regs_struct x86_32;
+	struct i386_user_regs_struct i386;
 } user_regs_t;

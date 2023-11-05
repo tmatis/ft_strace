@@ -7,8 +7,8 @@ START_TEST(test_registers_get_type, "Test registers_get_type for x86_64")
 }
 END_TEST
 
-START_TEST(test_registers_get_type_32, "Test registers_get_type for x86_32")
+START_TEST(test_registers_get_type_32, "Test registers_get_type for i386")
 {
-	assert_true(registers_get_type(sizeof(struct i386_user_regs_struct)) == X86_32);
+	assert_true(registers_get_type(sizeof(struct i386_user_regs_struct)) == I386);
 }
 END_TEST

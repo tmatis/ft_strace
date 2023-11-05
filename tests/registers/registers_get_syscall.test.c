@@ -9,10 +9,10 @@ START_TEST(test_registers_get_syscall, "Test registers_get_syscall for x86_64")
 }
 END_TEST
 
-START_TEST(test_registers_get_syscall_32, "Test registers_get_syscall for x86_32")
+START_TEST(test_registers_get_syscall_32, "Test registers_get_syscall for i386")
 {
 	user_regs_t regs = {0};
-	regs.x86_32.orig_eax = 42;
-	assert_true(registers_get_syscall(&regs, X86_32) == 42);
+	regs.i386.orig_eax = 42;
+	assert_true(registers_get_syscall(&regs, I386) == 42);
 }
 END_TEST
