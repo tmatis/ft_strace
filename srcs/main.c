@@ -43,7 +43,10 @@ int main(int argc, char **argv, char **envp)
 	}
 	int status = analysis_routine(pid);
 	if (status == ROUTINE_ERROR)
+	{
+		statistics_destroy(statistics_get());
 		return 1;
+	}
 	if (is_option_set(OPT_MASK_STATISTICS, config))
 	{
 		statistics_t *statistics = statistics_get();
