@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <sys/time.h>
+#include <stdint.h>
 
 typedef struct timeval timeval;
 
@@ -131,10 +132,10 @@ extern tests_tracker test_tracker;
 				  " is " C_BOLD C_RED "equal" C_RESET);
 
 #define assert_string_equal(a, b)                                                                  \
-	if (!a)                                                                                        \
+	if ((uintptr_t)NULL == (uintptr_t)a)                                                           \
 		fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ") " C_RESET #a         \
 			 " is " C_BOLD C_RED "null" C_RESET);                                                  \
-	else if (!b)                                                                                   \
+	else if ((uintptr_t)NULL == (uintptr_t)b)                                                      \
 		fail("Assertion failed: " C_BOLD "assert_string_equal(" #a ", " #b ") " C_RESET #b         \
 			 " is " C_BOLD C_RED "null" C_RESET);                                                  \
 	else if (ft_strcmp(a, b) == 0)                                                                 \
