@@ -26,6 +26,8 @@ const syscall_description_t *syscall_get_description(uint64_t syscall_no, regist
 		if (syscall_no >= ELEM_COUNT(x86_64_syscalls))
 			return get_default_syscall(syscall_no);
 		selected_syscall = &x86_64_syscalls[syscall_no];
+		if (selected_syscall->name == NULL)
+			return get_default_syscall(syscall_no);
 	}
 	else
 	{

@@ -27,13 +27,13 @@ static int handle_status(pid_t pid, int status, int *cont_signal,
 	if (WIFEXITED(status))
 	{
 		if (!statistic_mode)
-			ft_printf("+++ exited with %d +++\n", WEXITSTATUS(status));
+			ft_dprintf(STDERR_FILENO, "+++ exited with %d +++\n", WEXITSTATUS(status));
 		return status;
 	}
 	if (WIFSIGNALED(status))
 	{
 		if (!statistic_mode)
-			ft_printf("+++ killed by %s +++\n", ft_signalname(WTERMSIG(status)));
+			ft_dprintf(STDERR_FILENO, "+++ killed by %s +++\n", ft_signalname(WTERMSIG(status)));
 		return status;
 	}
 	if (WIFSTOPPED(status))

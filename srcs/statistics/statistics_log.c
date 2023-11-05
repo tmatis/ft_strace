@@ -27,7 +27,7 @@ static void log_table_line(double time_percentage, struct timeval *total_time, u
 	if (errors > 0)
 		ft_dprintf(STDERR_FILENO, " %9ld", errors);
 	else
-		ft_dprintf(STDERR_FILENO, " %8s", "");
+		ft_dprintf(STDERR_FILENO, " %9s", "");
 	ft_dprintf(STDERR_FILENO, " %s\n", syscall_name);
 }
 
@@ -61,29 +61,30 @@ static ft_rbtree_t *build_sorted_tree(ft_rbtree_t *tree, double total_time_sec)
 	ft_rbtree_t *sorted_tree = ft_rbtree_new(sizeof(statistics_entry_t), cmp_statistics_entry);
 	if (sorted_tree == NULL)
 		return NULL;
-    statistics_entry_arg_t statistics_entry_arg = {
-        .total_time_sec = total_time_sec,
-        .sorted_tree = sorted_tree
-    };
+	statistics_entry_arg_t statistics_entry_arg = {.total_time_sec = total_time_sec,
+												   .sorted_tree = sorted_tree};
 	ft_rbtree_foreach_arg(tree, add_statistic_entry, &statistics_entry_arg);
 	return sorted_tree;
 }
 
-static void log_table_line_callback(statistics_entry_t *entry)
+static void log_table_line_callback(statistics_entry_t *entry, register_t *type)
 {
-    log_table_line(entry->time_percentage, &(entry->total_time), entry->calls, entry->errors, "syscall_name");
+	const syscall_description_t *syscall_description =
+		syscall_get_description(entry->syscall_no, *type);
+	log_table_line(entry->time_percentage, &(entry->total_time), entry->calls, entry->errors,
+				   syscall_description->name);
 }
 
 void log_table(ft_rbtree_t *tree, struct timeval *total_time, register_t type)
 {
-    (void)type;
-    double total_time_sec = total_time->tv_sec + total_time->tv_usec / 1000000.0;
-    ft_rbtree_t *sorted_tree = build_sorted_tree(tree, total_time_sec);
+	(void)type;
+	double total_time_sec = total_time->tv_sec + total_time->tv_usec / 1000000.0;
+	ft_rbtree_t *sorted_tree = build_sorted_tree(tree, total_time_sec);
 	log_table_head();
 	log_table_separator();
-    ft_rbtree_foreach(sorted_tree, log_table_line_callback);
-    log_table_separator();
-    ft_rbtree_destroy(sorted_tree);
+	ft_rbtree_foreach_arg(sorted_tree, log_table_line_callback, &type);
+	log_table_separator();
+	ft_rbtree_destroy(sorted_tree);
 }
 
 /**
@@ -93,9 +94,10 @@ void log_table(ft_rbtree_t *tree, struct timeval *total_time, register_t type)
  */
 void statistics_log(statistics_t *statistics)
 {
-    // log_table(statistics->stats_x86_64, &(statistics->total_time_x86_64), X86_64);
+	log_table(statistics->stats_x86_64, &(statistics->total_time_x86_64), X86_64);
 	if (statistics->stats_i386->value_size > 0)
 	{
 		ft_dprintf(STDERR_FILENO, "System call usage summary for 32 bit mode:\n");
 	}
+	log_table(statistics->stats_i386, &(statistics->total_time_i386), I386);
 }
