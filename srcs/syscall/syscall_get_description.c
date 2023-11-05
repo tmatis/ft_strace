@@ -7,7 +7,7 @@
 static syscall_description_t *get_default_syscall(uint64_t syscall_no)
 {
 	static char default_syscall_name[32] = {0};
-	static syscall_description_t default_syscall = {default_syscall_name, INT, {NONE}};
+	static syscall_description_t default_syscall = {default_syscall_name, INT, {NONE}, NULL};
 	ft_snprintf(default_syscall_name, sizeof(default_syscall_name), "unknown_%llu", syscall_no);
 	return &default_syscall;
 }

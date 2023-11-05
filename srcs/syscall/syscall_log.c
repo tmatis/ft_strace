@@ -24,6 +24,11 @@ int syscall_log_name_params(pid_t pid, user_regs_t *regs_before, register_type_t
 	uint64_t syscall_no = registers_get_syscall(regs_before, register_type);
 	const syscall_description_t *syscall_desc = syscall_get_description(syscall_no, register_type);
 	size_written += ft_dprintf(STDERR_FILENO, "%s(", syscall_desc->name);
+	if (syscall_desc->custom_handler)
+	{
+		size_written += syscall_desc->custom_handler(pid, regs_before, register_type);
+		return size_written;
+	}
 	const size_t param_count = ELEM_COUNT(syscall_desc->arg_types);
 	for (uint8_t i = 0; i < param_count; i++)
 	{

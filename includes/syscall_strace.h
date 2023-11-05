@@ -25,6 +25,7 @@ typedef struct
 	const char *name;
 	const arg_type_t return_type;
 	const arg_type_t arg_types[6];
+	int (*custom_handler)(pid_t pid, user_regs_t *regs, register_type_t regs_type);
 } syscall_description_t;
 
 #define MAX_SYSCALL_NO 0x17f

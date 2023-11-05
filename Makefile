@@ -168,6 +168,10 @@ SRCS += statistics/statistics_get.c \
 		statistics/statistics_add_entry.c \
 		statistics/statistics_log.c
 
+# custom handlers srcs
+
+SRCS += syscall/custom_handlers/custom_handler_clone.c
+
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
 OBJS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.o))
