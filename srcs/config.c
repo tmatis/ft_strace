@@ -98,6 +98,13 @@ int parse_args(int argc, char **argv, args_t *args, config_t *config)
 		arg++; // we skip the '-'
 		if (*arg == '-')
 		{
+			if (arg[1] == '\0')
+			{
+				// if the arg is just '--' we do not count it as an option
+				argv++;
+				argc--;
+				break;
+			}
 			if (parse_arg_by_name(&argv, &argc, config))
 				return 1;
 		}
