@@ -57,7 +57,7 @@ void statistics_add_entry(statistics_t *statistics, uint64_t syscall_no, bool_t 
 
 /**
  * @brief Log the statistics.
- * 
+ *
  * @param statistics the statistics
  */
 void statistics_log(statistics_t *statistics);

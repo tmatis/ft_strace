@@ -9,7 +9,7 @@ static ft_rbtree_node_t *ft_rbtree_next(ft_rbtree_node_t *node)
 			node = node->left;
 		return (node);
 	}
-	
+
 	ft_rbtree_node_t *parent = node->parent;
 	while (parent != NULL && node == parent->right)
 	{
@@ -29,7 +29,7 @@ void ft_rbtree_foreach(ft_rbtree_t *tree, void *f)
 {
 	if (tree == NULL || tree->root == NULL)
 		return;
-	
+
 	ft_rbtree_node_t *node = tree->root;
 	while (node->left != NULL)
 		node = node->left;
@@ -51,7 +51,7 @@ void ft_rbtree_foreach_arg(ft_rbtree_t *tree, void *f, void *arg)
 {
 	if (tree == NULL || tree->root == NULL)
 		return;
-	
+
 	ft_rbtree_node_t *node = tree->root;
 	while (node->left != NULL)
 		node = node->left;

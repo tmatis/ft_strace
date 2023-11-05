@@ -20,7 +20,7 @@ typedef struct
 
 /**
  * @brief Log the table head.
- * 
+ *
  */
 static void log_table_head(void)
 {
@@ -29,7 +29,7 @@ static void log_table_head(void)
 
 /**
  * @brief Log the table separator.
- * 
+ *
  */
 static void log_table_separator(void)
 {
@@ -39,7 +39,7 @@ static void log_table_separator(void)
 
 /**
  * @brief Log a line of the table.
- * 
+ *
  * @param time_percentage the percentage of time spent in the syscall
  * @param total_time the total time spent in the syscall
  * @param calls the number of calls to the syscall
@@ -63,7 +63,7 @@ static void log_table_line(double time_percentage, struct timeval *total_time, u
 
 /**
  * @brief Compare two statistics entries.
- * 
+ *
  * @param a the first entry
  * @param b the second entry
  * @return int difference between the two entries
@@ -80,7 +80,7 @@ static int cmp_statistics_entry(statistics_entry_t *a, statistics_entry_t *b)
 
 /**
  * @brief Add a statistics entry to the sorted tree. (Callback for ft_rbtree_foreach_arg)
- * 
+ *
  * @param entry the entry to add
  * @param statistics_entry_arg the argument to the function
  */
@@ -95,7 +95,7 @@ static void add_statistic_entry(statistics_entry_t *entry,
 
 /**
  * @brief Build a sorted tree from a tree of statistics entries.
- * 
+ *
  * @param tree the tree of statistics entries
  * @param total_time_sec the total time spent in syscalls
  * @return ft_rbtree_t* the sorted tree
@@ -113,7 +113,7 @@ static ft_rbtree_t *build_sorted_tree(ft_rbtree_t *tree, double total_time_sec)
 
 /**
  * @brief Log a line of the table. (Callback for ft_rbtree_foreach_arg)
- * 
+ *
  * @param entry the entry to log
  * @param arg the argument to the function
  */
@@ -129,7 +129,7 @@ static void log_table_line_callback(statistics_entry_t *entry, log_table_line_ca
 
 /**
  * @brief Log the table.
- * 
+ *
  * @param tree the tree of statistics entries
  * @param total_time the total time spent in syscalls
  * @param type the type of registers

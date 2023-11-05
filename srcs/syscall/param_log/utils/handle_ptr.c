@@ -1,7 +1,7 @@
 #include "../param_log.h"
 #include <ft_printf.h>
-#include <stdint.h>
 #include <registers.h>
+#include <stdint.h>
 
 /**
  * @brief Handle a pointer value

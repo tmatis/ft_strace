@@ -12,9 +12,10 @@ void statistics_add_entry(statistics_t *statistics, uint64_t syscall_no, bool_t 
 						  struct timeval *total_time, register_type_t type)
 {
 	ft_rbtree_t *tree = type == X86_64 ? statistics->stats_x86_64 : statistics->stats_i386;
-	struct timeval *total_time_all = type == X86_64 ? &(statistics->total_time_x86_64)
-													  : &(statistics->total_time_i386);
-	ft_rbtree_node_t *node = ft_rbtree_search(tree, &(statistics_entry_t){.syscall_no = syscall_no});
+	struct timeval *total_time_all =
+		type == X86_64 ? &(statistics->total_time_x86_64) : &(statistics->total_time_i386);
+	ft_rbtree_node_t *node =
+		ft_rbtree_search(tree, &(statistics_entry_t){.syscall_no = syscall_no});
 	if (node == NULL)
 	{
 		ft_rbtree_insert(tree, &(statistics_entry_t){.syscall_no = syscall_no,
