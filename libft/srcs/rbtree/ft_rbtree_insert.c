@@ -182,6 +182,8 @@ ft_rbtree_node_t *ft_rbtree_insert(ft_rbtree_t *tree, void *value)
 	if (tree->root == NULL)
 	{
 		tree->root = new_node(value, tree->value_size, NULL);
+		if (tree->root == NULL)
+			return NULL;
 		tree->root->color = RBT_BLACK;
 		tree->node_count++;
 		return tree->root;
