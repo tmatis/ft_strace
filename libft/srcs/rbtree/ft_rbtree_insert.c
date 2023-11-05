@@ -70,7 +70,8 @@ static void check_node(ft_rbtree_node_t *node)
 				parent->parent = great_grand_parent;
 				if (great_grand_parent != NULL)
 				{
-					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+					if (great_grand_parent->left != NULL &&
+						great_grand_parent->left == grand_parent)
 						great_grand_parent->left = parent;
 					else
 						great_grand_parent->right = parent;
@@ -100,7 +101,8 @@ static void check_node(ft_rbtree_node_t *node)
 				child->parent = great_grand_parent;
 				if (great_grand_parent != NULL)
 				{
-					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+					if (great_grand_parent->left != NULL &&
+						great_grand_parent->left == grand_parent)
 						great_grand_parent->left = child;
 					else
 						great_grand_parent->right = child;
@@ -125,7 +127,8 @@ static void check_node(ft_rbtree_node_t *node)
 				parent->parent = great_grand_parent;
 				if (great_grand_parent != NULL)
 				{
-					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+					if (great_grand_parent->left != NULL &&
+						great_grand_parent->left == grand_parent)
 						great_grand_parent->left = parent;
 					else
 						great_grand_parent->right = parent;
@@ -153,7 +156,8 @@ static void check_node(ft_rbtree_node_t *node)
 				child->parent = great_grand_parent;
 				if (great_grand_parent != NULL)
 				{
-					if (great_grand_parent->left != NULL && great_grand_parent->left == grand_parent)
+					if (great_grand_parent->left != NULL &&
+						great_grand_parent->left == grand_parent)
 						great_grand_parent->left = child;
 					else
 						great_grand_parent->right = child;

@@ -2,7 +2,7 @@
 
 /**
  * @brief Searches a red-black tree for a value.
- * 
+ *
  * @param tree the tree to search
  * @param value_to_match the value to search for
  * @return ft_rbtree_node_t* the node containing the value or NULL if not found

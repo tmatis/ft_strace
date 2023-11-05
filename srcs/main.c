@@ -5,6 +5,7 @@
 #include <ft_strace_utils.h>
 #include <signal.h>
 #include <signals_strace.h>
+#include <statistics.h>
 
 int main(int argc, char **argv, char **envp)
 {
@@ -32,9 +33,19 @@ int main(int argc, char **argv, char **envp)
 	}
 	if (setup_tracing(pid))
 		return 1;
+	if (is_option_set(OPT_MASK_STATISTICS, config))
+	{
+		if (statistics_init(statistics_get()))
+		{
+			log_error("main", "statistics_init failed", true);
+			return 1;
+		}
+	}
 	int status = analysis_routine(pid);
 	if (status == ROUTINE_ERROR)
 		return 1;
+	if (is_option_set(OPT_MASK_STATISTICS, config))
+		statistics_log(statistics_get());
 	signals_unblock();
 	if (WIFSIGNALED(status))
 		raise(WTERMSIG(status));

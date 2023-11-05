@@ -3,7 +3,9 @@
 #include <ft_printf.h>
 #include <ft_strace_utils.h>
 #include <signals_strace.h>
+#include <statistics.h>
 #include <sys/ptrace.h>
+#include <sys/time.h>
 #include <sys/uio.h>
 #include <sys/wait.h>
 #include <syscall_strace.h>
@@ -25,6 +27,7 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
 {
 	user_regs_t regs_before;
 	struct iovec regs_before_iov;
+	bool_t statistics_mode = is_option_set(OPT_MASK_STATISTICS, get_config());
 
 	regs_before_iov.iov_base = &regs_before;
 	regs_before_iov.iov_len = sizeof(regs_before);
@@ -49,8 +52,9 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
 		return NO_STATUS;
 	bool_t should_log = analysis_state->status == EXECVE_ENCOUNTERED ||
 						(analysis_state->status != EXECVE_ERROR && *is_execve);
-	if (should_log && !is_option_set(OPT_MASK_STATISTICS, get_config()))
+	if (should_log && !statistics_mode)
 		*size_written = syscall_log_name_params(pid, &regs_before, *register_type_before);
+
 	return should_log;
 }
 
@@ -67,7 +71,8 @@ static int handle_before_syscall(pid_t pid, analysis_routine_data_t *analysis_st
  */
 static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_state,
 								uint64_t syscall_no, register_type_t register_type_before,
-								int should_log, bool_t is_execve, int size_written)
+								struct timeval *before_start, int should_log, bool_t is_execve,
+								int size_written)
 {
 	user_regs_t regs_after;
 	struct iovec regs_after_iov;
@@ -81,12 +86,28 @@ static int handle_syscall_after(pid_t pid, analysis_routine_data_t *analysis_sta
 	}
 	register_type_t register_type_after = registers_get_type(regs_after_iov.iov_len);
 	if (analysis_state->status == EXECVE_NOT_ENCOUNTERED && is_execve)
-		analysis_state->status = (int64_t)registers_get_return(&regs_after, register_type_after) < 0
+		analysis_state->status = (int32_t)registers_get_return(&regs_after, register_type_after) < 0
 									 ? EXECVE_ERROR
 									 : EXECVE_ENCOUNTERED;
-	if (should_log && !is_option_set(OPT_MASK_STATISTICS, get_config()))
-		syscall_log_params_return(pid, syscall_no, register_type_before, &regs_after,
-								  register_type_after, size_written);
+	if (should_log)
+	{
+		if (!is_option_set(OPT_MASK_STATISTICS, get_config()))
+		{
+			syscall_log_params_return(pid, syscall_no, register_type_before, &regs_after,
+									  register_type_after, size_written);
+		}
+		else
+		{
+			struct timeval after_end;
+			gettimeofday(&after_end, NULL);
+			struct timeval total_time;
+			timersub(&after_end, before_start, &total_time);
+			statistics_add_entry(statistics_get(), syscall_no,
+								 (int32_t)registers_get_return(&regs_after, register_type_after) <
+									 0,
+								 &total_time, register_type_before);
+		}
+	}
 	return NO_STATUS;
 }
 
@@ -107,8 +128,10 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont
 	int size_written = 0;
 	int should_log = handle_before_syscall(pid, analysis_state, &syscall_no, &register_type_before,
 										   &is_execve, &size_written);
+	struct timeval before_start;
 	if (should_log == NO_STATUS)
 		return NO_STATUS;
+	gettimeofday(&before_start, NULL);
 	if (ptrace(PTRACE_SYSCALL, pid, NULL, *cont_signal) < 0)
 	{
 		log_error("handle_syscall", "ptrace failed", true);
@@ -130,6 +153,6 @@ int syscall_handle(pid_t pid, analysis_routine_data_t *analysis_state, int *cont
 		}
 		return status;
 	}
-	return handle_syscall_after(pid, analysis_state, syscall_no, register_type_before, should_log,
-								is_execve, size_written);
+	return handle_syscall_after(pid, analysis_state, syscall_no, register_type_before,
+								&before_start, should_log, is_execve, size_written);
 }

@@ -31,7 +31,7 @@ typedef struct
 
 /**
  * @brief Creates a new red-black tree.
- * 
+ *
  * @param value_size the size of the value to store in the tree
  * @param cmp the function to compare two values
  * @return ft_rbtree_t* the new tree or NULL if an error occurred
@@ -64,7 +64,7 @@ void ft_rbtree_destroy(ft_rbtree_t *tree);
 
 /**
  * @brief Searches a red-black tree for a value.
- * 
+ *
  * @param tree the tree to search
  * @param value_to_match the value to search for
  * @return ft_rbtree_node_t* the node containing the value or NULL if not found
@@ -73,7 +73,7 @@ ft_rbtree_node_t *ft_rbtree_search(ft_rbtree_t *tree, void *value_to_match);
 
 /**
  * @brief Frees a red-black tree node and its value. And fixes the tree.
- * 
+ *
  * @param tree the tree to delete from
  * @param to_delete the node to delete
  */
@@ -81,7 +81,7 @@ void ft_rbtree_delete(ft_rbtree_t *tree, ft_rbtree_node_t *to_delete);
 
 /**
  * @brief Applies a function to each node's value in a red-black tree.
- * 
+ *
  * @param tree the tree to iterate over
  * @param f the function to apply to each node's value
  */
@@ -89,7 +89,7 @@ void ft_rbtree_foreach(ft_rbtree_t *tree, void *f);
 
 /**
  * @brief Applies a function to each node's value in a red-black tree.
- * 
+ *
  * @param tree the tree to iterate over
  * @param f the function to apply to each node's value with an argument
  * @param arg an argument to pass to the function

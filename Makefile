@@ -160,6 +160,14 @@ SRCS += registers/registers_get_param.c \
 SRCS += signals/signals_block.c \
 		signals/signals_handle.c
 
+# statistics srcs
+
+SRCS += statistics/statistics_get.c \
+		statistics/statistics_destroy.c \
+		statistics/statistics_init.c \
+		statistics/statistics_add_entry.c \
+		statistics/statistics_log.c
+
 OBJS_MAIN_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS_MAIN:.c=.o))
 OBJS_MAIN_DEBUG := $(addprefix $(OBJSDIR_DEBUG)/,$(SRCS_MAIN:.c=.o))
 OBJS_RELEASE := $(addprefix $(OBJSDIR_RELEASE)/,$(SRCS:.c=.o))
