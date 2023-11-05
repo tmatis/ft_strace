@@ -38,13 +38,13 @@ int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysi
 	}
 	if (should_log && analysis_state->status == EXECVE_ENCOUNTERED)
 	{
-		ft_printf("--- %s {si_signo=%s, si_code=%s, si_pid=%d, si_uid=%d",
+		ft_dprintf(STDERR_FILENO, "--- %s {si_signo=%s, si_code=%s, si_pid=%d, si_uid=%d",
 				  ft_signalname(siginfo.si_signo), ft_signalname(siginfo.si_signo),
 				  ft_sicodename(siginfo.si_signo, siginfo.si_code), siginfo.si_pid, siginfo.si_uid);
 		if (siginfo.si_signo == SIGCHLD)
-			ft_printf(", si_status=%d, si_utime=%ld, si_stime=%ld", siginfo.si_status,
+			ft_dprintf(STDERR_FILENO,", si_status=%d, si_utime=%ld, si_stime=%ld", siginfo.si_status,
 					  siginfo.si_utime, siginfo.si_stime);
-		ft_printf("} ---\n");
+		ft_dprintf(STDERR_FILENO, "} ---\n");
 	}
 	*cont_signal = siginfo.si_signo;
 	return SIG_RAISED;
