@@ -23,8 +23,8 @@ static int log_wait_status(int status)
 	bool_t first = true;
 	if (WIFEXITED(status))
 	{
-		size_written += ft_dprintf(STDERR_FILENO, "{WIFEXITED(s), WEXITSTATUS(s) == %d}",
-								   WIFEXITED(status), WEXITSTATUS(status));
+		size_written +=
+			ft_dprintf(STDERR_FILENO, "{WIFEXITED(s), WEXITSTATUS(s) == %d}", WEXITSTATUS(status));
 		first = false;
 	}
 	if (WIFSIGNALED(status))
