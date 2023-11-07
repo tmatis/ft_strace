@@ -81,7 +81,7 @@ static size_t compute_escaped_size(const char *str, size_t size)
 char *ft_escape(const char *str, size_t size)
 {
 	size_t escaped_size = compute_escaped_size(str, size);
-	char *escaped_str = ft_calloc(escaped_size + 1, sizeof(char));
+	char *escaped_str = ft_calloc(escaped_size * 2 + 1, sizeof(char));
 	if (escaped_str == NULL)
 		return NULL;
 	size_t j = 0;
