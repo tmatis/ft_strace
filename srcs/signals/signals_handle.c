@@ -43,7 +43,7 @@ int signals_handle(pid_t pid, int *cont_signal, analysis_routine_data_t *analysi
 				   ft_sicodename(siginfo.si_signo, siginfo.si_code));
 		if (siginfo.si_signo == SIGSEGV)
 			ft_dprintf(STDERR_FILENO, ", si_addr=%p", siginfo.si_addr);
-		else
+		else if (siginfo.si_signo != SIGINT)
 			ft_dprintf(STDERR_FILENO, ", si_pid=%d, si_uid=%d", siginfo.si_pid, siginfo.si_uid);
 		if (siginfo.si_signo == SIGCHLD)
 			ft_dprintf(STDERR_FILENO, ", si_status=%d, si_utime=%ld, si_stime=%ld",
